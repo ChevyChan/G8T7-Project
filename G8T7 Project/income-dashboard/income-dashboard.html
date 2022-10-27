@@ -67,9 +67,16 @@
         // Initialize Firebase Authentication and get a reference to the service
         const auth = getAuth(app);
         const database = getDatabase(app);
-    
-    
-    
+        function retrieveAllIncomes(){
+          const dbRef = ref(database, "incomes");
+
+          onValue(dbRef, (snapshot) => {
+          snapshot.forEach((childSnapshot) => {
+          const childKey = childSnapshot.key;
+          const childData = childSnapshot.val();
+        });
+      })
+      }
     </script>
     <script src="income-dashboard.js"></script>
 </body>
