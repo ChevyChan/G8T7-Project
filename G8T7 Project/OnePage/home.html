@@ -42,14 +42,14 @@
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto " href="#hero">Home</a></li>
-          <li><a class="nav-link scrollto " href="#hero">Products</a></li>
+          <li><a class="nav-link scrollto " href="home.html">Home</a></li>
+          <li><a class="nav-link scrollto " href="listing.html">Products</a></li>
           <li><a class="nav-link scrollto o" href="#cart">Shopping Cart</a></li>
           <li class="dropdown"><a href="#"><span>Profile</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a id="editProfile" href="#">Edit Profile</a></li>
               <li><a href="#">Purchase History</a></li>
-              <li><a id="artistBidList" href="#">Income Dashboard</a></li>
+              <li><a id="artistBidList" href="../income-dashboard/income-dashboard.html">Income Dashboard</a></li>
               <li><a href="#about">Logout</a></li>
             </ul>
           </li>
@@ -71,7 +71,7 @@
             
             <div class="input-group mb-3">
                 <input type="text" class="form-control" placeholder="Search for listing" aria-label="search" aria-describedby="button-addon2" id="searchInput">
-                <button type="submit" class="btn btn-success" id="btn_submit">Search</button>
+                <button type="button" class="btn btn-success" id="btn_submit">Search</button>
             </div>
             
         </div>
@@ -83,15 +83,25 @@
         <div class="carousel-indicators">
           <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
           <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
         </div>
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <img src="media/Untitled (Carousel Facebook Ad).png" class="d-block w-100" alt="...">
+            <a href="#signup" target="_blank">
+              <img src="media/carousel slide 1.png" class="d-block w-100" alt="...">
+            </a>
+          </div>
+          <div class="carousel-item ">
+            <a href="#createlisting" target="_blank">
+              <img src="media/carousel slide 2.png" class="d-block w-100" alt="...">
+            </a>
           </div>
           <div class="carousel-item">
-            <video class="img-fluid d-block w-100" autoplay loop muted>
-                <source src="media/Untitled (Carousel Facebook Ad).mp4" type="video/mp4" />
-            </div>
+            <a href="listing.html" target="_blank">
+              <video class="img-fluid d-block w-100" autoplay loop muted>
+                <source src="media/carousel slide 3.mp4" type="video/mp4" />
+              </video>
+            </a>
           </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
@@ -187,12 +197,13 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
-<script>
-  btn_submit.addEventListener('click', (e) => {
-    var searchInput = document.getElementById("searchInput").value;
-    window.location.href="listing.html?search="+searchInput;
-  })
-</script>
+  <script>
+    btn_submit.addEventListener('click', (e) => {
+      var searchInput = document.getElementById("searchInput").value;
+      console.log(searchInput);
+      window.location.href= "listing.html?search=" + searchInput;
+    })
+  </script>
 
 </body>
 

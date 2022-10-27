@@ -42,18 +42,18 @@
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto " href="#hero">Home</a></li>
-          <li><a class="nav-link scrollto" href="#products">Products</a></li>
-          <li><a class="nav-link scrollto" id="productList" href="#">Live Bidding</a></li>
+          <li><a class="nav-link scrollto " href="home.html">Home</a></li>
+          <li><a class="nav-link scrollto " href="listing.html">Products</a></li>
           <li><a class="nav-link scrollto o" href="#cart">Shopping Cart</a></li>
           <li class="dropdown"><a href="#"><span>Profile</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a id="editProfile" href="#">Edit Profile</a></li>
               <li><a href="#">Purchase History</a></li>
-              <li><a id="artistBidList" href="#">Your Bidding Products</a></li>
+              <li><a id="artistBidList" href="../income-dashboard/income-dashboard.html">Income Dashboard</a></li>
+              <li><a href="#about">Logout</a></li>
             </ul>
           </li>
-          <li><a class="getstarted scrollto" href="#about">Logout</a></li>
+          <li><a class="getstarted scrollto" href="#">Create New Listing</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -361,9 +361,10 @@
       console.log(queryString); 
       const urlParams = new URLSearchParams(queryString); 
       console.log(urlParams); 
-      const product_id = urlParams.get('id'); 
+      const product_id = urlParams.get('search'); 
       console.log(product_id);
     }
+    window.onload=redirectInput()
   </script>
 </body>
 
