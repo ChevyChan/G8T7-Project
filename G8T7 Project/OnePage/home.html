@@ -43,17 +43,17 @@
       <nav id="navbar" class="navbar">
         <ul>
           <li><a class="nav-link scrollto " href="#hero">Home</a></li>
-          <li><a class="nav-link scrollto" href="#products">Products</a></li>
-          <li><a class="nav-link scrollto" id="productList" href="#">Live Bidding</a></li>
+          <li><a class="nav-link scrollto " href="#hero">Products</a></li>
           <li><a class="nav-link scrollto o" href="#cart">Shopping Cart</a></li>
           <li class="dropdown"><a href="#"><span>Profile</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a id="editProfile" href="#">Edit Profile</a></li>
               <li><a href="#">Purchase History</a></li>
-              <li><a id="artistBidList" href="#">Your Bidding Products</a></li>
+              <li><a id="artistBidList" href="#">Income Dashboard</a></li>
+              <li><a href="#about">Logout</a></li>
             </ul>
           </li>
-          <li><a class="getstarted scrollto" href="#about">Logout</a></li>
+          <li><a class="getstarted scrollto" href="#">Create New Listing</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -66,12 +66,12 @@
     <!-- ======= Breadcrumbs ======= -->
     <section class="breadcrumbs">
       <div class="container">
-        <form>
+        <form action="listing.html">
         <div class="d-flex justify-content-between align-items-center">
             
             <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Search for listing" aria-label="search" aria-describedby="button-addon2">
-                <button class="btn btn-success" type="button" id="button-addon2">Search</button>
+                <input type="text" class="form-control" placeholder="Search for listing" aria-label="search" aria-describedby="button-addon2" id="searchInput">
+                <button type="submit" class="btn btn-success" id="btn_submit">Search</button>
             </div>
             
         </div>
@@ -187,6 +187,12 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+<script>
+  btn_submit.addEventListener('click', (e) => {
+    var searchInput = document.getElementById("searchInput").value;
+    window.location.href="listing.html?search="+searchInput;
+  })
+</script>
 
 </body>
 
