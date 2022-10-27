@@ -21,7 +21,7 @@ table.charts-css.column{
   }
   #motion-effect tr:hover th {
     background-color: rgba(0, 0, 0, 0.4);
-    color: #fff;
+    color: #ffffff;
   }
   #motion-effect td .data {
     transition-duration: 0.3s;
