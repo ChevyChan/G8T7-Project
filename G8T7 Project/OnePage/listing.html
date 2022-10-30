@@ -96,7 +96,7 @@
           </div>
         </div>
 
-        <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="300">
+        <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="300" id="cardStuff">
 
           <div class="col-lg-4 col-md-6 portfolio-item filter-app">
             <div class="portfolio-wrap">
@@ -316,7 +316,7 @@
     // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
     import { getAuth , createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
-    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js";
+    import { getDatabase, ref, set , onValue } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js";
     import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-storage.js"
     // TODO: Add SDKs for Firebase products that you want to use
     // https://firebase.google.com/docs/web/setup#available-libraries
@@ -342,15 +342,33 @@
 
     function retrieveAllProducts(){
       const dbRef = ref(database, "auction");
-
+      var str=''
       onValue(dbRef, (snapshot) => {
       snapshot.forEach((childSnapshot) => {
         const childKey = childSnapshot.key;
         const childData = childSnapshot.val();
-        
+        console.log(childData)
+        str+=`<div class="col-lg-4 col-md-6 portfolio-item filter-app">
+            <div class="portfolio-wrap">
+              <img src="${childData.productPic}" class="img-fluid" alt="${childData.title}">
+              <div class="portfolio-info">
+                <h4>${childData.title}</h4>
+                <p>${childData.artistName}</p>
+                <div class="portfolio-links">
+                  <a href="${childData.productPic}" data-gallery="portfolioGallery" class="portfolio-lightbox" title="${childData.title}"><i class="bx bx-plus"></i></a>
+                  <a href="portfolio-details.html?p=${childData.id}" title="More Details"><i class="bx bx-link"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>`
+          console.log(str)
       });
+      console.log(str)
+      document.getElementById('cardStuff').innerHTML=str
 })
+
 }
+window.onload=retrieveAllProducts()
 
 
 </script>
