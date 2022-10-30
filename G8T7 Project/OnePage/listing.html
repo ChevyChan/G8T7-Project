@@ -81,8 +81,7 @@
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">
-          <h2>Portfolio</h2>
-          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+          <h2>Listings</h2>
         </div>
 
         <div class="row" data-aos="fade-up" data-aos-delay="150">
@@ -229,7 +228,6 @@
       </div>
     </section><!-- End Portfolio Section -->
     
-
   <!-- ======= Footer ======= -->
   <footer id="footer">
 
@@ -296,6 +294,7 @@
       </div>
     </div>
   </footer><!-- End Footer -->
+  </main>
 
   <div id="preloader"></div>
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
@@ -344,42 +343,63 @@
       const dbRef = ref(database, "auction");
       var str=''
       onValue(dbRef, (snapshot) => {
-      snapshot.forEach((childSnapshot) => {
+        if(product_id==null){
+          snapshot.forEach((childSnapshot) => {
+          const childKey = childSnapshot.key;
+          const childData = childSnapshot.val();
+          console.log(childData)
+          str+=`<div class="col-lg-4 col-md-6 portfolio-item filter-app">
+                  <div class="portfolio-wrap">
+                    <img src="${childData.productPic}" class="img-fluid" alt="${childData.title}">
+                    <div class="portfolio-info">
+                      <h4>${childData.title}</h4>
+                      <p>${childData.artistName}</p>
+                        <div class="portfolio-links">
+                          <a href="portfolio-details.html?p=${childData.id}" title="More Details"><i class="bx bx-link"></i></a>
+                        </div>
+                    </div>
+                  </div>
+                </div>`
+      });}
+      else{
+        snapshot.forEach((childSnapshot) => {
         const childKey = childSnapshot.key;
         const childData = childSnapshot.val();
         console.log(childData)
-        str+=`<div class="col-lg-4 col-md-6 portfolio-item filter-app">
-            <div class="portfolio-wrap">
-              <img src="${childData.productPic}" class="img-fluid" alt="${childData.title}">
-              <div class="portfolio-info">
-                <h4>${childData.title}</h4>
-                <p>${childData.artistName}</p>
-                <div class="portfolio-links">
-                  <a href="${childData.productPic}" data-gallery="portfolioGallery" class="portfolio-lightbox" title="${childData.title}"><i class="bx bx-plus"></i></a>
-                  <a href="portfolio-details.html?p=${childData.id}" title="More Details"><i class="bx bx-link"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>`
-          console.log(str)
-      });
-      console.log(str)
+        if(childData.title.includes(product_id)){
+          str+=`<div class="col-lg-4 col-md-6 portfolio-item filter-app">
+                  <div class="portfolio-wrap">
+                    <img src="${childData.productPic}" class="img-fluid" alt="${childData.title}">
+                    <div class="portfolio-info">
+                      <h4>${childData.title}</h4>
+                      <p>${childData.artistName}</p>
+                        <div class="portfolio-links">
+                          <a href="portfolio-details.html?p=${childData.id}" title="More Details"><i class="bx bx-link"></i></a>
+                        </div>
+                    </div>
+                  </div>
+                </div>`
+      }});
+      }
       document.getElementById('cardStuff').innerHTML=str
 })
 
 }
+window.onload=redirectInput()
 window.onload=retrieveAllProducts()
+
 
 
 </script>
 
   <script>
+    var product_id=''
     function redirectInput(){
     const queryString = window.location.search; 
       console.log(queryString); 
       const urlParams = new URLSearchParams(queryString); 
       console.log(urlParams); 
-      const product_id = urlParams.get('search'); 
+      product_id = urlParams.get('search'); 
       console.log(product_id);
     }
     window.onload=redirectInput()
