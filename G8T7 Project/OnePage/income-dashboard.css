@@ -1,8 +1,6 @@
 #income-chart.column {
-    height: 400px;
-    max-width: 500px;
-    margin: 50px auto 50px auto;
-    --color: #4444FF;
+    height: 500px;
+    --color: linear-gradient(#469fdf, #2487ce);
   }
 
 table.charts-css.column{
@@ -17,7 +15,7 @@ table.charts-css.column{
     transition-duration: 0.3s;
   }
   #motion-effect tr:hover {
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.1);
   }
   #motion-effect tr:hover th {
     background-color: rgba(0, 0, 0, 0.4);
