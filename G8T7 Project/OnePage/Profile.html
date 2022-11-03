@@ -354,16 +354,21 @@
         var unitNumber = document.getElementById('inputUnitNo').value;
         var profilePic_url = ImgURL;
 
-        var passHash = passwordHash(newPassword);
-        console.log(passHash);
-    
-        if(profilePic_url != ""){
-          UploadProcess();
-          updateProfile(email, passHash, firstName, lastName, postalCode, address, unitNumber, profilePic_url, oldPassword);
+        if(oldPassword == newPassword){
+            var passHash = passwordHash(newPassword);
+            console.log(passHash);
+        
+            if(profilePic_url != ""){
+              UploadProcess();
+              updateProfile(email, passHash, firstName, lastName, postalCode, address, unitNumber, profilePic_url, oldPassword);
+            }else{
+              profilePic_url = imageSrc.src;
+              updateProfile(email, passHash, firstName, lastName, postalCode, address, unitNumber, profilePic_url, oldPassword);
+            }
         }else{
-          profilePic_url = imageSrc.src;
-          updateProfile(email, passHash, firstName, lastName, postalCode, address, unitNumber, profilePic_url, oldPassword);
+          alert("Wrong Password! Please try again!");
         }
+        
     })
     
     var id = "";
@@ -433,7 +438,7 @@
         if(password != ""){
           updatePassword(user, password).then(() => {
             // Update successful.
-            update(ref(database, 'users/' + id), {
+            update(ref(database, 'users/' + user.uid), {
                   email: email,
                   password : password,
                   firstName: firstName,
