@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Artistic Shop</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <style>
+    #summary{
+      background-color:lightgrey; 
+      float:right; 
+      height:inherit; 
+      padding:20px;
+      width: 38%;
+    }
+
+    #shoppingDetails{
+        width:60%; 
+        float:left;
+        margin-top: 20px;
+        height: inherit;
+    }
+
+    #shipping{
+      width: 70%;
+      
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center justify-content-between">
+
+      <h1 class="logo"><a href="index.html">Artistic Shop</a></h1>
+      <!-- Uncomment below if you prefer to use an image logo -->
+      <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto " href="home.html">Home</a></li>
+          <li><a class="nav-link scrollto " href="listing.html">Products</a></li>
+          <li><a class="nav-link scrollto" id="productList" href="#">Live Bidding</a></li>
+          <li><a class="nav-link scrollto o" href="#cart">Shopping Cart</a></li>
+          <li class="dropdown"><a href="#"><span>Profile</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a id="editProfile" href="#">Edit Profile</a></li>
+              <li><a href="#">Purchase History</a></li>
+              <li><a href="../income-dashboard/income-dashboard.html">Income Dashboard</a></li>
+              <li><a id="artistBidList" href="#">Your Bidding Products</a></li>
+              <li><a href="LoginAccount.html">Logout</a></li>
+            </ul>
+          </li>
+          <li><a class="getstarted scrollto" href="#">Create New Listing</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+
+    </div>
+  </header><!-- End Header -->
+
+  <main id="main">
+
+    <!-- ======= Breadcrumbs ======= -->
+    <section class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>My Profile</h2>
+          <ol>
+            <li><a href="index.html">Home</a></li>
+            <li>My Profile</li>
+          </ol>
+        </div>
+
+      </div>
+    </section><!-- End Breadcrumbs -->
+
+    <section class="inner-page">
+      <div class="container">
+        <div class="mb-3">
+          <img src="C:\wamp64\www\Project\assets\img\profile-icon-9.png" id="imageSrc" class="rounded float-start mx-auto" alt="Project\assets\img\profile-icon-9.png">
+          <input type="file" class="form-control" id="customFile" />
+        </div>
+        <br>
+        <div class="mb-3">
+          <label for="firstName" class="form-label">First Name</label>
+          <input type="email" class="form-control" id="firstName" aria-describedby="firstNameHelp" >
+        </div>
+        <div class="mb-3">
+          <label for="lastName" class="form-label">Last Name</label>
+          <input type="email" class="form-control" id="lastName" aria-describedby="lastNameHelp" >
+        </div>
+        <div class="mb-3">
+          <label for="inputPostalCode" class="form-label">Postal Code</label>
+          <input type="email" class="form-control" id="inputPostalCode" aria-describedby="postalCodeHelp" >
+        </div>
+        <div class="mb-3">
+          <label for="inputAddress" class="form-label">Address</label>
+          <input type="email" class="form-control" id="inputAddress" aria-describedby="addressHelp" disabled>
+        </div>
+        <div class="mb-3">
+          <label for="inputUnitNo" class="form-label">Unit Number</label>
+          <input type="email" class="form-control" id="inputUnitNo" aria-describedby="unitNoHelp" >
+        </div>
+        <div class="mb-3">
+          <label for="emailAddress" class="form-label">Email address</label>
+          <input type="email" class="form-control" id="emailAddress" aria-describedby="emailHelp" >
+        </div>
+        <div class="mb-3">
+          <label for="inputPassword" class="form-label">Old Password</label>
+          <input type="password" class="form-control" id="inputExistingPassword" >
+        </div>
+        <div class="mb-3">
+          <label for="inputPassword" class="form-label">New Password</label>
+          <input type="password" class="form-control" id="inputNewPassword" >
+        </div>
+        <button type="submit" id="btn_edit" class="btn btn-primary">Update</button>
+        <button type="submit" id="btn_back" class="btn btn-primary">Back</button>
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-lg-3 col-md-6 footer-contact">
+            <h3>Artistic Shop</h3>
+            <p>
+              A108 Adam Street <br>
+              New York, NY 535022<br>
+              United States <br><br>
+              <strong>Phone:</strong> +1 5589 55488 55<br>
+              <strong>Email:</strong> info@example.com<br>
+            </p>
+          </div>
+
+          <div class="col-lg-2 col-md-6 footer-links">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Products</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Live Bidding</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Shopping Cart</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-links">
+            <h4>Our Services</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Selling</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Buying</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Trading</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Bidding</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-4 col-md-6 footer-newsletter">
+            <h4>Join Our Newsletter</h4>
+            <p>Join us to receive frequent updates about priceless art pieces</p>
+            <form action="" method="post">
+              <input type="email" name="email"><input type="submit" value="Subscribe">
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container d-md-flex py-4">
+
+      <div class="me-md-auto text-center text-md-start">
+        <div class="copyright">
+          &copy; Copyright <strong><span>Artistic Shop</span></strong>. All Rights Reserved
+        </div>
+      </div>
+      <div class="social-links text-center text-md-right pt-3 pt-md-0">
+        <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+        <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+        <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+        <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+        <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+  <div id="preloader"></div>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+    import { getAuth, updatePassword, reauthenticateWithCredential, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+    import { getDatabase, ref, set, get, child, update, onValue } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js";
+    import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-storage.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyDaa4E6_70V4giloehQSPALsd247XEqH3k",
+      authDomain: "ihelpartists-app.firebaseapp.com",
+      databaseURL: "https://ihelpartists-app-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "ihelpartists-app",
+      storageBucket: "ihelpartists-app.appspot.com",
+      messagingSenderId: "1078317726292",
+      appId: "1:1078317726292:web:0cadf1ec10d51359fdcbc1",
+      measurementId: "G-P21FPFFWWT"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    // Initialize Firebase Authentication and get a reference to the service
+    const auth = getAuth(app);
+    const database = getDatabase(app);
+
+    var userId = "";
+
+    onAuthStateChanged(auth, (user) => {
+      if(user){
+        console.log(user.uid);
+      }else{
+        "Please login!";
+      }
+    });
+
+    //Upload or Replace Image File
+    var file_name = document.getElementById('customFile');
+    
+    var files =[];
+    var reader = new FileReader();
+    var name = "";
+    var extention = "";
+
+    file_name.type = 'file';
+    file_name.onchange = e => {
+      files = e.target.files;
+
+      extention = GetFileExtention(files[0]);
+      name = GetFileName(files[0]);
+
+      name = file_name.src;
+      
+      reader.readAsDataURL(files[0]);
+    }
+
+    function GetFileExtention(file){
+      var temp = file.name.split('.');
+      var ext = temp.slice(temp.length-1, temp.length);
+      return '.'+ ext[0];
+    }
+  
+    function GetFileName(file){
+      var temp = file.name.split('.');
+      var fname = temp.slice(0,-1).join('.');
+      return fname;
+    }
+  
+    var ImgName = "";
+    var ImgURL = "";
+    async function UploadProcess(){
+      var ImgToUpload = files[0];
+      
+      var pic_link = file_name.value;
+      var pic_link_result = pic_link.slice(12);
+      console.log(pic_link_result);
+      
+      ImgName = pic_link_result;
+      console.log(pic_link_result);
+  
+      const metaData = {
+        contentType: ImgToUpload.type
+      }
+  
+      const storage = getStorage();
+  
+      const storageRef = sRef(storage, 'profilePictures/' + ImgName);
+      const uploadTask = uploadBytesResumable(storageRef, ImgToUpload, metaData);
+      uploadTask.on('state-changed', (snapshot) => {
+        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log("Upload " + progress + "%");
+      },
+      (error) => {
+        alert("Error, please try again!");
+      },
+      () =>{
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          ImgURL = downloadURL;
+          console.log(downloadURL);
+        })
+      }
+      );
+  
+    }
+
+    reader.onload = function(){
+      imageSrc.src = reader.result;
+    }
+
+    document.getElementById('btn_edit').addEventListener('click', (e) => {
+        e.preventDefault();
+
+        var email = document.getElementById('emailAddress').value;
+        var oldPassword = document.getElementById('inputExistingPassword').value;
+        var newPassword = document.getElementById('inputNewPassword').value;
+        var firstName = document.getElementById('firstName').value;
+        var lastName = document.getElementById('lastName').value;
+        var postalCode = document.getElementById('inputPostalCode').value;
+        var address = document.getElementById('inputAddress').value;
+        var unitNumber = document.getElementById('inputUnitNo').value;
+        var profilePic_url = ImgURL;
+
+        var passHash = passwordHash(newPassword);
+        console.log(passHash);
+    
+        if(profilePic_url != ""){
+          UploadProcess();
+          updateProfile(email, passHash, firstName, lastName, postalCode, address, unitNumber, profilePic_url, oldPassword);
+        }else{
+          profilePic_url = imageSrc.src;
+          updateProfile(email, passHash, firstName, lastName, postalCode, address, unitNumber, profilePic_url, oldPassword);
+        }
+    })
+    
+    var id = "";
+
+    function getProfileDetails(){
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+
+      retrieveUserDetails(user_id);
+    }
+
+    window.onload = getProfileDetails();
+
+    function retrieveUserDetails(user_id){
+      const dbRef = ref(database, "users/" + user_id);
+      
+      onValue(dbRef, (snapshot) => {
+        
+        console.log(snapshot.val());
+        
+        console.log(id);
+        document.getElementById('emailAddress').value = snapshot.val().email;
+        //document.getElementById('inputPassword').value = snapshot.val().password;
+        document.getElementById('firstName').value = snapshot.val().firstName;
+        document.getElementById('lastName').value = snapshot.val().lastName;
+        document.getElementById('inputPostalCode').value = snapshot.val().postalCode;
+        document.getElementById('inputAddress').value = snapshot.val().address;
+        document.getElementById('inputUnitNo').value = snapshot.val().unitNumber;
+        var imageURL = document.getElementById('imageSrc');
+        imageURL.setAttribute('src', snapshot.val().profilePic_url);
+      }) 
+    }
+
+    function promptForCredentials(email, dbPass){
+
+      var oldPassword = document.getElementById('inputExistingPassword').value;
+      //verify the hash password
+      var bcrypt = dcodeIO.bcrypt;
+      bcrypt.compare(oldPassword, dbPass, function(err, result) {
+        if (result) {
+          // password is valid
+          //if true, assign the hash to the parameter of signinwithemailandpassword
+          signInWithEmailAndPassword(auth, email, dbPass)
+            .then((userCredential) => {
+              // Signed in 
+              const user = userCredential.user;
+            })
+           .catch((error) => {
+             const errorCode = error.code;
+             const errorMessage = error.message;
+
+             alert(errorMessage);
+           });
+        }else{
+          alert("Invalid Password. Please try again!");
+        }
+      });
+      
+    }
+
+    function updateProfile(email, password, firstName, lastName, postalCode, address, unitNumber, profilePic_url, oldPassword) {
+        const user = auth.currentUser;
+        if(password != ""){
+          updatePassword(user, password).then(() => {
+            // Update successful.
+            update(ref(database, 'users/' + id), {
+                  email: email,
+                  password : password,
+                  firstName: firstName,
+                  lastName: lastName,
+                  postalCode: postalCode,
+                  address: address, 
+                  unitNumber: unitNumber,
+                  profilePic_url: profilePic_url
+                })
+                .then(() => {
+                    // Data saved successfully!
+                    alert("Profile Updated Successfully!");  
+                    redirectPage();               
+                })
+          }).catch((error) => {
+              const credential = promptForCredentials(email, oldPassword);
+              reauthenticateWithCredential(user, credential).then(() => {
+                // User re-authenticated.
+              }).catch((error) => {
+                // An error ocurred
+                // ...
+              });
+          });
+        }else{
+          // Data saved successfully!
+          update(ref(database, 'users/' + id), {
+            email: email,
+            firstName: firstName,
+            lastName: lastName,
+            postalCode: postalCode,
+            address: address, 
+            unitNumber: unitNumber,
+            profilePic_url: profilePic_url
+          })
+          .then(() => {
+              // Data saved successfully!
+              alert("Profile Updated Successfully!");
+              redirectPage();
+              
+          })
+          .catch((error) => {
+              // The write failed...
+              alert(error);
+          });     
+        }
+
+        
+    }
+
+    function redirectPage(){
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+      window.location.href = "ArtistsProductBidList.html?user_id=" + user_id;
+    }
+
+    editProfile.addEventListener('click', (e) => {
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+
+      window.location.href = "Profile.html?user_id=" + user_id;
+
+    })    
+
+    artistBidList.addEventListener('click', (e) => {
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+
+      window.location.href = "ArtistsProductBidList.html?user_id=" + user_id;
+
+    })
+
+    productList.addEventListener('click', (e) => {
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+
+      window.location.href = "ProductBiddingList.html?user_id=" + user_id;
+
+    })
+
+    btn_back.addEventListener('click', (e) => {
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+
+      window.location.href = "ArtistsProductBidList.html?user_id=" + user_id;
+
+    })
+
+    function passwordHash(password){
+      var bcrypt = dcodeIO.bcrypt;
+    
+      var hashPassword = password;
+      var salt = bcrypt.genSaltSync(10);
+      var hash = bcrypt.hashSync(password, salt);
+      console.log(hash);
+      return hash;
+    }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.js"></script>
+
+</body>
+
+</html>

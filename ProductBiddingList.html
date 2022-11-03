@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Artistic Shop</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center justify-content-between">
+
+      <h1 class="logo"><a href="index.html">Artistic Shop</a></h1>
+      <!-- Uncomment below if you prefer to use an image logo -->
+      <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto " href="home.html">Home</a></li>
+          <li><a class="nav-link scrollto " href="listing.html">Products</a></li>
+          <li><a class="nav-link scrollto" id="productList" href="#">Live Bidding</a></li>
+          <li><a class="nav-link scrollto o" href="#cart">Shopping Cart</a></li>
+          <li class="dropdown"><a href="#"><span>Profile</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a id="editProfile" href="#">Edit Profile</a></li>
+              <li><a href="#">Purchase History</a></li>
+              <li><a href="../income-dashboard/income-dashboard.html">Income Dashboard</a></li>
+              <li><a id="artistBidList" href="#">Your Bidding Products</a></li>
+              <li><a href="LoginAccount.html">Logout</a></li>
+            </ul>
+          </li>
+          <li><a class="getstarted scrollto" href="#">Create New Listing</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+
+    </div>
+  </header><!-- End Header -->
+
+  <main id="main">
+
+    <!-- ======= Breadcrumbs ======= -->
+    <section class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>Bidding Arena</h2>
+          <ol>
+            <li><a href="index.html">Home</a></li>
+            <li>Bidding Arena</li>
+          </ol>
+        </div>
+
+      </div>
+    </section><!-- End Breadcrumbs -->
+
+    <section class="inner-page">
+      <div class="container">
+        <h2 class="mt-3">Active Bidding Products</h2>
+        <div id="cardList" class="row row-cols-auto mt-4">
+          <!--1st item-->
+          <div class="col mb-4">
+            <div class="col mb-4">
+              <img src="https://i.kym-cdn.com/entries/icons/facebook/000/006/428/637738.jpg" class="card-img-top" alt="C:\wamp64\www\Project\assets\img\profile-icon-9.png">
+              <h2 class="text-center mt-4">Please check again later!</h2>
+            </div>
+          </div>
+        </div>
+
+        
+        <!--Add bids that are expired here!-->
+        <div id="previousBids">
+            <hr>
+            <h2 class="mt-3 mb-3">Expired Bidding Products</h2>
+          <div id="expiredBidding"  class="row row-cols-auto mt-4">
+            <div class="col mb-4">
+              <img src="https://i.kym-cdn.com/entries/icons/original/000/026/111/4917038d8bbd7fe362bed691690c7da4.jpg" class="card-img-top" alt="C:\wamp64\www\Project\assets\img\profile-icon-9.png">
+              <h2 class="text-center mt-4">Please check again later!</h2>
+            </div>
+          </div>
+        </div> 
+
+        
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-lg-3 col-md-6 footer-contact">
+            <h3>Artistic Shop</h3>
+            <p>
+              A108 Adam Street <br>
+              New York, NY 535022<br>
+              United States <br><br>
+              <strong>Phone:</strong> +1 5589 55488 55<br>
+              <strong>Email:</strong> info@example.com<br>
+            </p>
+          </div>
+
+          <div class="col-lg-2 col-md-6 footer-links">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Products</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Live Bidding</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Shopping Cart</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-links">
+            <h4>Our Services</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Selling</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Buying</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Trading</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Bidding</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-4 col-md-6 footer-newsletter">
+            <h4>Join Our Newsletter</h4>
+            <p>Join us to receive frequent updates about priceless art pieces</p>
+            <form action="" method="post">
+              <input type="email" name="email"><input type="submit" value="Subscribe">
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container d-md-flex py-4">
+
+      <div class="me-md-auto text-center text-md-start">
+        <div class="copyright">
+          &copy; Copyright <strong><span>Artistic Shop</span></strong>. All Rights Reserved
+        </div>
+      </div>
+      <div class="social-links text-center text-md-right pt-3 pt-md-0">
+        <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+        <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+        <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+        <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+        <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+  <div id="preloader"></div>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged} from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+    import { getDatabase, set, ref, get, onValue } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyDaa4E6_70V4giloehQSPALsd247XEqH3k",
+      authDomain: "ihelpartists-app.firebaseapp.com",
+      databaseURL: "https://ihelpartists-app-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "ihelpartists-app",
+      storageBucket: "ihelpartists-app.appspot.com",
+      messagingSenderId: "1078317726292",
+      appId: "1:1078317726292:web:0cadf1ec10d51359fdcbc1",
+      measurementId: "G-P21FPFFWWT"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    // Initialize Firebase Authentication and get a reference to the service
+    const auth = getAuth(app);
+    const database = getDatabase(app);
+
+    onAuthStateChanged(auth, (user) => {
+      if(user){
+        console.log(user);
+      }else{
+        "Please login!";
+      }
+      
+    });
+
+    function retrieveAllBiddingProduct(){
+      const dbRef = ref(database, "auction");
+      
+      onValue(dbRef, (snapshot) => {
+        var products = [];
+        var str = "";
+        var str1 = "";
+        var str2 = ""
+        var str3 = "";
+
+        snapshot.forEach(childSnapshot => {
+          products.push(childSnapshot.val());
+          console.log(childSnapshot.val());
+
+          var expiredTiming = childSnapshot.val().countdownTimer;
+
+          var curDate = new Date();
+          var dd = String(curDate.getDate()).padStart(2, '0');
+          var mm = String(curDate.getMonth() + 1).padStart(2, '0'); //January is 0!
+          var yyyy = curDate.getFullYear();
+  
+          var hours = curDate.getHours();
+          var mins = curDate.getMinutes();
+  
+          curDate = yyyy + '-' + mm + '-' + dd + "T" + hours + ":" + mins; //Current Date and time
+          console.log(curDate);
+          console.log(expiredTiming);
+          console.log(childSnapshot.length);
+
+
+          if(curDate > expiredTiming){
+            str += `
+              <div class="col mb-4">
+                <div class="card" style="width: 18rem;">
+                  <img src="${childSnapshot.val().productPic}" class="card-img-top" style="width:auto; height:150px;" alt="C:\wamp64\www\Project\assets\img\profile-icon-9.png">
+                  <div class="card-body">
+                    <h5 class="card-title">${childSnapshot.val().title}</h5>
+                    <p class="card-text">${childSnapshot.val().artistName}</p>
+                    <p class="card-text" hidden>${childSnapshot.val().id}</p>
+                  </div>
+                </div>
+              </div>
+            `;
+
+            document.getElementById('expiredBidding').innerHTML = str;
+          }
+          
+          var bidding_list = document.getElementById("cardList");
+
+          if(expiredTiming >= curDate){
+            str2 += `
+              <div class="col mb-4">
+                <div class="card" style="width: 18rem;">
+                  <img src="${childSnapshot.val().productPic}" class="card-img-top" style="width:auto; height:150px;" alt="C:\wamp64\www\Project\assets\img\profile-icon-9.png">
+                  <div class="card-body">
+                    <h5 class="card-title">${childSnapshot.val().title}</h5>
+                    <p class="card-text">${childSnapshot.val().artistName}</p>
+                    <p class="card-text" hidden>${childSnapshot.val().id}</p>
+                    <button type="button" class="btn btn-primary" id="btn_viewDetails" onclick="retrieveBiddingProductById(this)">View Details</button>
+                  </div>
+                </div>
+              </div>
+            `;
+  
+            bidding_list.innerHTML = str2;
+          }
+        })
+      })
+    }
+
+    editProfile.addEventListener('click', (e) => {
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+
+      window.location.href = "Profile.html?user_id=" + user_id;
+
+    })    
+
+    artistBidList.addEventListener('click', (e) => {
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+
+      window.location.href = "ArtistsProductBidList.html?user_id=" + user_id;
+
+    })
+
+    productList.addEventListener('click', (e) => {
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+
+      window.location.href = "ProductBiddingList.html?user_id=" + user_id;
+
+    })
+   
+    window.onload = retrieveAllBiddingProduct();
+  </script>
+
+  <script>
+    function retrieveBiddingProductById(id){
+
+      console.log(id);
+      var btn_element = id.getAttribute('id');
+      console.log(btn_element);
+      var parent_element = document.getElementById(btn_element).parentElement;
+      console.log(parent_element);
+      var product_id = parent_element.children[2].innerHTML;
+      console.log(product_id);
+
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+     
+      window.location.href = "ProductBiddingDetails.html?product_id=" + product_id + "&user_id=" + user_id;
+    }
+  </script>
+
+</body>
+
+</html>
