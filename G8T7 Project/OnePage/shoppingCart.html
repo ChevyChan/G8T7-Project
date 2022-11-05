@@ -28,41 +28,44 @@
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 
-  <!--Firebase Code-->
   <script type="module">
     // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-analytics.js";
-    //import { getDatabase, ref, set} from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js";
-    import { getDatabase, ref, child, push, update, set , get, remove} from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js";
-
-
-
+    import { getAuth , createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+    import { getDatabase, ref, set ,get, remove, child} from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js";
+    import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-storage.js"
     // TODO: Add SDKs for Firebase products that you want to use
     // https://firebase.google.com/docs/web/setup#available-libraries
-
+  
     // Your web app's Firebase configuration
     // For Firebase JS SDK v7.20.0 and later, measurementId is optional
     const firebaseConfig = {
-        apiKey: "AIzaSyCtNpL7vs3K-UnYJ1QYgmHphvyq2E1fJOE",
-        authDomain: "is216-1c307.firebaseapp.com",
-        databaseURL: "https://is216-1c307-default-rtdb.asia-southeast1.firebasedatabase.app",
-        projectId: "is216-1c307",
-        storageBucket: "is216-1c307.appspot.com",
-        messagingSenderId: "748522071707",
-        appId: "1:748522071707:web:c038fc008eb3c075dd483e",
-        measurementId: "G-LEDCPX86BW"
+      apiKey: "AIzaSyDaa4E6_70V4giloehQSPALsd247XEqH3k",
+      authDomain: "ihelpartists-app.firebaseapp.com",
+      databaseURL: "https://ihelpartists-app-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "ihelpartists-app",
+      storageBucket: "ihelpartists-app.appspot.com",
+      messagingSenderId: "1078317726292",
+      appId: "1:1078317726292:web:0cadf1ec10d51359fdcbc1",
+      measurementId: "G-P21FPFFWWT"
     };
-
+  
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
+    // Initialize Firebase Authentication and get a reference to the service
+    const auth = getAuth(app);
     const database = getDatabase(app);
 
+    const queryString = window.location.search; 
+      console.log(queryString); 
+      const urlParams = new URLSearchParams(queryString); 
+      console.log(urlParams); 
+      const userID = urlParams.get('user_id'); 
+      console.log(userID);
     //read cart
     function getCart(){
         const dbRef = ref(getDatabase());
-        get(child(dbRef, `users/userid/cart/`)).then((snapshot) => {
+        get(child(dbRef, `users/${userID}/cart/`)).then((snapshot) => {
         if (snapshot.exists()) {
             console.log(snapshot.val());
             let data = snapshot.val()
@@ -96,7 +99,7 @@
       console.log(itemID)
       //remove item from database
       const dbRef = ref(getDatabase());
-      remove(child(dbRef, `users/userid/cart/${itemID}`))
+      remove(child(dbRef, `users/${userID}/cart/${itemID}`))
 
       //remove list item
       document.getElementById(itemID).remove()
@@ -113,8 +116,8 @@
     }
     getCart()
 
-    
-  </script>
+
+</script>
 
 
 </head>
