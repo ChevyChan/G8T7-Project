@@ -322,8 +322,15 @@
                 </div>
               </div>
               `;
+              count += 1;
               
+            }
+
+            if(count > 0){
               bidding_list.innerHTML = str;
+            }else{
+              var str1 = `<p class="h1" id="noProduct">You have not posted any biddable items</p>`;
+              bidding_list.innerHTML = str1;
             }
         });
       })
