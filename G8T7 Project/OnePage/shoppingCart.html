@@ -67,18 +67,17 @@
         const dbRef = ref(getDatabase());
         get(child(dbRef, `users/${userID}/cart/`)).then((snapshot) => {
         if (snapshot.exists()) {
-            console.log(snapshot.val());
             let data = snapshot.val()
-            for(let i in data){
+            for(let id in data){
               //add cart items and button into list
                 let li = document.createElement("li")
-                let node = document.createTextNode(data[i])
+                let node = document.createTextNode(data[id])
                 li.appendChild(node)
                 li.setAttribute("class","list-group-item d-flex justify-content-between")
-                li.setAttribute('id', data[i])
-                li.innerHTML += `<button class='btn btn-danger' value='${data[i]}'>Remove Item</button>`
-                document.getElementById("cartList").appendChild(li)
-                document.getElementById(data[i]).addEventListener("click",function(){removeItem(data[i])})
+                li.setAttribute('id','listItem')
+                li.innerHTML += `<button class='btn btn-danger' id='${id}' value='${id}'>Remove Item</button>`
+                document.getElementById("cartList").appendChild(li) 
+                document.getElementById(id).addEventListener("click",function(){removeItem(id)})
             }
             
         } else {
@@ -102,7 +101,7 @@
       remove(child(dbRef, `users/${userID}/cart/${itemID}`))
 
       //remove list item
-      document.getElementById(itemID).remove()
+      document.getElementById('listItem').remove()
 
       //add cart empty message
       if(document.getElementById('cartList').children.length==0){
@@ -124,8 +123,8 @@
 
 <body>
 
-  <!-- ======= Header ======= -->
-  <header id="header" class="fixed-top">
+   <!-- ======= Header ======= -->
+   <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center justify-content-between">
 
       <h1 class="logo"><a href="index.html">Artistic Shop</a></h1>
@@ -136,19 +135,22 @@
         <ul>
           <li><a class="nav-link scrollto " href="home.html">Home</a></li>
           <li><a class="nav-link scrollto " href="listing.html">Products</a></li>
-          <li><a class="nav-link scrollto o" href="#cart">Shopping Cart</a></li>
+          <li><a class="nav-link scrollto" id="productList" href="#">Live Bidding</a></li>
+          <li><a class="nav-link scrollto o" href="#" id="shoppingCart">Shopping Cart</a></li>
           <li class="dropdown"><a href="#"><span>Profile</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a id="editProfile" href="#">Edit Profile</a></li>
               <li><a href="#">Purchase History</a></li>
-              <li><a id="artistBidList" href="income-dashboard.html">Income Dashboard</a></li>
-              <li><a href="#about">Logout</a></li>
+              <li><a href="../income-dashboard/income-dashboard.html">Income Dashboard</a></li>
+              <li><a id="artistBidList" href="#">Your Bidding Products</a></li>
+              <li><a href="LoginAccount.html">Logout</a></li>
             </ul>
           </li>
           <li><a class="getstarted scrollto" href="#">Create New Listing</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
+
 
     </div>
   </header><!-- End Header -->
