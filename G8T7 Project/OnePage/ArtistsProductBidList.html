@@ -45,7 +45,7 @@
           <li><a class="nav-link scrollto " href="home.html">Home</a></li>
           <li><a class="nav-link scrollto " href="listing.html">Products</a></li>
           <li><a class="nav-link scrollto" id="productList" href="#">Live Bidding</a></li>
-          <li><a class="nav-link scrollto o" href="#cart">Shopping Cart</a></li>
+          <li><a class="nav-link scrollto o" href="#" id="shoppingCart">Shopping Cart</a></li>
           <li class="dropdown"><a href="#"><span>Profile</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a id="editProfile" href="#">Edit Profile</a></li>
@@ -234,6 +234,18 @@
         window.location.href = "Profile.html?user_id=" + user_id;
 
       })    
+
+      document.getElementById('shoppingCart').addEventListener('click', (e) => {
+        const queryString = window.location.search;
+        console.log(queryString);
+        const urlParams = new URLSearchParams(queryString);
+        console.log(urlParams);
+        const user_id = urlParams.get('user_id');
+        console.log(user_id);
+
+        window.location.href = "shoppingCart.html" + user_id;
+
+      })
 
       artistBidList.addEventListener('click', (e) => {
         const queryString = window.location.search;
