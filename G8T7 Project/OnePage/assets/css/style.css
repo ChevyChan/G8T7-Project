@@ -1779,7 +1779,7 @@ section {
 }
 
 /*--------------------------------------------------------------
-# Footer
+# 
 --------------------------------------------------------------*/
 #footer {
   color: #444444;
@@ -1817,7 +1817,7 @@ section {
   font-size: 16px;
   font-weight: bold;
   color: #124265;
-  position: relative;
+  position:relative;
   padding-bottom: 12px;
 }
 
