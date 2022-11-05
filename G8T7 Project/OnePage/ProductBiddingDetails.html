@@ -203,7 +203,7 @@
     // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
     import { getAuth, onAuthStateChanged} from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
-    import { getDatabase, ref, set, onValue} from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js";
+    import { getDatabase, ref, set, onValue, get, update, child} from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js";
     // TODO: Add SDKs for Firebase products that you want to use
     // https://firebase.google.com/docs/web/setup#available-libraries
   
@@ -253,6 +253,7 @@
         var countdown = snapshot.val().countdownTimer;
         var productPic = snapshot.val().productPic;
         var prodDesc = snapshot.val().prodDesc;
+        var lastBidUser = snapshot.val().lastBidUser;
         console.log(countdown);
 
         const queryString = videoURL;
@@ -290,8 +291,43 @@
             if(time_left < 0) {
               clearInterval(x);
               document.getElementById("countdownTimer").innerHTML = "Auction Ended";
+              // Add to user cart 
+              addToWinnerCart()
             }
         })
+
+        function addToWinnerCart() {
+          const dbRef = ref(getDatabase());
+            get(child(dbRef, `users/${lastBidUser}/cart`)).then((snapshot) => {
+            if (snapshot.exists()) {
+                console.log(snapshot.val())
+                //update cart
+                const db = getDatabase();
+                let up = {}
+                up[`/users/${lastBidUser}/cart/` + id] = title
+                update(ref(db),up)
+            } else {
+                console.log("No data available");
+                //add cart branch to database
+                get(child(dbRef, `users/${lastBidUser}/`)).then((snapshot) => {
+                if (snapshot.exists()) {
+                    console.log(snapshot.val())
+                    //update cart
+                    const db = getDatabase();
+                    let up = {}
+                    up[`/users/${lastBidUser}/cart/` + id] = title
+                    update(ref(db),up)
+                } else {
+                    console.log("No data available");
+                }
+                }).catch((error) => {
+                console.error(error);
+                });
+            }
+            }).catch((error) => {
+            console.error(error);
+            });
+        }
 
         var str = `
         <div class="container">
