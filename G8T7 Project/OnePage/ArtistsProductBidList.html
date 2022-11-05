@@ -83,6 +83,8 @@
 
     <section class="inner-page">
       <div class="container" id="content">
+        <button name="createBid" class="btn btn-primary float-end" style="margin-top: -60px;" onclick="createBiddingProduct()">Create Bid</button>
+        <p class="h1" id="noProduct" hidden>You have not posted any biddable items</p>
         <div class="row row-cols-auto mt-4" id="cardList">
           <div class="col mb-4" hidden>
             <div class="card" style="width: 18rem;">
@@ -97,8 +99,6 @@
             </div>
           </div>
         </div>
-        <button name="createBid" class="btn btn-primary mt-1 float-end mb-4" onclick="createBiddingProduct()">Create Bid</button>
-        <p class="h1 mt-5 mb-5">You have not posted any biddable items</p>
       </div>
     </section>
 
@@ -296,6 +296,7 @@
       onValue(dbRef, (snapshot) => {
         var products = [];
         var str = "";
+        let count = 0;
 
         snapshot.forEach(childSnapshot => {
           products.push(childSnapshot.val());
@@ -308,7 +309,7 @@
           //Check for user's posted bids
           if(artistID == user_id){
               str += `
-              <div class="col mb-4">
+              <div class="col mb-3">
                 <div class="card" style="width: 18rem;">
                   <img src="${childSnapshot.val().productPic}" class="card-img-top" style="width:auto; height:150px;" alt="C:\wamp64\www\Project\assets\img\profile-icon-9.png">
                   <div class="card-body">
@@ -321,9 +322,9 @@
                 </div>
               </div>
               `;
-
+              
               bidding_list.innerHTML = str;
-          }
+            }
         });
       })
     }

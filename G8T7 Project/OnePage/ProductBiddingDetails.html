@@ -257,8 +257,8 @@
         console.log(countdown);
 
         const queryString = videoURL;
-        const video_id = queryString.slice(32);
-        console.log(video_id);
+        const video_id = queryString.split("=");
+        console.log(video_id[1]);
 
         var days = 0;
         var hours = 0;
@@ -352,7 +352,7 @@
             <div class="row">
               <div class="col col-6">
                 <p class="h2 text-center">Video</p>
-                <iframe width="560" height="315" class="mt-4" style="margin-left: 30px;" src="https://www.youtube.com/embed/${video_id}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe width="560" height="315" class="mt-4" style="margin-left: 30px;" src="https://www.youtube.com/embed/${video_id[1]}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
               </div>
               <div class="col col-6">
                 <p class="h2 text-center">Description</p>
