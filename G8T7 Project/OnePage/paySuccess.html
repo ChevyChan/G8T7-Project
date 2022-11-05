@@ -32,7 +32,7 @@
     // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
     import { getAuth , createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
-    import { getDatabase, ref, set ,get, remove, child} from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js";
+    import { getDatabase, ref, set, get, remove, child} from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js";
     import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-storage.js"
     // TODO: Add SDKs for Firebase products that you want to use
     // https://firebase.google.com/docs/web/setup#available-libraries
@@ -57,63 +57,32 @@
     const database = getDatabase(app);
 
     const queryString = window.location.search; 
-      console.log(queryString); 
-      const urlParams = new URLSearchParams(queryString); 
-      console.log(urlParams); 
-      const userID = urlParams.get('user_id'); 
-      console.log(userID);
-    //read cart
-    function getCart(){
-        const dbRef = ref(getDatabase());
-        get(child(dbRef, `users/${userID}/cart/`)).then((snapshot) => {
-        if (snapshot.exists()) {
-            let data = snapshot.val()
-            for(let id in data){
-              //add cart items and button into list
-                let li = document.createElement("li")
-                let node = document.createTextNode(data[id])
-                li.appendChild(node)
-                li.setAttribute("class","list-group-item d-flex justify-content-between")
-                li.setAttribute('id','listItem')
-                li.innerHTML += `<button class='btn btn-danger' id='${id}' value='${id}'>Remove Item</button>`
-                document.getElementById("cartList").appendChild(li) 
-                document.getElementById(id).addEventListener("click",function(){removeItem(id)})
-            }
-            
-        } else {
-          //cart empty message
-            console.log("No data available");
-            let li = document.createElement("li")
-            let node = document.createTextNode("Cart is currently empty. Add something to it!")
-            li.appendChild(node)
-            li.setAttribute("class","list-group-item d-flex justify-content-between")
-            document.getElementById("cartList").appendChild(li)
-        }
-        }).catch((error) => {
-        console.error(error);
-        });
-    }
+    console.log(queryString); 
+    const urlParams = new URLSearchParams(queryString); 
+    console.log(urlParams); 
+    //const userID = urlParams.get('user_id'); 
+    //console.log(userID);
+    
+    const userID = 'g1zagR0mKyPHv6atkMW5vOM2SPA3'
 
-    function removeItem(itemID){
-      console.log(itemID)
-      //remove item from database
+    function addToHistory(){
+      //add purchase history to userID
       const dbRef = ref(getDatabase());
-      remove(child(dbRef, `users/${userID}/cart/${itemID}`))
+      const db = getDatabase();
+      get(child(dbRef, `users/${userID}/cart/`)).then((snapshot) => {
+        let cartItems = snapshot.val()
+        let currentDateTime = new Date().toJSON().replace('.',':')
+        set(ref(db, `users/${userID}/purchaseHistory/${currentDateTime}`), cartItems);
+       
+      }).catch((error) => {
+        console.error(error);
+      });
 
-      //remove list item
-      document.getElementById('listItem').remove()
-
-      //add cart empty message
-      if(document.getElementById('cartList').children.length==0){
-        let li = document.createElement("li")
-        let node = document.createTextNode("Cart is currently empty. Add something to it!")
-        li.appendChild(node)
-        li.setAttribute("class","list-group-item d-flex justify-content-between")
-        document.getElementById("cartList").appendChild(li)
-      }
-      
+      //remove cart
+      remove(child(dbRef, `users/${userID}/cart/`))
     }
-    getCart()
+    
+    document.getElementById('historyBtn').addEventListener('click', addToHistory)
 
 
 </script>
@@ -175,19 +144,7 @@
 
     <!-- Body section -->
     <div id="main">
-      <a href="paySuccess.html"><button class="btn btn-success" style="position:absolute;right:0px;">Pay</button></a>
-      <a href="history.html"><button class="btn btn-success" style="position:absolute;top:50px;right:0px;">Purchase History</button></a>
-      <div class="container">
-          <div class="row">
-            <div class="col">
-              <h1>Items in Cart</h1>
-              <ul id="cartList" class="list-group">
-              </ul>
-            </div>
-              
-          </div>
-          
-      </div>
+      <button id="historyBtn">Add to history</button>
     </div>
     
 
