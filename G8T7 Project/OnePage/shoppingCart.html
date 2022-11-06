@@ -113,6 +113,19 @@
       }
       
     }
+
+    document.getElementById('pay').addEventListener('click', (e) => {
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+
+      window.location.href = "paySuccess.html?user_id=" + user_id;
+
+    })
+
     getCart()
 
 
@@ -175,7 +188,6 @@
 
     <!-- Body section -->
     <div id="main">
-      <a href="paySuccess.html"><button class="btn btn-success" style="position:absolute;right:0px;">Pay</button></a>
       <a href="history.html"><button class="btn btn-success" style="position:absolute;top:50px;right:0px;">Purchase History</button></a>
       <div class="container">
           <div class="row">
@@ -184,9 +196,12 @@
               <ul id="cartList" class="list-group">
               </ul>
             </div>
-              
           </div>
-          
+          <div class="row">
+            <div class="d-grid col-12 mx-auto my-3">
+              <button class="btn btn-success" id="pay" type="button">Pay</button>
+            </div>
+          </div>
       </div>
     </div>
     

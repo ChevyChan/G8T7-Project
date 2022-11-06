@@ -60,10 +60,10 @@
     console.log(queryString); 
     const urlParams = new URLSearchParams(queryString); 
     console.log(urlParams); 
-    //const userID = urlParams.get('user_id'); 
-    //console.log(userID);
+    const userID = urlParams.get('user_id'); 
+    console.log(userID);
     
-    const userID = 'g1zagR0mKyPHv6atkMW5vOM2SPA3'
+    //const userID = 'g1zagR0mKyPHv6atkMW5vOM2SPA3'
 
     function addToHistory(){
       //add purchase history to userID
@@ -73,13 +73,14 @@
         let cartItems = snapshot.val()
         let currentDateTime = new Date().toJSON().replace('.',':')
         set(ref(db, `users/${userID}/purchaseHistory/${currentDateTime}`), cartItems);
+        //remove cart
+        remove(child(dbRef, `users/${userID}/cart/`))
        
       }).catch((error) => {
         console.error(error);
       });
 
-      //remove cart
-      remove(child(dbRef, `users/${userID}/cart/`))
+      
     }
     
     document.getElementById('historyBtn').addEventListener('click', addToHistory)
