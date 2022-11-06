@@ -66,10 +66,10 @@
         <form action="listing.html">
         <div class="d-flex justify-content-between align-items-center">
             
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Search for listing" aria-label="search" aria-describedby="button-addon2" id="searchInput">
-                <button type="submit" class="btn btn-success" id="btn_submit">Search</button>
-            </div>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Search for listing" aria-label="search" aria-describedby="button-addon2" id="searchInput">
+            <button type="button" class="btn btn-success" id="btn_submit">Search</button>
+        </div>
             
         </div>
     </form>
@@ -82,17 +82,6 @@
 
         <div class="section-title">
           <h2>Listings</h2>
-        </div>
-
-        <div class="row" data-aos="fade-up" data-aos-delay="150">
-          <div class="col-lg-12 d-flex justify-content-center">
-            <ul id="portfolio-flters">
-              <li data-filter="*" class="filter-active">All</li>
-              <li data-filter=".filter-app">App</li>
-              <li data-filter=".filter-card">Card</li>
-              <li data-filter=".filter-web">Web</li>
-            </ul>
-          </div>
         </div>
 
         <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="300" id="cardStuff">
@@ -332,15 +321,28 @@
       appId: "1:1078317726292:web:0cadf1ec10d51359fdcbc1",
       measurementId: "G-P21FPFFWWT"
     };
-  
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     // Initialize Firebase Authentication and get a reference to the service
     const auth = getAuth(app);
     const database = getDatabase(app);
-
+    var product_id=''
+    btn_submit.addEventListener('click', (e) => {
+      var searchInput = document.getElementById("searchInput").value;
+      console.log(searchInput);
+      window.location.href= "listing.html?search=" + searchInput;
+    })
+    function redirectInput(){
+    const queryString = window.location.search; 
+      console.log(queryString); 
+      const urlParams = new URLSearchParams(queryString); 
+      console.log(urlParams); 
+      product_id = urlParams.get('search'); 
+      console.log(product_id);
+    }
+    window.onload=redirectInput()
     function retrieveAllProducts(){
-      const dbRef = ref(database, "auction");
+      const dbRef = ref(database, "product");
       var str=''
       onValue(dbRef, (snapshot) => {
         if(product_id==null){
@@ -348,14 +350,16 @@
           const childKey = childSnapshot.key;
           const childData = childSnapshot.val();
           console.log(childData)
-          str+=`<div class="col-lg-4 col-md-6 portfolio-item filter-app">
+          str+=`<div class="col-lg-4 col-md-6 portfolio-item">
                   <div class="portfolio-wrap">
                     <img src="${childData.productPic}" class="img-fluid" alt="${childData.title}">
                     <div class="portfolio-info">
                       <h4>${childData.title}</h4>
                       <p>${childData.artistName}</p>
+                      <br>
+                      <p>$${childData.price}</p>
                         <div class="portfolio-links">
-                          <a href="portfolio-details.html?p=${childData.id}" title="More Details"><i class="bx bx-link"></i></a>
+                          <a href="product.html?p=${childData.id}" title="More Details"><i class="bx bx-link"></i></a>
                         </div>
                     </div>
                   </div>
@@ -365,16 +369,16 @@
         snapshot.forEach((childSnapshot) => {
         const childKey = childSnapshot.key;
         const childData = childSnapshot.val();
-        console.log(childData)
-        if(childData.title.includes(product_id)){
-          str+=`<div class="col-lg-4 col-md-6 portfolio-item filter-app">
+        if(childData.title.toLowerCase().includes(product_id)){
+          str+=`<div class="col-lg-4 col-md-6 portfolio-item">
                   <div class="portfolio-wrap">
                     <img src="${childData.productPic}" class="img-fluid" alt="${childData.title}">
                     <div class="portfolio-info">
                       <h4>${childData.title}</h4>
-                      <p>${childData.artistName}</p>
+                      <p>${childData.artistName}</p><br>
+                      <p>$${childData.price}</p>
                         <div class="portfolio-links">
-                          <a href="portfolio-details.html?p=${childData.id}" title="More Details"><i class="bx bx-link"></i></a>
+                          <a href="product.html?p=${childData.id}" title="More Details"><i class="bx bx-link"></i></a>
                         </div>
                     </div>
                   </div>
@@ -389,21 +393,8 @@ window.onload=redirectInput()
 window.onload=retrieveAllProducts()
 
 
-
 </script>
 
-  <script>
-    var product_id=''
-    function redirectInput(){
-    const queryString = window.location.search; 
-      console.log(queryString); 
-      const urlParams = new URLSearchParams(queryString); 
-      console.log(urlParams); 
-      product_id = urlParams.get('search'); 
-      console.log(product_id);
-    }
-    window.onload=redirectInput()
-  </script>
 </body>
 
 </html>

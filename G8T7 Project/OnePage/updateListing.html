@@ -71,10 +71,10 @@
       <div class="container">
 
         <div class="d-flex justify-content-between align-items-center">
-          <h2>Create Product Details</h2>
+          <h2>Update Product Details</h2>
           <ol>
             <li><a href="index.html">Home</a></li>
-            <li>Create Product Details</li>
+            <li>Update Product Details</li>
           </ol>
         </div>
 
@@ -119,7 +119,7 @@
   
               <!-- Submit button -->
               <button type="submit" id="btn_submit" class="btn btn-primary btn-block mb-4">
-                  Create Listing
+                  Update Listing
               </button>
               <button type="submit" id="btn_back" class="btn btn-primary btn-block mb-4">
                 Back
@@ -151,7 +151,7 @@
     // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
     import { getAuth, onAuthStateChanged} from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
-    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js";
+    import { getDatabase, ref, update } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js";
     import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-storage.js";
     // TODO: Add SDKs for Firebase products that you want to use
     // https://firebase.google.com/docs/web/setup#available-libraries
@@ -183,7 +183,6 @@
       }
       
     });
-    
     var file_name = document.getElementById('customFile');
     
     var files =[];
@@ -255,13 +254,22 @@
     reader.onload = function(){
       imageSrc.src = reader.result;
     }
-    
+    var product_id=''
+    function redirectInput(){
+    const queryString = window.location.search; 
+      console.log(queryString); 
+      const urlParams = new URLSearchParams(queryString); 
+      console.log(urlParams); 
+      product_id = urlParams.get('p'); 
+      console.log(product_id);
+    }
+    window.onload=redirectInput()
     function createLisitngProduct(id, title, artistName, price, productPic, prodDesc) {
       const user = auth.currentUser.uid;
       console.log(user);
 
-      set(ref(database, 'product/' + id), { 
-        id: id,
+      update(ref(database, 'product/' + product_id), { 
+        id: product_id,
         title : title,
         artistName : artistName,
         price : price, 
@@ -271,7 +279,7 @@
       })
       .then(() => {
         // Data saved successfully!
-        alert("Product Listed!");
+        alert("Product Updated!");
 
         const queryString = window.location.search;
         console.log(queryString);
@@ -279,7 +287,7 @@
         console.log(urlParams);
         const userID = urlParams.get('user_id');
         console.log(userID);
-        window.location.href = "home.html"
+        window.location.href = "product.html?p=" + product_id
       })
       .catch((error) => {
         // The write failed...
