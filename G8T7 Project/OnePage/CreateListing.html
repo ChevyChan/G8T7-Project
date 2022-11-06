@@ -323,6 +323,37 @@
       imageSrc.src = reader.result;
     }
 
+    function createLisitngProduct(id, title, artistName, price, productPic, prodDesc) {
+      const user = auth.currentUser.uid;
+      console.log(user);
+
+      set(ref(database, 'product/' + id), { 
+        id: id,
+        title : title,
+        artistName : artistName,
+        price : price, 
+        productPic : productPic,
+        prodDesc : prodDesc,
+        userId : user
+      })
+      .then(() => {
+        // Data saved successfully!
+        alert("Product Listed!");
+
+        const queryString = window.location.search;
+        console.log(queryString);
+        const urlParams = new URLSearchParams(queryString);
+        console.log(urlParams);
+        const userID = urlParams.get('user_id');
+        console.log(userID);
+        window.location.href = "home.html"
+      })
+      .catch((error) => {
+        // The write failed...
+        alert(error);
+      });
+  }
+
 
     document.getElementById('btn_submit').addEventListener('click', e => {
         e.preventDefault();
@@ -345,7 +376,7 @@
           var prodDesc = document.getElementById('productDesc').value;     
       
           if(productPic != ""){
-            createListingProduct(id, title, artistName, price, productPic, prodDesc);
+            createLisitngProduct(id, title, artistName, price, productPic, prodDesc);
           }else{
             productPic = imageSrc.src;
             createLisitngProduct(id, title, artistName, price, productPic, prodDesc);
@@ -366,38 +397,6 @@
         console.log(userID);
         window.location.href = "listing?user_id=" + userID; //change query
     })
-
-    function createLisitngProduct(id, title, artistName, price, productPic, prodDesc) {
-      const user = auth.currentUser.uid;
-      console.log(user);
-
-      set(ref(database, 'product/' + id), {
-        id: id,
-        title : title,
-        artistName : artistName,
-        price : price, 
-        videoURL : videoURL,
-        productPic : productPic,
-        prodDesc : prodDesc,
-        userId : user
-      })
-      .then(() => {
-        // Data saved successfully!
-        alert("Product Listed!");
-
-        const queryString = window.location.search;
-        console.log(queryString);
-        const urlParams = new URLSearchParams(queryString);
-        console.log(urlParams);
-        const userID = urlParams.get('user_id');
-        console.log(userID);
-        window.location.href = "home.html"
-      })
-      .catch((error) => {
-        // The write failed...
-        alert(error);
-      });
-  }
 
   editProfile.addEventListener('click', (e) => {
     const queryString = window.location.search;
