@@ -56,79 +56,72 @@
     const auth = getAuth(app);
     const database = getDatabase(app);
 
-    //set userID according to url
+    //set user id according to url
     const queryString = window.location.search; 
       console.log(queryString); 
       const urlParams = new URLSearchParams(queryString); 
       console.log(urlParams); 
       const userID = urlParams.get('user_id'); 
       console.log(userID);
-    //read cart
-    function getCart(){
+    //read History
+    function getHistory(){
         const dbRef = ref(getDatabase());
-        get(child(dbRef, `users/${userID}/cart/`)).then((snapshot) => {
+        get(child(dbRef, `users/${userID}/purchaseHistory/`)).then((snapshot) => {
         if (snapshot.exists()) {
             let data = snapshot.val()
-            for(let id in data){
-              //add cart items and button into list
-                let li = document.createElement("li")
-                let node = document.createTextNode(data[id])
-                li.appendChild(node)
-                li.setAttribute("class","list-group-item d-flex justify-content-between")
-                li.setAttribute('id','listItem')
-                li.innerHTML += `<button class='btn btn-danger' id='${id}' value='${id}'>Remove Item</button>`
-                document.getElementById("cartList").appendChild(li) 
-                document.getElementById(id).addEventListener("click",function(){removeItem(id)})
+            for(let timeStamp in data){
+                //process timestamp into suitable ID
+                let timeStampID = timeStamp.replace(':','')
+                timeStampID = timeStampID.replace(':','')
+                timeStampID = timeStampID.replace(':','')
+                timeStampID = timeStampID.replace('-','')
+                timeStampID = timeStampID.replace('-','')
+                timeStampID = 'T' + timeStampID
+                console.log(timeStamp)
+
+                let listID = timeStampID + 'L'
+                let dateBought = timeStamp.slice(0,10)
+
+                document.getElementById('historyContainer').innerHTML += `
+                <div class="row">
+                    <div class='col'>
+                        <a class="btn btn-primary dropdown-toggle" data-bs-toggle="collapse" href="#${timeStampID}" role="button" aria-expanded="false" aria-controls="collapseExample">
+                            ${dateBought}
+                        </a>
+                        <div class="collapse" id=${timeStampID}>
+                            <div class='list-group' id=${listID}>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                `
+                for(let itemID in data[timeStamp]){
+                    document.getElementById(listID).innerHTML = `
+                        <li class='list-group-item d-flex justify-content-between'>
+                            <p>${data[timeStamp][itemID]}<p>
+                            <p>Item Rating:</p>
+                        </div>
+                    `
+                }
+                
             }
             
         } else {
-          //cart empty message
+          //History empty message
             console.log("No data available");
             let li = document.createElement("li")
-            let node = document.createTextNode("Cart is currently empty. Add something to it!")
+            let node = document.createTextNode("You have not bought anything yet!")
             li.appendChild(node)
             li.setAttribute("class","list-group-item d-flex justify-content-between")
-            document.getElementById("cartList").appendChild(li)
-
-          //disable pay button if cart empty
-          document.getElementById('pay').setAttribute('disabled', true)
+            document.getElementById("historyList").appendChild(li)
         }
         }).catch((error) => {
         console.error(error);
         });
     }
 
-    function removeItem(itemID){
-      console.log(itemID)
-      //remove item from database
-      const dbRef = ref(getDatabase());
-      remove(child(dbRef, `users/${userID}/cart/${itemID}`))
 
-      //remove list item
-      document.getElementById('listItem').remove()
-
-      //add cart empty message
-      if(document.getElementById('cartList').children.length==0){
-        let li = document.createElement("li")
-        let node = document.createTextNode("Cart is currently empty. Add something to it!")
-        li.appendChild(node)
-        li.setAttribute("class","list-group-item d-flex justify-content-between")
-        document.getElementById("cartList").appendChild(li)
-      }
-      
-    }
-
-    document.getElementById('pay').addEventListener('click', (e) => {
-      const queryString = window.location.search;
-      console.log(queryString);
-      const urlParams = new URLSearchParams(queryString);
-      console.log(urlParams);
-      const user_id = urlParams.get('user_id');
-      console.log(user_id);
-
-      window.location.href = "paySuccess.html?user_id=" + user_id;
-
-    })
 
     document.getElementById('purchaseHistory').addEventListener('click', (e) => {
       const queryString = window.location.search;
@@ -139,6 +132,18 @@
       console.log(user_id);
 
       window.location.href = "purchaseHistory.html?user_id=" + user_id;
+
+    })
+
+    document.getElementById('shoppingCart').addEventListener('click', (e) => {
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+
+      window.location.href = "shoppingCart.html?user_id=" + user_id;
 
     })
 
@@ -154,7 +159,7 @@
 
     // })
 
-    getCart()
+    getHistory()
 
 
 </script>
@@ -181,7 +186,7 @@
           <li class="dropdown"><a href="#"><span>Profile</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a id="editProfile" href="#">Edit Profile</a></li>
-              <li><a href="#" id="purchaseHistory">Purchase History</a></li>
+              <li><a href="purchaseHistory.html" id="purchaseHistory">Purchase History</a></li>
               <li><a href="../income-dashboard/income-dashboard.html">Income Dashboard</a></li>
               <li><a id="artistBidList" href="#">Your Bidding Products</a></li>
               <li><a href="LoginAccount.html">Logout</a></li>
@@ -216,20 +221,14 @@
 
     <!-- Body section -->
     <div id="main">
-      <div class="container">
+      <div class="container" id="historyContainer">
           <div class="row">
             <div class="col">
-              <h1>Items in Cart</h1>
-              <ul id="cartList" class="list-group">
-              </ul>
+              <h1>Purchase History</h1>
+              
             </div>
           </div>
-          <div class="row">
-            <div class="d-grid col-12 mx-auto my-3">
-              <button class="btn btn-success" id="pay" type="button">Pay</button>
-              <!-- <button class="btn btn-success" id="sales" type="button">Retrieve Sales</button> -->
-            </div>
-          </div>
+          
       </div>
     </div>
     
