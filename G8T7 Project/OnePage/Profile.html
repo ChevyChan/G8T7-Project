@@ -344,6 +344,22 @@
     document.getElementById('btn_edit').addEventListener('click', (e) => {
         e.preventDefault();
 
+        const queryString = window.location.search;
+        console.log(queryString);
+        const urlParams = new URLSearchParams(queryString);
+        console.log(urlParams);
+        const user_id = urlParams.get('user_id');
+        console.log(user_id);
+
+        const dbRef = ref(database, "users/" + user_id);
+        var dbPass = "";
+
+        onValue(dbRef, (snapshot) => {
+        
+          console.log(snapshot.val());
+          dbPass = snapshot.val().password;
+        })
+
         var email = document.getElementById('emailAddress').value;
         var oldPassword = document.getElementById('inputExistingPassword').value;
         var newPassword = document.getElementById('inputNewPassword').value;
@@ -354,7 +370,10 @@
         var unitNumber = document.getElementById('inputUnitNo').value;
         var profilePic_url = ImgURL;
 
-        if(oldPassword == newPassword){
+        //verify the hash password
+      var bcrypt = dcodeIO.bcrypt;
+      bcrypt.compare(oldPassword, dbPass, function(err, result) {
+        if (result) {
             var passHash = passwordHash(newPassword);
             console.log(passHash);
         
@@ -368,6 +387,8 @@
         }else{
           alert("Wrong Password! Please try again!");
         }
+      });
+
         
     })
     
