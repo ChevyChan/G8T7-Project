@@ -52,10 +52,10 @@
               <li><a href="#">Purchase History</a></li>
               <li><a href="../income-dashboard/income-dashboard.html">Income Dashboard</a></li>
               <li><a id="artistBidList" href="#">Your Bidding Products</a></li>
-              <li><a href="LoginAccount.html">Logout</a></li>
+              <li><a href="LoginAccount.html" id="btn_logout">Logout</a></li>
             </ul>
           </li>
-          <li><a class="getstarted scrollto" href="#">Create New Listing</a></li>
+          <li><a class="getstarted scrollto" href="#" onclick="createBiddingProduct()">Create New Bid</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -83,9 +83,8 @@
 
     <section class="inner-page">
       <div class="container" id="content">
-        <button name="createBid" class="btn btn-primary float-end" style="margin-top: -60px;" onclick="createBiddingProduct()">Create Bid</button>
         <p class="h1" id="noProduct" hidden>You have not posted any biddable items</p>
-        <div class="row row-cols-auto mt-4" id="cardList">
+        <div class="row row-cols-auto mt-5" id="cardList">
           <div class="col mb-4" hidden>
             <div class="card" style="width: 18rem;">
               <img src="..." class="card-img-top" alt="C:\wamp64\www\Project\assets\img\profile-icon-9.png">
@@ -282,6 +281,63 @@
       })
     }
 
+    var delayInMilliseconds = 2000; //1 second
+    var runningTimer = "";
+
+    setTimeout(function() {
+      //your code to be executed after 1 second
+      const dbRef = ref(database, "auction");
+      onValue(dbRef, (snapshot) => {
+        var products = [];
+        var str = "";
+        let count = 0;
+
+        snapshot.forEach(childSnapshot => {
+          
+          products.push(childSnapshot.val());
+          console.log(childSnapshot.val());
+
+          var countdown = childSnapshot.val().countdownTimer;
+          console.log(countdown);
+
+          var days = 0;
+          var hours = 0;
+          var minutes = 0;
+          var seconds = 0;
+
+          var x = setInterval(function() {
+            var now = new Date().getTime();
+      
+            var year = countdown.slice(0, 4);
+            var month = countdown.slice(5, 7);
+            var day = countdown.slice(8, 10);
+            var countHours = countdown.slice(11, 13);
+            var countMinutes = countdown.slice(14, 16);
+            
+            var arrayMonth = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
+            
+            var countDownDate = new Date(arrayMonth[month-1] + " " + day + ", " + year + " " + countHours + ":" + countMinutes + ":" + "00").getTime();
+      
+            var time_left = countDownDate - now
+      
+            days = Math.floor(time_left / (1000 * 60 * 60 * 24));
+            hours = Math.floor((time_left % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            minutes = Math.floor((time_left % (1000 * 60 * 60)) / (1000 * 60));
+            seconds = Math.floor((time_left % (1000 * 60)) / 1000); 
+
+            console.log(days + "d " + hours + "h " + minutes + "m " + seconds + "s ");
+            runningTimer = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+
+            if(time_left < 0) {
+              clearInterval(x);
+              runningTimer = "Auction Ended";
+            }
+
+          })
+        })
+      })
+    }, delayInMilliseconds);
+
     function retrieveAllBiddingProductByArtists(){
       const dbRef = ref(database, "auction");
       
@@ -306,24 +362,25 @@
           var bidding_list = document.getElementById("cardList");
           var con_content = document.getElementById("content");
 
+          console.log(runningTimer);
+
           //Check for user's posted bids
           if(artistID == user_id){
               str += `
               <div class="col mb-3">
                 <div class="card" style="width: 18rem;">
-                  <img src="${childSnapshot.val().productPic}" class="card-img-top" style="width:auto; height:150px;" alt="C:\wamp64\www\Project\assets\img\profile-icon-9.png">
+                  <img src="${childSnapshot.val().productPic}" class="card-img-top" style="width:auto; height:300px;" alt="C:\wamp64\www\Project\assets\img\profile-icon-9.png">
                   <div class="card-body">
                     <h5 class="card-title">${childSnapshot.val().title}</h5>
                     <p class="card-text">${childSnapshot.val().artistName}</p>
+                    <p class="card-text" id=countdownTimer>${runningTimer}</p>
                     <p class="card-text" id="artistID" hidden>${childSnapshot.val().id}</p>
                     <button name="${childSnapshot.val().id}" class="btn btn-primary" onclick="retrieveBiddingProductById(this)">View Details</button>
-                    <button name="${childSnapshot.val().id}" class="btn btn-warning mt-2" onclick="updateBiddingProductById(this)">Update Bidding</button>
                   </div>
                 </div>
               </div>
               `;
               count += 1;
-              
             }
 
             if(count > 0){
@@ -350,21 +407,6 @@
   </script>
   
   <script>
-    function updateBiddingProductById(id){
-
-      const queryString = window.location.search;
-      console.log(queryString);
-      const urlParams = new URLSearchParams(queryString);
-      console.log(urlParams);
-      const user_id = urlParams.get('user_id');
-      console.log(user_id);
-
-      console.log(id);
-      var btn_element = id.getAttribute('name');
-      console.log(btn_element);
-     
-      window.location.href = "UpdateBidding.html?id=" + btn_element + "&user_id=" + user_id;
-    }
 
     function retrieveBiddingProductById(id){
 
@@ -379,7 +421,7 @@
       var btn_element = id.getAttribute('name');
       console.log(btn_element);
      
-      window.location.href = "ProductBiddingDetails.html?product_id=" + btn_element + "&user_id=" + user_id;
+      window.location.href = "ArtistsProductDetailView.html?product_id=" + btn_element + "&user_id=" + user_id;
     }
 
     function createBiddingProduct(){
