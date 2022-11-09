@@ -28,6 +28,10 @@
     <!-- Template Main CSS File -->
     <link href="assets/css/style.css" rel="stylesheet">
 
+    <!-- Vue.js Version 3 CDN -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <!-- Charts.css CDN -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/charts.css/dist/charts.min.css">
     <link rel="stylesheet" href="income-dashboard.css">
 
@@ -43,15 +47,14 @@
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto " href="index.html">Home</a></li>
+          <li><a class="nav-link scrollto " href="home.html">Home</a></li>
           <li><a class="nav-link scrollto " href="listing.html">Products</a></li>
           <li><a class="nav-link scrollto o" href="#cart">Shopping Cart</a></li>
           <li class="dropdown"><a href="#"><span>Profile</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a id="editProfile" href="#">Edit Profile</a></li>
               <li><a href="#">Purchase History</a></li>
-              <li><a href="income-dashboard.html">Income Dashboard</a></li>
-              <li><a id="artistBidList" href="#">Your Bidding Products</a></li>
+              <li><a id="artistBidList" href="income-dashboard.html">Income Dashboard</a></li>
               <li><a href="#about">Logout</a></li>
             </ul>
           </li>
@@ -65,43 +68,23 @@
 
     
 
-  <main id="main">
+  <div id="main">
          <!-- ======= Hero Section ======= -->
     <section id="hero" class="d-flex align-items-center">
       <div class="container position-relative" data-aos="fade-up" data-aos-delay="25">
         <div class="row justify-content-center">
-          <div class="col-xl-9 col-lg-9 text-center">
-            <h1>One Week Income Summary</h1>
+          <div class="col-xl-12 col-lg-12 text-center">
+            <h1>Sales Summary</h1>
             <br/>
+            From <input type="date" id="fromDate">
+            To <input type="date" id="toDate">
+            <button id="sales" type="button" v-on:click="get_scales()">Get Sales</button>
+            <br/><br/>
             <table class="charts-css column show-labels show-data-on-hover show-heading" id="income-chart">
               <tbody id="motion-effect">
-                <tr>
-                  <th scope="row"> 01/01/2022 </th>
-                  <td style="--size: 0.4"> <span class="data"> $40 </span> </td>
-                </tr>
-                <tr>
-                  <th scope="row"> 02/01/2022 </th>
-                  <td style="--size: 0.8"> <span class="data"> $80 </span> </td>
-                </tr>
-                <tr>
-                  <th scope="row"> 03/01/2022 </th>
-                  <td style="--size: 0.6"> <span class="data"> $60 </span> </td>
-                </tr>
-                <tr>
-                  <th scope="row"> 04/01/2022 </th>
-                  <td style="--size: 1"> <span class="data"> $100 </span> </td>
-                </tr>
-                <tr>
-                  <th scope="row"> 05/01/2022 </th>
-                  <td style="--size: 0.3"> <span class="data"> $30 </span> </td>
-                </tr>
-                <tr>
-                  <th scope="row"> 06/01/2022 </th>
-                  <td style="--size: 0.5"> <span class="data"> $50 </span> </td>
-                </tr>
-                <tr>
-                  <th scope="row"> 07/01/2022 </th>
-                  <td style="--size: 0.1"> <span class="data"> $10 </span> </td>
+                <tr v-for="earning of test_earnings">
+                  <th scope="row"> {{ earning[0] }} </th>
+                  <td style="--size: 0.4"> <span class="data"> ${{ earning[1] }} </span> </td>
                 </tr>
               </tbody>
             
@@ -110,6 +93,7 @@
         </div>
       </div>
     </section><!-- End Hero -->
+  </div>
         
       <!-- ======= Footer ======= -->
       <footer id="footer">
@@ -177,7 +161,7 @@
           </div>
         </div>
       </footer><!-- End Footer -->
-      </main>
+    </div>
 
       <div id="preloader"></div>
       <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
@@ -198,7 +182,7 @@
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
         import { getAuth , createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
-        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js";
+        import { getDatabase, get, ref, set, remove, child, onValue } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js";
         import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-storage.js"
         // TODO: Add SDKs for Firebase products that you want to use
         // https://firebase.google.com/docs/web/setup#available-libraries
@@ -221,17 +205,71 @@
         // Initialize Firebase Authentication and get a reference to the service
         const auth = getAuth(app);
         const database = getDatabase(app);
-        function retrieveAllIncomes(){
-          const dbRef = ref(database, "incomes");
+        
+    
+      //get user id from url
+      const queryString = window.location.search; 
+      console.log(queryString); 
+      const urlParams = new URLSearchParams(queryString); 
+      console.log(urlParams); 
+      const userID = urlParams.get('user_id'); 
+      console.log(userID);
 
-          onValue(dbRef, (snapshot) => {
-          snapshot.forEach((childSnapshot) => {
-          const childKey = childSnapshot.key;
-          const childData = childSnapshot.val();
-        });
-      })
+      function getSales(){
+          let date = new Date()
+          let dateArr = []
+          var isoDateTime = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString();
+          let fromDate = new Date(document.getElementById('fromDate').value)
+          let toDate = new Date(document.getElementById('toDate').value)
+          fromDate.setHours(0,0,0,0)
+          toDate.setHours(23,59,59,999)
+          //dayDiff converts the difference between the two dates from milliseconds to days
+          let dayDiff = (toDate-fromDate) / 1000 / 60 / 60 / 24
+          if (isNaN(dayDiff)){
+              alert("Error: Make sure you have selected 2 dates first!")
+          }
+          else if (dayDiff < 0){
+              alert("Error: 'To' date cannot be before the 'From' date!")
+          }
+          else {
+              //populate date array with placeholder data first
+              let indexDate = new Date(fromDate);
+              for (let d = 0; d<=dayDiff; d++){
+                  indexDate.setDate(indexDate.getDate()+1)
+                  dateArr.push([indexDate.toLocaleDateString('en-GB'), 0])
+              }
+              //get auction list
+              const dbRef = ref(getDatabase());
+              get(child(dbRef, `auction/`)).then((snapshot) => {
+                  let auction = snapshot.val()
+                  for (let aucID in auction){
+                      //check if user has sold the current auction item
+                      if (auction[aucID]['userId'] == userID && auction[aucID]['lastBidUser'] != undefined && isoDateTime>auction[aucID]['countdownTimer']){
+                          let soldDate = new Date(auction[aucID]['countdownTimer']);
+                          soldDate.setHours(0,0,0,0);
+                          if(fromDate <= soldDate && toDate >= soldDate){
+                              let currDate = new Date(fromDate);
+                              for(let d = 0; d<=dayDiff; d++){
+                                  currDate.setDate(fromDate.getDate()+1)
+                                  if(currDate.getDate() == soldDate.getDate()){
+                                      dateArr[d][1] += parseInt(auction[aucID]['curBid'])
+                                  }
+                              }
+                              
+                          }
+                      }
+                  }
+                  //dateArr variable is an array which has the revenues of the current user from the date specified to the end date specified
+                  console.log(dateArr)
+              }).catch((error) => {
+              console.error(error);
+              });
+          }
       }
+  document.getElementById('sales').addEventListener('click',getSales)
+    
     </script>
+    
     <script src="income-dashboard.js"></script>
 </body>
 </html>
