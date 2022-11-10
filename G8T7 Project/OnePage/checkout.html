@@ -75,15 +75,6 @@
             let data = snapshot.val()
             let price = 0
             for(let id in data){
-              //add cart items and button into list
-                let li = document.createElement("li")
-                let node = document.createTextNode(data[id])
-                li.appendChild(node)
-                li.setAttribute("class","list-group-item d-flex justify-content-between")
-                li.setAttribute('id','listItem')
-                li.innerHTML += `<button class='btn btn-danger' id='${id}' value='${id}'>Remove Item</button>`
-                document.getElementById("cartList").appendChild(li) 
-                document.getElementById(id).addEventListener("click",function(){removeItem(id)})
 
                 //get product price from auction
                 get(child(dbRef, `auction/`)).then((snapshot) => {
@@ -96,7 +87,7 @@
                             get(child(dbRef, `users/${artistID}`)).then((snapshot) => {
                                 let artist = snapshot.val()
                                 document.getElementById('cartContent').innerHTML += `
-                                <tr class="border-bottom">
+                                <tr class="border-bottom" id="item${id}">
                                     <td>
                                         <div class="d-flex align-items-center">
                                             <div> <img class="pic" src="https://images.pexels.com/photos/7322083/pexels-photo-7322083.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" alt=""> </div>
@@ -117,7 +108,7 @@
                                     </td>
                                 </tr>
                                 `
-                                document.getElementById(id).addEventListener("click",function(){removeItem(id)})
+                                document.getElementById(id).addEventListener("click",function(){removeItem("item"+id)})
                             }).catch((error) => {
                             console.error(error);
                             });
@@ -201,30 +192,35 @@
       remove(child(dbRef, `users/${userID}/cart/${itemID}`))
 
       //remove list item
-      document.getElementById('listItem').remove()
+      document.getElementById(itemID).remove()
 
       //add cart empty message
-      if(document.getElementById('cartList').children.length==0){
-        let li = document.createElement("li")
-        let node = document.createTextNode("Cart is currently empty. Add something to it!")
-        li.appendChild(node)
-        li.setAttribute("class","list-group-item d-flex justify-content-between")
-        document.getElementById("cartList").appendChild(li)
+      if(document.getElementById("cartContent").children.length==0){
+        document.getElementById("cartContent").innerText = 'Cart is empty, add something!'
       }
       
     }
+    function addToHistory(){
+      //add purchase history to userID
+      const dbRef = ref(getDatabase());
+      const db = getDatabase();
+      get(child(dbRef, `users/${userID}/cart/`)).then((snapshot) => {
+        let cartItems = snapshot.val()
+        let currentDateTime = new Date().toJSON().replace('.',':')
+        set(ref(db, `users/${userID}/purchaseHistory/${currentDateTime}`), cartItems);
+        //remove cart
+        remove(child(dbRef, `users/${userID}/cart/`))
+       
+      }).catch((error) => {
+        console.error(error);
+      });
 
-    document.getElementById('pay').addEventListener('click', (e) => {
-      const queryString = window.location.search;
-      console.log(queryString);
-      const urlParams = new URLSearchParams(queryString);
-      console.log(urlParams);
-      const user_id = urlParams.get('user_id');
-      console.log(user_id);
+      
+    }
+    
+    document.getElementById('pay').addEventListener('click', addToHistory)
 
-      window.location.href = "payment.html?user_id=" + user_id;
-
-    })
+    
 
     document.getElementById('purchaseHistory').addEventListener('click', (e) => {
       const queryString = window.location.search;
@@ -271,7 +267,7 @@
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto " href="index.html">Home</a></li>
+          <li><a class="nav-link scrollto " href="home.html">Home</a></li>
           <li><a class="nav-link scrollto " href="listing.html">Products</a></li>
           <li><a class="nav-link scrollto" id="productList" href="#">Live Bidding</a></li>
           <li><a class="nav-link scrollto o" href="#" id="shoppingCart">Shopping Cart</a></li>
@@ -279,7 +275,7 @@
             <ul>
               <li><a id="editProfile" href="#">Edit Profile</a></li>
               <li><a href="#" id="purchaseHistory">Purchase History</a></li>
-              <li><a href="income-dashboard.html">Income Dashboard</a></li>
+              <li><a href="../income-dashboard/income-dashboard.html">Income Dashboard</a></li>
               <li><a id="artistBidList" href="#">Your Bidding Products</a></li>
               <li><a href="LoginAccount.html">Logout</a></li>
             </ul>
@@ -339,27 +335,7 @@
                         <div class="table-responsive px-md-4 px-2 pt-3">
                             <table class="table table-borderless">
                                 <tbody id="cartContent">
-                                    <tr class="border-bottom">
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div> <img class="pic" src="https://images.pexels.com/photos/7322083/pexels-photo-7322083.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" alt=""> </div>
-                                                <div class="ps-3 d-flex flex-column justify-content">
-                                                    <p class="fw-bold">Air<span class="ps-1">Red</span><span class="ps-1">Pants</span></p> <small class=" d-flex"> <span class=" text-muted">Color:</span> <span class=" fw-bold">Red/White</span> </small> <small class=""> <span class=" text-muted">Size:</span> <span class=" fw-bold">L</span> </small>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex">
-                                                <p class="pe-3"><span class="red">$45.00</span></p>
-                                                <p class="text-muted text-decoration-line-through">$55.00</p>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex align-items-center"> <span class="pe-3 text-muted">Quantity</span> <span class="pe-3"> <input class="ps-2" type="number" value="2"></span>
-                                                <div class="round"> <span class=""> L </span> </div>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                    <!-- cart will be here -->
                                 </tbody>
                             </table>
                         </div>
