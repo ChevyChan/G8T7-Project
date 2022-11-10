@@ -45,7 +45,7 @@
           <li><a class="nav-link scrollto " href="home.html">Home</a></li>
           <li><a class="nav-link scrollto " href="listing.html">Products</a></li>
           <li><a class="nav-link scrollto" id="productList" href="#">Live Bidding</a></li>
-          <li><a class="nav-link scrollto o" href="#cart">Shopping Cart</a></li>
+          <li><a class="nav-link scrollto o" href="#" id="shoppingCart">Shopping Cart</a></li>
           <li class="dropdown"><a href="#"><span>Profile</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a id="editProfile" href="#">Edit Profile</a></li>
@@ -236,6 +236,10 @@
       
     });
 
+    var lastBidUser = "";
+    var auction_id = "";
+    var title = "";
+
     function retrieveBiddingProductByIdFromDB(id){
 
       const dbRef = ref(database, "auction/" + id);
@@ -244,8 +248,8 @@
         
         console.log(snapshot.val());
         
-        var id = snapshot.val().id;
-        var title = snapshot.val().title;
+        auction_id = snapshot.val().id;
+        title = snapshot.val().title;
         var artist = snapshot.val().artistName;
         var startBid = snapshot.val().startBid;
         var currentBid = snapshot.val().curBid;
@@ -254,7 +258,7 @@
         var countdown = snapshot.val().countdownTimer;
         var productPic = snapshot.val().productPic;
         var prodDesc = snapshot.val().prodDesc;
-        var lastBidUser = snapshot.val().lastBidUser;
+        lastBidUser = snapshot.val().lastBidUser;
         console.log(countdown);
 
         const queryString = videoURL;
@@ -291,8 +295,7 @@
 
             if(time_left < 0) {
               clearInterval(x);
-              // Add to user cart 
-              addToWinnerCart();
+              addToHistory();
               document.getElementById("countdownTimer").innerHTML = "Auction Ended";
             }
         })
@@ -422,38 +425,26 @@
       retrieveBiddingProductByIdFromDB(product_id);
     }
 
-    function addToWinnerCart() {
+    function addToHistory(){
+      //add purchase history to userID
       const dbRef = ref(getDatabase());
-        get(child(dbRef, `users/${lastBidUser}/cart`)).then((snapshot) => {
-        if (snapshot.exists()) {
-            console.log(snapshot.val())
-            //update cart
-            const db = getDatabase();
-            let up = {}
-            up[`/users/${lastBidUser}/cart/` + id] = title
-            update(ref(db),up)
-        } else {
-            console.log("No data available");
-            //add cart branch to database
-            get(child(dbRef, `users/${lastBidUser}/`)).then((snapshot) => {
-            if (snapshot.exists()) {
-                console.log(snapshot.val())
-                //update cart
-                const db = getDatabase();
-                let up = {}
-                up[`/users/${lastBidUser}/cart/` + id] = title
-                update(ref(db),up)
-            } else {
-                console.log("No data available");
-            }
-            }).catch((error) => {
-            console.error(error);
-            });
-        }
-        }).catch((error) => {
-        console.error(error);
-        });
+      const db = getDatabase();
+    
+      let currentDateTime = new Date().toJSON().replace('.',':')
+      set(ref(db, `users/${lastBidUser}/purchaseHistory/${currentDateTime}`), {auction_id, title});
     }
+
+    document.getElementById('shoppingCart').addEventListener('click', (e) => {
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+
+      window.location.href = "shoppingCart.html?user_id=" + user_id;
+
+    })
 
     window.onload = getProductDetails();
 
