@@ -75,7 +75,6 @@
             let data = snapshot.val()
             let price = 0
             for(let id in data){
-
                 //get product price from auction
                 get(child(dbRef, `auction/`)).then((snapshot) => {
                     let aucSnap = snapshot.val()
@@ -98,7 +97,7 @@
                                     </td>
                                     <td>
                                         <div class="d-flex">
-                                            <p class="pe-3"><span class="red">${price}</span></p>
+                                            <p class="pe-3"><span class="red">$${price}</span></p>
                                         </div>
                                     </td>
                                     <td>
@@ -129,12 +128,12 @@
                     for(let prodID in prodSnap){
                         if (id == prodID){
                             price = prodSnap[prodID].price
-                            artistID = prodSnap[prodID].artistName
+                            artistID = prodSnap[prodID].userId
                             get(child(dbRef, `users/${artistID}`)).then((snapshot) => {
                                 console.log(artistID)
                                 let artist = snapshot.val()
                                 document.getElementById('cartContent').innerHTML += `
-                                <tr class="border-bottom">
+                                <tr class="border-bottom" id="item${id}">
                                     <td>
                                         <div class="d-flex align-items-center">
                                             <div> <img class="pic" src="https://images.pexels.com/photos/7322083/pexels-photo-7322083.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" alt=""> </div>
@@ -145,7 +144,7 @@
                                     </td>
                                     <td>
                                         <div class="d-flex">
-                                            <p class="pe-3"><span class="red">${price}</span></p>
+                                            <p class="pe-3"><span class="red">$${price}</span></p>
                                         </div>
                                     </td>
                                     <td>
@@ -155,7 +154,7 @@
                                     </td>
                                 </tr>
                                 `
-                                document.getElementById(id).addEventListener("click",function(){removeItem(id)})
+                                document.getElementById(id).addEventListener("click",function(){removeItem("item"+id)})
                             }).catch((error) => {
                             console.error(error);
                             });
@@ -231,6 +230,54 @@
       console.log(user_id);
 
       window.location.href = "purchaseHistory.html?user_id=" + user_id;
+
+    })
+
+    document.getElementById('shoppingCart').addEventListener('click', (e) => {
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+
+      window.location.href = "shoppingCart.html?user_id=" + user_id;
+
+    })
+
+    document.getElementById('productList').addEventListener('click', (e) => {
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+
+      window.location.href = "ProductBiddingList.html?user_id=" + user_id;
+
+    })
+
+    document.getElementById('editProfile').addEventListener('click', (e) => {
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+
+      window.location.href = "Profile.html?user_id=" + user_id;
+
+    })
+
+    document.getElementById('artistBidList').addEventListener('click', (e) => {
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+
+      window.location.href = "ArtistsProductBidList.html?user_id=" + user_id;
 
     })
 
