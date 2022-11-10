@@ -1,32 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-  <title>Artistic Shop</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
-
-  <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-
-  <!-- Vendor CSS Files -->
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
-  <!-- Template Main CSS File -->
-  <link href="assets/css/style.css" rel="stylesheet">
+	<title>Login V3</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="login/images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="login/vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="login/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="login/fonts/iconic/css/material-design-iconic-font.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="login/vendor/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="login/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="login/vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="login/vendor/select2/select2.min.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="login/vendor/daterangepicker/daterangepicker.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="login/css/util.css">
+	<link rel="stylesheet" type="text/css" href="login/css/main.css">
+<!--===============================================================================================-->
 
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
@@ -42,383 +41,279 @@
         text-align: center;
       }
     </style>
-  
 </head>
-
 <body>
+	
+	<div class="limiter">
+		<div class="container-login100" style="background-image: url('assets/img/colorful-2137080_1920.jpg');">
+			<div class="wrap-login100">
+				<form class="login100-form validate-form">
+					
 
-  <!-- ======= Header ======= -->
-  <header id="header" class="fixed-top">
-    <div class="container d-flex align-items-center justify-content-between">
+					<span class="login100-form-title p-b-34 p-t-27">
+						Sign up
+					</span>
 
-      <h1 class="logo"><a href="index.html">Artistic Shop</a></h1>
-      <!-- Uncomment below if you prefer to use an image logo -->
-      <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+                    <div class="wrap-input100 validate-input text-center">
+                        <img src="../OnePage/assets/img/profile-icon-9.png" id="imageSrc" alt="../OnePage/assets/img/spongebob.png" style="max-width:200px; max-height:200px; margin-bottom:50px; border-radius:20px;">
+                        <label class="form-label" id="lbl_upload"></label>
+                        <input type="file" class="input100 mb-2 text-center" id="customFile" />
+                        <label class="form-label" id="customFile">Upload your Personal Picture</label>
+                    </div>
 
-      <nav id="navbar" class="navbar">
-        <ul>
-          <li><a class="nav-link scrollto " href="home.html">Home</a></li>
-          <li><a class="nav-link scrollto " href="listing.html">Products</a></li>
-          <li><a class="nav-link scrollto" id="productList" href="#">Live Bidding</a></li>
-          <li><a class="nav-link scrollto o" href="#cart">Shopping Cart</a></li>
-          <li class="dropdown"><a href="#"><span>Profile</span> <i class="bi bi-chevron-down"></i></a>
-            <ul>
-              <li><a id="editProfile" href="#">Edit Profile</a></li>
-              <li><a href="purchaseHistory.html" id="purchaseHistory">Purchase History</a></li>
-              <li><a href="income-dashboard.html">Income Dashboard</a></li>
-              <li><a id="artistBidList" href="#">Your Bidding Products</a></li>
-              <li><a href="LoginAccount.html">Logout</a></li>
-            </ul>
-          </li>
-          <li><a class="getstarted scrollto" href="#">Create New Listing</a></li>
-        </ul>
-        <i class="bi bi-list mobile-nav-toggle"></i>
-      </nav><!-- .navbar -->
+					<div class="wrap-input100 validate-input" data-validate = "Enter first name">
+						<input class="input100" type="text" name="fName" placeholder="First Name *" id="firstName">
+						<span class="focus-input100" data-placeholder="&#xf207;"></span>
+					</div>
 
+					<div class="wrap-input100 validate-input" data-validate="Enter last name">
+						<input class="input100" type="text" id="lastName" name="lName" placeholder="Last Name *">
+						<span class="focus-input100" data-placeholder="&#xf207;"></span>
+					</div>
 
-    </div>
-  </header><!-- End Header -->
+                    <div class="wrap-input100 validate-input" data-validate="Postal Code">
+						<input class="input100" type="number" id="inputPostalCode" name="pCode" placeholder="Postal Code *" onchange="postalCodeSearch(this.value)">
+						<span class="focus-input100" data-placeholder="&#xf191;"></span>
+					</div>
 
-  <main id="main">
+                    <div class="wrap-input100 validate-input" data-validate="Enter Address">
+						<input class="input100" type="text" id="inputAddress" name="address" placeholder="Address *">
+						<span class="focus-input100" data-placeholder="&#xf191;"></span>
+					</div>
 
-    <!-- ======= Breadcrumbs ======= -->
-    <section class="breadcrumbs">
-      <div class="container">
+                    <div class="wrap-input100 validate-input" data-validate="Enter Unit Number">
+						<input class="input100" type="text" id="inputUnitNo" name="unitNo" placeholder="Unit Number *">
+						<span class="focus-input100" data-placeholder="&#xf191;"></span>
+					</div>
 
-        <div class="d-flex justify-content-between align-items-center">
-          <h2 style="font-weight:bold;">Register</h2>
-        </div>
+                    <div class="wrap-input100 validate-input" data-validate="Enter Email">
+						<input class="input100" type="text" id="emailAddress" name="email" placeholder="Email *">
+						<span class="focus-input100" data-placeholder="&#xf191;"></span>
+					</div>
 
-      </div>
-    </section><!-- End Breadcrumbs -->
+                    <div class="wrap-input100 validate-input" data-validate="Enter Password">
+						<input class="input100" type="password" id="inputPassword" name="pass" placeholder="Password *">
+						<span class="focus-input100" data-placeholder="&#xf191;"></span>
+					</div>
 
-    <section class="inner-page">
-      <div class="container" style="text-align:center; padding: 100px;">
-        <form id="registerForm" method="GET" action="LoginAccount.html">
-          <div class="form-outline mb-4">
-            <img src="../OnePage/assets/img/profile-icon-9.png" id="imageSrc" alt="../OnePage/assets/img/spongebob.png" style="width:200px; height:200px; margin-bottom:50px;">
-            <label class="form-label" id="lbl_upload"></label>
-            <input type="file" class="form-control" id="customFile" />
-          </div>
-          <!-- 2 column grid layout with text inputs for the first and last names -->
-          <div class="row mt-5">
-            <div class="col-md-6 mb-4">
-                <div class="form-outline">
-                <input type="text" id="firstName" name="inputUser" class="form-control" value=""/>
-                <label class="form-label" for="firstName">First name</label>
-                </div>
-            </div>
-            <div class="col-md-6 mb-4">
-                <div class="form-outline">
-                <input type="text" id="lastName" class="form-control" value=""/>
-                <label class="form-label" for="lastName">Last name</label>
-                </div>
-            </div>
-          </div>
-            <div class="form-outline mb-4">
-              <input type="text" class="form-control" id="inputPostalCode" aria-describedby="postalCodeHelp" onchange="postalCodeSearch(this.value)">
-              <label for="inputPostalCode" class="form-label">Postal Code</label>
-            </div>
-            <div class="form-outline mb-4">
-              <input type="text" class="form-control" id="inputAddress" aria-describedby="addressHelp" disabled>
-              <label for="inputAddress" class="form-label">Address</label>
-            </div>
-            <div class="form-outline mb-4">
-              <input type="text" class="form-control" id="inputUnitNo" aria-describedby="unitNoHelp">
-              <label for="inputUnitNo" class="form-label">Unit Number</label>
-            </div>
-            <!-- Email input -->
-            <div class="form-outline mb-4">
-            <input type="email" id="emailAddress" name="emailInput" class="form-control" value=""/>
-            <label class="form-label" for="emailAddress">Email address</label>
-            </div>
+					<!--Google Recaptcha-->
+          <div class="g-recaptcha" id="verifyHuman" data-sitekey="6LeBIY8iAAAAACE2qLagjOPu73wTsDqwakLhciw0" data-callback="recaptchaCallback"></div>  
 
-            <!-- Password input -->
-            <div class="form-outline mb-4">
-            <input type="password" id="inputPassword" name="passwordInput" class="form-control" value=""/>
-            <label class="form-label" for="inputPassword">Password</label>
-            </div>
+					<div class="container-login100-form-btn">
+						<button type="button" class="login100-form-btn" id="btn_submit">
+							Register
+						</button>
+					</div>
 
-            <!--Google Recaptcha-->
-            <div class="g-recaptcha" id="verifyHuman" data-sitekey="6LeBIY8iAAAAACE2qLagjOPu73wTsDqwakLhciw0" data-callback="recaptchaCallback"></div>
+					<div class="text-center p-t-30">
+						<a class="txt1" id="btn_backToLogin" href="index.html">
+							Back
+						</a>
+					</div>
+					
+				</form>
+			</div>
+		</div>
+	</div>
+	
 
-            <!-- Submit button -->
-            <button type="submit" href="LoginAccount.html" id="btn_submit" class="btn btn-primary btn-block mb-4" disabled>
-                Register
-            </button>
-            <button type="submit" href="LoginAccount.html" id="btn_backToLogin" class="btn btn-primary btn-block mb-4">
-              Back to Login
-          </button>
-        </form>
-      </div>
-    </section>
-
-  </main><!-- End #main -->
-
-  <!-- ======= Footer ======= -->
-  <footer id="footer">
-
-    <div class="footer-top">
-      <div class="container">
-        <div class="row">
-
-          <div class="col-lg-3 col-md-6 footer-contact">
-            <h3>Artistic Shop</h3>
-            <p>
-              A108 Adam Street <br>
-              New York, NY 535022<br>
-              United States <br><br>
-              <strong>Phone:</strong> +1 5589 55488 55<br>
-              <strong>Email:</strong> info@example.com<br>
-            </p>
-          </div>
-
-          <div class="col-lg-2 col-md-6 footer-links">
-            <h4>Useful Links</h4>
-            <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Products</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Live Bidding</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Shopping Cart</a></li>
-            </ul>
-          </div>
-
-          <div class="col-lg-3 col-md-6 footer-links">
-            <h4>Our Services</h4>
-            <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Selling</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Buying</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Trading</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Bidding</a></li>
-            </ul>
-          </div>
-
-          <div class="col-lg-4 col-md-6 footer-newsletter">
-            <h4>Join Our Newsletter</h4>
-            <p>Join us to receive frequent updates about priceless art pieces</p>
-            <form action="" method="post">
-              <input type="email" name="email"><input type="submit" value="Subscribe">
-            </form>
-          </div>
-
-        </div>
-      </div>
-    </div>
-
-    <div class="container d-md-flex py-4">
-
-      <div class="me-md-auto text-center text-md-start">
-        <div class="copyright">
-          &copy; Copyright <strong><span>Artistic Shop</span></strong>. All Rights Reserved
-        </div>
-      </div>
-      <div class="social-links text-center text-md-right pt-3 pt-md-0">
-        <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-        <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-        <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-        <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
-        <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
-      </div>
-    </div>
-  </footer><!-- End Footer -->
-
-  <div id="preloader"></div>
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-  <!-- Template Main JS File -->
-  <script src="assets/js/main.js"></script>
-
-  <script type="module">
-    // Import the functions you need from the SDKs you need
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
-    import { getAuth , createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
-    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js";
-    import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-storage.js"
-    // TODO: Add SDKs for Firebase products that you want to use
-    // https://firebase.google.com/docs/web/setup#available-libraries
-  
-    // Your web app's Firebase configuration
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    const firebaseConfig = {
-      apiKey: "AIzaSyDaa4E6_70V4giloehQSPALsd247XEqH3k",
-      authDomain: "ihelpartists-app.firebaseapp.com",
-      databaseURL: "https://ihelpartists-app-default-rtdb.asia-southeast1.firebasedatabase.app",
-      projectId: "ihelpartists-app",
-      storageBucket: "ihelpartists-app.appspot.com",
-      messagingSenderId: "1078317726292",
-      appId: "1:1078317726292:web:0cadf1ec10d51359fdcbc1",
-      measurementId: "G-P21FPFFWWT"
-    };
-  
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    // Initialize Firebase Authentication and get a reference to the service
-    const auth = getAuth(app);
-    const database = getDatabase(app);
-
-    var file_name = document.getElementById('customFile');
+	<div id="dropDownSelect1"></div>
+	
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+        import { getAuth , createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js";
+        import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-storage.js"
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+          apiKey: "AIzaSyDaa4E6_70V4giloehQSPALsd247XEqH3k",
+          authDomain: "ihelpartists-app.firebaseapp.com",
+          databaseURL: "https://ihelpartists-app-default-rtdb.asia-southeast1.firebasedatabase.app",
+          projectId: "ihelpartists-app",
+          storageBucket: "ihelpartists-app.appspot.com",
+          messagingSenderId: "1078317726292",
+          appId: "1:1078317726292:web:0cadf1ec10d51359fdcbc1",
+          measurementId: "G-P21FPFFWWT"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        // Initialize Firebase Authentication and get a reference to the service
+        const auth = getAuth(app);
+        const database = getDatabase(app);
     
-    var files =[];
-    var reader = new FileReader();
-    var name = "";
-    var extention = "";
-
-    file_name.type = 'file';
-    file_name.onchange = e => {
-      files = e.target.files;
-
-      extention = GetFileExtention(files[0]);
-      name = GetFileName(files[0]);
-
-      name = file_name.src;
-      
-      reader.readAsDataURL(files[0]);
-    }
-
-    function GetFileExtention(file){
-      var temp = file.name.split('.');
-      var ext = temp.slice(temp.length-1, temp.length);
-      return '.'+ ext[0];
-    }
-  
-    function GetFileName(file){
-      var temp = file.name.split('.');
-      var fname = temp.slice(0,-1).join('.');
-      return fname;
-    }
-  
-    var ImgName = "";
-    var ImgURL = "";
-    async function UploadProcess(){
-      var ImgToUpload = files[0];
-      
-      var pic_link = file_name.value;
-      var pic_link_result = pic_link.slice(12);
-      console.log(pic_link_result);
-      
-      ImgName = pic_link_result;
-      console.log(pic_link_result);
-  
-      const metaData = {
-        contentType: ImgToUpload.type
-      }
-  
-      const storage = getStorage();
-  
-      const storageRef = sRef(storage, 'profilePictures/' + ImgName);
-      const uploadTask = uploadBytesResumable(storageRef, ImgToUpload, metaData);
-      uploadTask.on('state-changed', (snapshot) => {
-        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log("Upload " + progress + "%");
-      },
-      (error) => {
-        alert("Error, please try again!");
-      },
-      () =>{
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          ImgURL = downloadURL;
-          console.log(downloadURL);
-          console.log(ImgURL);
-        })
-      }
-      );
-  
-    }
-
-    reader.onload = function(){
-      imageSrc.src = reader.result;
-    }
-  
-    document.getElementById('btn_submit').addEventListener('click', e => {
-      e.preventDefault();
-      console.log(e);
-
-      UploadProcess();
-
-      var email = document.getElementById('emailAddress').value;
-      var password = document.getElementById('inputPassword').value;
-      var firstName = document.getElementById('firstName').value;
-      var lastName = document.getElementById('lastName').value;
-      var postalCode = document.getElementById('inputPostalCode').value;
-      var address = document.getElementById('inputAddress').value;
-      var unitNumber = document.getElementById('inputUnitNo').value;
-      var profilePic_url = ImgURL;
-
-      var passHash = passwordHash(password);
-      console.log(passHash);
-
-      if(email == "" || password == "" || firstName == "" || lastName == "" || postalCode == "" || address == "" || unitNumber == ""){
-        alert("Please enter all the required fields!");
-      }else{
-        createUserWithEmailAndPassword(auth, email, passHash, firstName, lastName, postalCode, address, unitNumber, ImgURL)
-        .then((userCredential) => {
-            // Signed in 
-            const user = userCredential.user;
-
-            set(ref(database, 'users/' + user.uid), {
-                email: email,
-                password : passHash,
-                firstName: firstName,
-                lastName: lastName,
-                postalCode: postalCode,
-                address: address, 
-                unitNumber: unitNumber,
-                profilePic_url: ImgURL,
-                userID: user.uid,
-                credits: 0
-              })
-              .then(() => {
-                // Data saved successfully!
-                //SendEmail(email, firstName);
-                alert("User Created Successfully!");
-                window.location.href = "LoginAccount.html";
-              })
-              .catch((error) => {
-                // The write failed...
-                alert(error);
-              });
-
-            
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            
-            alert(errorMessage);
-        });
-      }
-    })
-           
-  //Send email to new users
-  function SendEmail(email, firstName){
-    emailjs.send('service_6lrco97', 'template_jdz1rgs', {
-      to_name: firstName,
-      to_email: email
-    })
-    .then(function(res){
-      console.log(res.status);
-    })
+        var file_name = document.getElementById('customFile');
+        
+        var files =[];
+        var reader = new FileReader();
+        var name = "";
+        var extention = "";
     
-  }
-
-  function passwordHash(password){
-    var bcrypt = dcodeIO.bcrypt;
-  
-    var hashPassword = password;
-    var salt = bcrypt.genSaltSync(10);
-    var hash = bcrypt.hashSync(password, salt);
-    console.log(hash);
-    return hash;
-  }
-
-  </script>
-
-  <script src="assets/js/AdvancedFeature.js"></script>
-
-  <!-- Axios CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.js"></script>
+        file_name.type = 'file';
+        file_name.onchange = e => {
+          files = e.target.files;
+    
+          extention = GetFileExtention(files[0]);
+          name = GetFileName(files[0]);
+    
+          name = file_name.src;
+          
+          reader.readAsDataURL(files[0]);
+        }
+    
+        function GetFileExtention(file){
+          var temp = file.name.split('.');
+          var ext = temp.slice(temp.length-1, temp.length);
+          return '.'+ ext[0];
+        }
+      
+        function GetFileName(file){
+          var temp = file.name.split('.');
+          var fname = temp.slice(0,-1).join('.');
+          return fname;
+        }
+      
+        var ImgName = "";
+        var ImgURL = "";
+        async function UploadProcess(){
+          var ImgToUpload = files[0];
+          
+          var pic_link = file_name.value;
+          var pic_link_result = pic_link.slice(12);
+          console.log(pic_link_result);
+          
+          ImgName = pic_link_result;
+          console.log(pic_link_result);
+      
+          const metaData = {
+            contentType: ImgToUpload.type
+          }
+      
+          const storage = getStorage();
+      
+          const storageRef = sRef(storage, 'profilePictures/' + ImgName);
+          const uploadTask = uploadBytesResumable(storageRef, ImgToUpload, metaData);
+          uploadTask.on('state-changed', (snapshot) => {
+            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log("Upload " + progress + "%");
+          },
+          (error) => {
+            alert("Error, please try again!");
+          },
+          () =>{
+            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+              ImgURL = downloadURL;
+              console.log(downloadURL);
+              console.log(ImgURL);
+            })
+          }
+          );
+      
+        }
+    
+        reader.onload = function(){
+          imageSrc.src = reader.result;
+        }
+      
+        document.getElementById('btn_submit').addEventListener('click', e => {
+          e.preventDefault();
+          console.log(e);
+    
+          UploadProcess();
+    
+          var email = document.getElementById('emailAddress').value;
+          var password = document.getElementById('inputPassword').value;
+          var firstName = document.getElementById('firstName').value;
+          var lastName = document.getElementById('lastName').value;
+          var postalCode = document.getElementById('inputPostalCode').value;
+          var address = document.getElementById('inputAddress').value;
+          var unitNumber = document.getElementById('inputUnitNo').value;
+          var profilePic_url = ImgURL;
+    
+          var passHash = passwordHash(password);
+          console.log(passHash);
+    
+          if(email == "" || password == "" || firstName == "" || lastName == "" || postalCode == "" || address == "" || unitNumber == ""){
+            alert("Please enter all the required fields!");
+          }else{
+            createUserWithEmailAndPassword(auth, email, passHash, firstName, lastName, postalCode, address, unitNumber, ImgURL)
+            .then((userCredential) => {
+                // Signed in 
+                const user = userCredential.user;
+    
+                set(ref(database, 'users/' + user.uid), {
+                    email: email,
+                    password : passHash,
+                    firstName: firstName,
+                    lastName: lastName,
+                    postalCode: postalCode,
+                    address: address, 
+                    unitNumber: unitNumber,
+                    profilePic_url: ImgURL,
+                    userID: user.uid,
+                    credits: 0
+                  })
+                  .then(() => {
+                    // Data saved successfully!
+                    //SendEmail(email, firstName);
+                    alert("User Created Successfully!");
+                    window.location.href = "index.html";
+                  })
+                  .catch((error) => {
+                    // The write failed...
+                    alert(error);
+                  });
+    
+                
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                
+                alert(errorMessage);
+            });
+          }
+        })
+               
+      //Send email to new users
+      function SendEmail(email, firstName){
+        emailjs.send('service_6lrco97', 'template_jdz1rgs', {
+          to_name: firstName,
+          to_email: email
+        })
+        .then(function(res){
+          console.log(res.status);
+        })
+        
+      }
+    
+      function passwordHash(password){
+        var bcrypt = dcodeIO.bcrypt;
+      
+        var hashPassword = password;
+        var salt = bcrypt.genSaltSync(10);
+        var hash = bcrypt.hashSync(password, salt);
+        console.log(hash);
+        return hash;
+      }
+    
+      btn_backToLogin.addEventListener('click', e => {
+        window.location.href = "index.html";
+      })
+    
+      </script>
+    
+      <script src="assets/js/AdvancedFeature.js"></script>
+    
+      <!-- Axios CDN -->
+      <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.js"></script>
+	
 
 </body>
-
 </html>

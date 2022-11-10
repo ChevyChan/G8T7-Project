@@ -36,7 +36,7 @@
   <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center justify-content-between">
 
-      <h1 class="logo"><a href="index.html">Artistic Shop</a></h1>
+      <h1 class="logo"><a href="index.html">Art House</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
@@ -52,10 +52,12 @@
               <li><a href="purchaseHistory.html" id="purchaseHistory">Purchase History</a></li>
               <li><a href="income-dashboard.html">Income Dashboard</a></li>
               <li><a id="artistBidList" href="#">Your Bidding Products</a></li>
-              <li><a href="LoginAccount.html">Logout</a></li>
+              <li><a id="credits"></a></li>
+              <li><a href="index.html" id="btn_logout">Logout</a></li>
             </ul>
           </li>
           <li><a class="getstarted scrollto" href="#" onclick="createBiddingProduct()">Create New Bid</a></li>
+          <li><a id="userName"></a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -67,11 +69,11 @@
   <main id="main">
 
     <!-- ======= Breadcrumbs ======= -->
-    <section class="breadcrumbs bg-danger">
+    <section class="breadcrumbs bg-warning">
       <div class="container">
 
         <div class="d-flex justify-content-between align-items-center">
-          <h2 style="font-weight:bold;">Your Bidding List</h2>
+          <h2>Your Bidding List</h2>
           <ol>
             <li><a href="index.html">Home</a></li>
             <li>List of Bidding Products</li>
@@ -84,16 +86,16 @@
     <section class="inner-page text-center">
       <div class="container">
         <h2 class="mt-4">Active Bidding Products
-          <a href="" class="btn btn-info btn-warning" onclick="reloadWebpage()">
+          <a href="" class="btn btn-info btn-info" onclick="reloadWebpage()">
             <span class="glyphicon glyphicon-refresh"></span> Refresh
           </a>
         </h2>
         
-        <div id="cardList" class="row row-cols-auto mt-4">
+        <div id="cardList" class="row row-cols-auto mt-5">
           <!--1st item-->
-          <div class="col mb-4">
+          <div class="col mb-4" style="margin-left:33%;">
             <div class="col mb-4">
-              <img src="https://i.kym-cdn.com/entries/icons/facebook/000/006/428/637738.jpg" class="card-img-top" alt="..\Project\assets\img\profile-icon-9.png">
+              <img src="..\OnePage\assets\img\coffee-2306471_1920.jpg" style="border-radius:50%; max-width:300px; max-height:300px;" class="card-img-top" alt="..\OnePage\assets\img\profile-icon-9.png">
               <h2 class="text-center mt-4">Please check again later!</h2>
             </div>
           </div>
@@ -106,7 +108,7 @@
             <h2 class="mt-4 mb-3">Expired Bidding Products</h2>
           <div id="expiredBidding"  class="row row-cols-auto mt-4 text-center">
             <div class="col mb-4 mx-auto text-center">
-              <img src="https://i.kym-cdn.com/entries/icons/original/000/026/111/4917038d8bbd7fe362bed691690c7da4.jpg" class="card-img-top" alt="C..\Project\assets\img\profile-icon-9.png">
+              <img src="..\OnePage\assets\img\brandenburger-tor-201939_1920.jpg" style="border-radius:50%; max-width:300px; max-height:300px;" class="card-img-top" alt="C..\OnePage\assets\img\profile-icon-9.png">
               <h2 class="text-center mt-4">Please check again later!</h2>
             </div>
           </div>
@@ -285,6 +287,8 @@
       })
       
     var userId = "";
+    var userCredit = 0;
+    var userName = "";
     function getUserData(uid) {
       const db = ref(database, 'users/' + uid);
       
@@ -292,6 +296,13 @@
           console.log(snap.val())
           userId = uid;
           console.log(userId);
+
+          userCredit = snap.val().credits;
+          userName = snap.val().firstName;
+          console.log(userCredit);
+          console.log(userName);
+          document.getElementById("credits").innerText = "Credits: " + userCredit;
+          document.getElementById("userName").innerText = "Welcome! " + userName;
       })
     }
 
@@ -381,7 +392,7 @@
               str += `
                 <div class="col mb-5">
                   <div class="card" style="width: 18rem;">
-                    <img src="${childSnapshot.val().productPic}" class="card-img-top" style="width:auto; height:300px;" alt="../Project/assets/img/profile-icon-9.png">
+                    <img src="${childSnapshot.val().productPic}" class="card-img-top" style="width:auto; max-width:300px; max-height:300px;" alt="../OnePage/assets/img/profile-icon-9.png">
                     <div class="card-body">
                       <h5 class="card-title">${childSnapshot.val().title}</h5>
                       <p class="card-text">${childSnapshot.val().artistName} || <span id="countdownTimer">${days + "d " + hours + "h " + minutes + "m " + seconds + "s "}</span></p>
@@ -400,7 +411,7 @@
               str2 += `
                 <div class="col mb-5">
                   <div class="card" style="width: 18rem;">
-                    <img src="${childSnapshot.val().productPic}" class="card-img-top" style="width:auto; height:300px;" alt="../Project/assets/img/profile-icon-9.png">
+                    <img src="${childSnapshot.val().productPic}" class="card-img-top" style="width:auto; max-width:300px; max-height:300px;" alt="../OnePage/assets/img/profile-icon-9.png">
                     <div class="card-body">
                       <h5 class="card-title">${childSnapshot.val().title}</h5>
                       <p class="card-text">${childSnapshot.val().artistName} || <span id="countdownTimer">${days + "d " + hours + "h " + minutes + "m " + seconds + "s "}</span></p>
@@ -430,11 +441,11 @@
 
     })
    
-    window.onload = retrieveAllBiddingProductByArtists();
+    
 
     btn_logout.addEventListener('click', (e) => {
       signOut(auth).then(() => {
-        window.location.href = "LoginAccount.html";
+        window.location.href = "index.html";
       }).catch((error) => {
         // An error happened.
         alert(error);
@@ -444,6 +455,8 @@
     function reloadWebpage(){
       location.reload();
     }
+
+    window.onload = retrieveAllBiddingProductByArtists();
 
   </script>
   
