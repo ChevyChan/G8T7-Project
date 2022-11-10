@@ -54,46 +54,52 @@
 						Sign up
 					</span>
 
-                    <div class="wrap-input100 validate-input text-center">
-                        <img src="../OnePage/assets/img/profile-icon-9.png" id="imageSrc" alt="../OnePage/assets/img/spongebob.png" style="max-width:200px; max-height:200px; margin-bottom:50px; border-radius:20px;">
-                        <label class="form-label" id="lbl_upload"></label>
-                        <input type="file" class="input100 mb-2 text-center" id="customFile" />
-                        <label class="form-label" id="customFile">Upload your Personal Picture</label>
-                    </div>
+          <div class="wrap-input100 validate-input text-center">
+              <img src="../Project/assets/img/profile-icon-9.png" id="imageSrc" alt="../OnePage/assets/img/spongebob.png" style="max-width:200px; max-height:200px; margin-bottom:50px; border-radius:20px;">
+              <label class="form-label" id="lbl_upload"></label>
+              <input type="file" class="input100 mb-2 text-center" id="customFile" required/>
+              <label class="form-label" id="customFile">Upload your Personal Picture (Mandatory)</label>
+          </div>
 
 					<div class="wrap-input100 validate-input" data-validate = "Enter first name">
-						<input class="input100" type="text" name="fName" placeholder="First Name *" id="firstName">
+						<input class="input100" type="text" name="fName" placeholder="First Name *" id="firstName" required>
 						<span class="focus-input100" data-placeholder="&#xf207;"></span>
+            <p style="color:red;" id="fNameError"></p>
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate="Enter last name">
-						<input class="input100" type="text" id="lastName" name="lName" placeholder="Last Name *">
+						<input class="input100" type="text" id="lastName" name="lName" placeholder="Last Name *" required>
 						<span class="focus-input100" data-placeholder="&#xf207;"></span>
+            <p style="color:red;" id="lNameError"></p>
 					</div>
 
-                    <div class="wrap-input100 validate-input" data-validate="Postal Code">
-						<input class="input100" type="number" id="inputPostalCode" name="pCode" placeholder="Postal Code *" onchange="postalCodeSearch(this.value)">
+          <div class="wrap-input100 validate-input" data-validate="Postal Code">
+						<input class="input100" type="number" id="inputPostalCode" name="pCode" placeholder="Postal Code *" onchange="postalCodeSearch(this.value)" required>
+						<span class="focus-input100" data-placeholder="&#xf191;"></span>
+            <p style="color:red;" id="postalError"></p>
+					</div>
+
+          <div class="wrap-input100 validate-input" data-validate="Enter Address">
+						<input class="input100" type="text" id="inputAddress" name="address" placeholder="Address *" disabled>
 						<span class="focus-input100" data-placeholder="&#xf191;"></span>
 					</div>
 
-                    <div class="wrap-input100 validate-input" data-validate="Enter Address">
-						<input class="input100" type="text" id="inputAddress" name="address" placeholder="Address *">
+          <div class="wrap-input100 validate-input" data-validate="Enter Unit Number">
+						<input class="input100" type="text" id="inputUnitNo" name="unitNo" placeholder="Unit Number * E.g., 01-123" required>
 						<span class="focus-input100" data-placeholder="&#xf191;"></span>
+            <p style="color:red;" id="unitError"></p>
 					</div>
 
-                    <div class="wrap-input100 validate-input" data-validate="Enter Unit Number">
-						<input class="input100" type="text" id="inputUnitNo" name="unitNo" placeholder="Unit Number *">
+          <div class="wrap-input100 validate-input" data-validate="Enter Email">
+						<input class="input100" type="text" id="emailAddress" name="email" placeholder="Email *" required>
 						<span class="focus-input100" data-placeholder="&#xf191;"></span>
+            <p style="color:red;" id="emailError"></p>
 					</div>
 
-                    <div class="wrap-input100 validate-input" data-validate="Enter Email">
-						<input class="input100" type="text" id="emailAddress" name="email" placeholder="Email *">
+          <div class="wrap-input100 validate-input" data-validate="Enter Password">
+						<input class="input100" type="password" id="inputPassword" name="pass" placeholder="Password *" required>
 						<span class="focus-input100" data-placeholder="&#xf191;"></span>
-					</div>
-
-                    <div class="wrap-input100 validate-input" data-validate="Enter Password">
-						<input class="input100" type="password" id="inputPassword" name="pass" placeholder="Password *">
-						<span class="focus-input100" data-placeholder="&#xf191;"></span>
+            <p style="color:red;" id="passwordError"></p>
 					</div>
 
 					<!--Google Recaptcha-->
@@ -238,6 +244,30 @@
           var passHash = passwordHash(password);
           console.log(passHash);
     
+          if(email == ""){
+            document.getElementById('emailError').innerText = "Please enter your Postal Code!";
+          }
+
+          if(password == ""){
+            document.getElementById('passwordError').innerText = "Please enter your Password!";
+          }
+
+          if(firstName == ""){
+            document.getElementById('fNameError').innerText = "Please enter your first name!";
+          }
+
+          if(lastName == ""){
+            document.getElementById('lNameError').innerText = "Please enter your last name!";
+          }
+          
+          if(postalCode == ""){
+            document.getElementById('postalError').innerText = "Please enter your Postal Code!";
+          }
+          
+          if(unitNumber == ""){
+            document.getElementById('unitError').innerText = "Please enter your Postal Code!";
+          }
+
           if(email == "" || password == "" || firstName == "" || lastName == "" || postalCode == "" || address == "" || unitNumber == ""){
             alert("Please enter all the required fields!");
           }else{
