@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Artistic Shop</title>
+  <title>Art House</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -73,7 +73,7 @@
       <div class="container">
 
         <div class="d-flex justify-content-between align-items-center">
-          <h2 style="font-weight:bold;">My Profile</h2>
+          <h2>My Profile</h2>
           <ol>
             <li><a href="index.html">Home</a></li>
             <li>My Profile</li>
@@ -84,46 +84,71 @@
     </section><!-- End Breadcrumbs -->
 
     <section class="inner-page">
-      <div class="container" style="text-align:center; padding: 100px;">
+      <div class="container" style="text-align:center; padding: 100px; width:50%;">
         <div class="text-center">
-          <img src="..\OnePage\assets\img\profile-icon-9.png" id="imageSrc" style="max-width:200px; max-height:200px; margin-bottom:50px; margin-top:-30px;" alt="..\OnePage\assets\img\profile-icon-9.png">
+          <img src="..\Project\assets\img\profile-icon-9.png" id="imageSrc" style="max-width:200px; max-height:200px; margin-bottom:50px; margin-top:-30px;" alt="..\Project\assets\img\profile-icon-9.png">
           <input type="file" class="form-control" id="customFile" />
         </div>
         <br>
-        <div class="mb-3">
-          <label for="firstName" class="form-label">First Name</label>
-          <input type="email" class="form-control" id="firstName" aria-describedby="firstNameHelp" >
+        <div class="row mt-5">
+          <div class="col-md-6 mb-4">
+            <div class="mb-3">
+              <label for="firstName" class="form-label">First Name</label>
+              <input type="email" class="form-control" id="firstName" aria-describedby="firstNameHelp" >
+            </div>
+          </div>
+          <div class="col-md-6 mb-4">
+            <div class="mb-3">
+              <label for="lastName" class="form-label">Last Name</label>
+              <input type="email" class="form-control" id="lastName" aria-describedby="lastNameHelp" >
+            </div>
+          </div>
         </div>
-        <div class="mb-3">
-          <label for="lastName" class="form-label">Last Name</label>
-          <input type="email" class="form-control" id="lastName" aria-describedby="lastNameHelp" >
+        <div class="row mt-5">
+          <div class="col-md-3 mb-4">
+            <div class="mb-3">
+              <label for="inputPostalCode" class="form-label">Postal Code</label>
+              <input type="email" class="form-control" id="inputPostalCode" aria-describedby="postalCodeHelp" >
+            </div>
+          </div>
+          <div class="col-md-6 mb-4">
+            <div class="mb-3">
+              <label for="inputAddress" class="form-label">Address</label>
+              <input type="email" class="form-control" id="inputAddress" aria-describedby="addressHelp" disabled>
+            </div>
+          </div>
+          <div class="col-md-3 mb-4">
+            <div class="mb-3">
+              <label for="inputUnitNo" class="form-label">Unit Number</label>
+              <input type="email" class="form-control" id="inputUnitNo" aria-describedby="unitNoHelp" >
+            </div>
+          </div>
         </div>
-        <div class="mb-3">
-          <label for="inputPostalCode" class="form-label">Postal Code</label>
-          <input type="email" class="form-control" id="inputPostalCode" aria-describedby="postalCodeHelp" >
+        <div class="row mt-5">
+          <div class="col-md-6 mb-4">
+            <div class="mb-3">
+              <label for="emailAddress" class="form-label">Email address</label>
+              <input type="email" class="form-control" id="emailAddress" aria-describedby="emailHelp" >
+            </div>
+          </div>
+          <div class="col-md-3 mb-4">
+            <div class="mb-3">
+              <label for="inputPassword" class="form-label">Old Password</label>
+              <input type="password" class="form-control" id="inputExistingPassword" >
+            </div>
+          </div>
+          <div class="col-md-3 mb-4">
+            <div class="mb-3">
+              <label for="inputPassword" class="form-label">New Password</label>
+              <input type="password" class="form-control" id="inputNewPassword" >
+            </div>
+          </div>
         </div>
-        <div class="mb-3">
-          <label for="inputAddress" class="form-label">Address</label>
-          <input type="email" class="form-control" id="inputAddress" aria-describedby="addressHelp" disabled>
+        <div class="row mt-5 mx-auto" style="width:40%;">
+          <button type="submit" id="btn_edit" class="btn btn-danger">Update</button>
+          <button type="submit" id="btn_back" class="btn btn-primary mt-4">Back</button>
         </div>
-        <div class="mb-3">
-          <label for="inputUnitNo" class="form-label">Unit Number</label>
-          <input type="email" class="form-control" id="inputUnitNo" aria-describedby="unitNoHelp" >
-        </div>
-        <div class="mb-3">
-          <label for="emailAddress" class="form-label">Email address</label>
-          <input type="email" class="form-control" id="emailAddress" aria-describedby="emailHelp" >
-        </div>
-        <div class="mb-3">
-          <label for="inputPassword" class="form-label">Old Password</label>
-          <input type="password" class="form-control" id="inputExistingPassword" >
-        </div>
-        <div class="mb-3">
-          <label for="inputPassword" class="form-label">New Password</label>
-          <input type="password" class="form-control" id="inputNewPassword" >
-        </div>
-        <button type="submit" id="btn_edit" class="btn btn-primary">Update</button>
-        <button type="submit" id="btn_back" class="btn btn-primary">Back</button>
+        
       </div>
     </section>
 
