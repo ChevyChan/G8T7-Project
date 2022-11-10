@@ -399,6 +399,14 @@
         UploadProcess();
         var curDate = new Date();
         console.log(curDate);
+        var dd = String(curDate.getDate()).padStart(2, '0');
+        var mm = String(curDate.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = curDate.getFullYear();
+
+        var hours = curDate.getHours();
+        var mins = curDate.getMinutes();
+
+        curDate = yyyy + '-' + mm + '-' + dd + "T" + hours + ":" + mins; //Current Date and time
         
         var id = 0;
         var api_endpoint_url = 'https://www.uuidtools.com/api/generate/v4/count/1';
