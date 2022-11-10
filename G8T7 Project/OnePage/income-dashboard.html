@@ -45,19 +45,19 @@
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto " href="home.html">Home</a></li>
+          <li><a class="nav-link scrollto " href="index.html">Home</a></li>
           <li><a class="nav-link scrollto " href="listing.html">Products</a></li>
-          <li><a class="nav-link scrollto o" href="#cart">Shopping Cart</a></li>
+          <li><a class="nav-link scrollto o" href="shoppingCart.html">Shopping Cart</a></li>
           <li class="dropdown"><a href="#"><span>Profile</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
-              <li><a id="editProfile" href="#">Edit Profile</a></li>
-              <li><a href="#">Purchase History</a></li>
+              <li><a id="editProfile" href="Profile.html">Edit Profile</a></li>
+              <li><a href="purchaseHistory.html" id="purchaseHistory">Purchase History</a></li>
               <li><a href="income-dashboard.html">Income Dashboard</a></li>
-              <li><a id="artistBidList" href="#">Your Bidding Products</a></li>
-              <li><a href="#about">Logout</a></li>
+              <li><a id="artistBidList" href="ArtistsProductBidList.html">Your Bidding Products</a></li>
+              <li><a href="LoginAccount.html">Logout</a></li>
             </ul>
           </li>
-          <li><a class="getstarted scrollto" href="#">Create New Listing</a></li>
+          <li><a class="getstarted scrollto" href="CreateListing.html">Create New Listing</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -77,7 +77,7 @@
             <br/>
             From <input type="date" id="fromDate">
             To <input type="date" id="toDate">
-            <button id="sales" type="button" v-on:click="get_scales()">Get Sales</button>
+            <button id="sales" type="button" class="btn btn-primary">Get Sales</button>
             <br/><br/>
             <div id="chartContainer" style="height: 300px; width: 100%;"></div>
           </div>
@@ -205,12 +205,17 @@
       console.log(urlParams); 
       const userID = urlParams.get('user_id'); 
       console.log(userID);
+      if(userID != null){
+        window.location.href = "income-dashboard.html?user_id=" + userID;
+      }
+      
 
       function getSales(){
           let date = new Date()
           let dateArr = []
           let incomeData = []
           let indexLabelChecker = ""
+          let totalRevenue = 0
           var isoDateTime = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString();
           let fromDate = new Date(document.getElementById('fromDate').value)
           let toDate = new Date(document.getElementById('toDate').value)
@@ -225,7 +230,7 @@
               alert("Error: 'To' date cannot be before the 'From' date!")
           }
           else {
-              //populate dateArr with placeholder data first
+              //populate date array with placeholder data first
               let indexDate = new Date(fromDate);
               for (let d = 0; d<=dayDiff; d++){
                   dateArr.push([indexDate.toLocaleDateString('en-GB'), 0])
@@ -252,29 +257,24 @@
                           }
                       }
                   }
-                  // dateArr variable is an array which has the revenues of the current user from the date specified to the end date specified
-                  // console.log(dateArr)
-
-                  // convert dateArr into a form that is easily readable by the canvas.js code
+                  //dateArr variable is an array which has the revenues of the current user from the date specified to the end date specified
+                  //console.log(dateArr)
                   for (let i=1; i<dateArr.length + 1; i++){
                     incomeData.push({x: i, y: dateArr[i-1][1], label: dateArr[i-1][0]})
+                    totalRevenue += dateArr[i-1][1]
                   }
-                  // console.log(incomeData)
-
-                  // only display the amount of money above each bar
-                  // if the selection is a month's worth of data or less
-                  // otherwise it'll look very cluttered
+                  //console.log(incomeData)
+                  //console.log(totalRevenue)
                   if (incomeData.length <= 31){
                     indexLabelChecker = "${y}"
                   }
                   else{
                     indexLabelChecker = ""
                   }
-
-                  // generate the chart
                   var chart = new CanvasJS.Chart("chartContainer",
                   {
-                    
+                    animationEnabled: true,
+
                     data: [
 
                     {
@@ -295,7 +295,5 @@
     
     </script>
     
-
-
 </body>
 </html>
