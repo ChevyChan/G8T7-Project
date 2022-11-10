@@ -42,7 +42,7 @@
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto " href="index.html">Home</a></li>
+          <li><a class="nav-link scrollto " href="home.html">Home</a></li>
           <li><a class="nav-link scrollto " href="listing.html">Products</a></li>
           <li><a class="nav-link scrollto" id="productList" href="#">Live Bidding</a></li>
           <li><a class="nav-link scrollto o" href="#cart">Shopping Cart</a></li>
@@ -50,7 +50,7 @@
             <ul>
               <li><a id="editProfile" href="#">Edit Profile</a></li>
               <li><a href="#">Purchase History</a></li>
-              <li><a href="income-dashboard.html">Income Dashboard</a></li>
+              <li><a href="../income-dashboard/income-dashboard.html">Income Dashboard</a></li>
               <li><a id="artistBidList" href="#">Your Bidding Products</a></li>
               <li><a href="LoginAccount.html">Logout</a></li>
             </ul>
@@ -66,13 +66,14 @@
   <main id="main">
 
     <!-- ======= Breadcrumbs ======= -->
-    <section class="breadcrumbs">
+    <section class="breadcrumbs bg-danger">
       <div class="container">
 
         <div class="d-flex justify-content-between align-items-center">
-          <h2>Bidding Details</h2>
+          <h2 style="font-weight:bold;">Live Bidding >> Bidding Details</h2>
           <ol>
             <li><a href="index.html">Home</a></li>
+            <li>Live Bidding</li>
             <li>Bidding Details</li>
           </ol>
         </div>
@@ -83,11 +84,11 @@
     <section class="inner-page">
       <div id="content_field" class="container">
         <div class="row">
-          <div class="col">
+          <div class="col col">
             <!--Product Image-->
             <img src="/Project/assets/img/spongebob.png" class="rounded float-start mt-4" style="width:400px; height:400px;" alt="...">
           </div>
-          <div class="col col-7">
+          <div class="col col-6">
             <p class="h2 mt-4" id="title">Spongebob Squarepants Art</p>
             <p class="mt-4" id="artist">Artist: <span>Leon Carpiro | Artists since 2008</span></p>
             <hr>
@@ -103,7 +104,7 @@
         <div class="row">
           <div class="col col-6">
             <p class="h2 text-center">Video</p>
-            <iframe width="560" height="315" class="mt-4 ml-2" src="https://www.youtube.com/embed/2bkwLTMVLww" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/2bkwLTMVLww" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
           </div>
           <div class="col col-6">
             <p class="h2 text-center">Description</p>
@@ -285,7 +286,7 @@
           seconds = Math.floor((time_left % (1000 * 60)) / 1000); 
 
           console.log(days + "d " + hours + "h " + minutes + "m " + seconds + "s ");
-          document.getElementById("countdownTimer").innerHTML =` <p class="mt-4" id="countdownTimer">Auction ending in - <span>${days + "d " + hours + "h " + minutes + "m " + seconds + "s "}</span></p>`;
+          document.getElementById("countdownTimer").innerHTML =` <p class="mt-4" id="countdownTimer">Auction ending in: <span>${days + "d " + hours + "h " + minutes + "m " + seconds + "s "}</span></p>`;
 
             if(time_left < 0) {
               clearInterval(x);
@@ -293,38 +294,95 @@
             }
         })
 
-        var str = `
-        <div class="container">
-            <div class="row">
-              <div class="col">
-                <!--Product Image-->
-                <img src="${productPic}" class="rounded float-start mt-4" style="width:400px; height:400px;" alt="...">
+        if(videoURL != ""){
+          var str = `
+            <div class="container">
+              <div class="row">
+                <div class="col col-6 text-center">
+                  <!--Product Image-->
+                  <img src="${productPic}" class="rounded float-middle mt-4" style="width:400px; height:400px;" alt="...">
+                </div>
+                <div class="col col-6">
+                  <h3 class="h2 mt-4" id="title"><span>${title}</span></h3>
+                  <h4 class="mt-4" id="artist">Artist: <span>${artist}</span></h4>
+                  <hr>
+                  <p class="mt-4" id="price">Starting Bid: $<span>${startBid}</span></p>
+                  <p class="mt-4" id="price">Subsequent Bid: $<span>${subBid}</span></p>
+                  <p class="mt-4" id="price">Current Bid: $<span>${currentBid}</span></p>
+                  <p class="mt-4" id="countdownTimer">Auction ending in: <span>${days + "d " + hours + "h " + minutes + "m " + seconds + "s "}</span></p>
+                  <hr>
+                  <button class="btn btn-primary btn-lg col-4" id="bidButton" type="button" name="${snapshot.val().id}" onclick="updateBiddingProductById(this)">Update Bidding</button>
+                </div>
               </div>
-              <div class="col col-7">
-                <p class="h2 mt-4" id="title">${title}</p>
-                <p class="mt-4" id="artist">Artist: <span>${artist}</span></p>
-                <hr>
-                <p class="mt-4" id="price">Starting Bid: $<span>${startBid}</span></p>
-                <p class="mt-4" id="price">Subsequent Bid (Increase): $<span>${subBid}</span></p>
-                <p class="mt-4" id="price">Current Bid: $<span>${currentBid}</span></p>
-                <p class="mt-4" id="countdownTimer">Auction ending in - <span>${days + "d " + hours + "h " + minutes + "m " + seconds + "s "}</span></p>
-                <hr>
-                <button class="btn btn-primary btn-lg col-4" id="bidButton" type="button" name="${snapshot.val().id}" onclick="updateBiddingProductById(this)">Update Bidding</button>
+              <hr>
+              <div class="row mb-5">
+                <div class="accordion" id="accordionExample">
+                  <div class="accordion-item text-center">
+                    <h2 class="accordion-header" id="headingOne">
+                      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Art Walkthrough
+                      </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                      <div class="accordion-body">
+                        <iframe width="560" height="315" class="mt-4" src="https://www.youtube.com/embed/${video_id}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingTwo">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Item Description
+                      </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                      <div class="accordion-body">
+                        <strong>${prodDesc}</strong>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-            <hr>
-            <div class="row">
-              <div class="col col-6">
-                <p class="h2 text-center">Video</p>
-                <iframe width="560" height="315" class="mt-4" style="margin-left: 30px;" src="https://www.youtube.com/embed/${video_id}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          `;
+          }else{
+            str = `
+            <div class="container">
+              <div class="row">
+                <div class="col col-6 text-center">
+                  <!--Product Image-->
+                  <img src="${productPic}" class="rounded float-middle mt-4" style="width:400px; height:400px;" alt="...">
+                </div>
+                <div class="col col-6">
+                  <h3 class="h2 mt-4" id="title"><span>${title}</span></h3>
+                  <h4 class="mt-4" id="artist">Artist: <span>${artist}</span></h4>
+                  <hr>
+                  <p class="mt-4" id="price">Starting Bid: $<span>${startBid}</span></p>
+                  <p class="mt-4" id="price">Subsequent Bid: $<span>${subBid}</span></p>
+                  <p class="mt-4" id="price">Current Bid: $<span>${currentBid}</span></p>
+                  <p class="mt-4" id="countdownTimer">Auction ending in: <span>${days + "d " + hours + "h " + minutes + "m " + seconds + "s "}</span></p>
+                  <button class="btn btn-primary btn-lg col-4" id="bidButton" type="button" name="${snapshot.val().id}" onclick="updateBiddingProductById(this)">Update Bidding</button>  
+                </div>  
               </div>
-              <div class="col col-6">
-                <p class="h2 text-center">Description</p>
-                <p id="desc-content" class="text-center mt-4">${prodDesc}</p>
+              <hr>
+              <div class="row mb-5">
+                <div class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                      Item Description
+                    </button>
+                  </h2>
+                  <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                      <strong>${prodDesc}</strong>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        `;
+          `;
+          }
 
         //Disable button when bidding time is over
         var curDate = new Date();

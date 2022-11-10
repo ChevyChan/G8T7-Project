@@ -57,7 +57,7 @@
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto " href="index.html">Home</a></li>
+          <li><a class="nav-link scrollto " href="home.html">Home</a></li>
           <li><a class="nav-link scrollto " href="listing.html">Products</a></li>
           <li><a class="nav-link scrollto" id="productList" href="#">Live Bidding</a></li>
           <li><a class="nav-link scrollto o" href="#cart">Shopping Cart</a></li>
@@ -86,7 +86,7 @@
       <div class="container">
 
         <div class="d-flex justify-content-between align-items-center">
-          <h2>Register</h2>
+          <h2 style="font-weight:bold;">Register</h2>
         </div>
 
       </div>
@@ -96,7 +96,7 @@
       <div class="container" style="text-align:center; padding: 100px;">
         <form id="registerForm" method="GET" action="LoginAccount.html">
           <div class="form-outline mb-4">
-            <img src="/Project/assets/img/profile-icon-9.png" id="imageSrc" alt="/Project/assets/img/spongebob.png">
+            <img src="../Project/assets/img/profile-icon-9.png" id="imageSrc" alt="../Project/assets/img/spongebob.png" style="width:200px; height:200px; margin-bottom:50px;">
             <label class="form-label" id="lbl_upload"></label>
             <input type="file" class="form-control" id="customFile" />
           </div>
@@ -364,7 +364,8 @@
                 address: address, 
                 unitNumber: unitNumber,
                 profilePic_url: ImgURL,
-                userID: user.uid
+                userID: user.uid,
+                credits: 0
               })
               .then(() => {
                 // Data saved successfully!

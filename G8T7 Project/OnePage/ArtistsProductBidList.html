@@ -42,7 +42,7 @@
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto " href="index.html">Home</a></li>
+          <li><a class="nav-link scrollto " href="home.html">Home</a></li>
           <li><a class="nav-link scrollto " href="listing.html">Products</a></li>
           <li><a class="nav-link scrollto" id="productList" href="#">Live Bidding</a></li>
           <li><a class="nav-link scrollto o" href="#" id="shoppingCart">Shopping Cart</a></li>
@@ -50,7 +50,7 @@
             <ul>
               <li><a id="editProfile" href="#">Edit Profile</a></li>
               <li><a href="#">Purchase History</a></li>
-              <li><a href="income-dashboard.html">Income Dashboard</a></li>
+              <li><a href="../income-dashboard/income-dashboard.html">Income Dashboard</a></li>
               <li><a id="artistBidList" href="#">Your Bidding Products</a></li>
               <li><a href="LoginAccount.html" id="btn_logout">Logout</a></li>
             </ul>
@@ -67,11 +67,11 @@
   <main id="main">
 
     <!-- ======= Breadcrumbs ======= -->
-    <section class="breadcrumbs">
+    <section class="breadcrumbs bg-danger">
       <div class="container">
 
         <div class="d-flex justify-content-between align-items-center">
-          <h2>Your Bidding List</h2>
+          <h2 style="font-weight:bold;">Your Bidding List</h2>
           <ol>
             <li><a href="index.html">Home</a></li>
             <li>List of Bidding Products</li>
@@ -81,23 +81,37 @@
       </div>
     </section><!-- End Breadcrumbs -->
 
-    <section class="inner-page">
-      <div class="container" id="content">
-        <p class="h1" id="noProduct" hidden>You have not posted any biddable items</p>
-        <div class="row row-cols-auto mt-5" id="cardList">
-          <div class="col mb-4" hidden>
-            <div class="card" style="width: 18rem;">
-              <img src="..." class="card-img-top" alt="C:\wamp64\www\Project\assets\img\profile-icon-9.png">
-              <div class="card-body">
-                <h5 class="card-title">title</h5>
-                <p class="card-text">artistName</p>
-                <p class="card-text" id="artistID" hidden>id</p>
-                <button name="idName" class="btn btn-primary" onclick="retrieveBiddingProductById(this)">View Details</button>
-                <button name="idName" class="btn btn-primary" onclick="updateBiddingProductById(this)">Update Bidding</button>
-              </div>
+    <section class="inner-page text-center">
+      <div class="container">
+        <h2 class="mt-4">Active Bidding Products
+          <a href="" class="btn btn-info btn-warning" onclick="reloadWebpage()">
+            <span class="glyphicon glyphicon-refresh"></span> Refresh
+          </a>
+        </h2>
+        
+        <div id="cardList" class="row row-cols-auto mt-4">
+          <!--1st item-->
+          <div class="col mb-4">
+            <div class="col mb-4">
+              <img src="https://i.kym-cdn.com/entries/icons/facebook/000/006/428/637738.jpg" class="card-img-top" alt="..\Project\assets\img\profile-icon-9.png">
+              <h2 class="text-center mt-4">Please check again later!</h2>
             </div>
           </div>
         </div>
+        
+        <hr>
+
+        <!--Add bids that are expired here!-->
+        <div id="previousBids">
+            <h2 class="mt-4 mb-3">Expired Bidding Products</h2>
+          <div id="expiredBidding"  class="row row-cols-auto mt-4 text-center">
+            <div class="col mb-4 mx-auto text-center">
+              <img src="https://i.kym-cdn.com/entries/icons/original/000/026/111/4917038d8bbd7fe362bed691690c7da4.jpg" class="card-img-top" alt="C..\Project\assets\img\profile-icon-9.png">
+              <h2 class="text-center mt-4">Please check again later!</h2>
+            </div>
+          </div>
+        </div> 
+
       </div>
     </section>
 
@@ -281,62 +295,7 @@
       })
     }
 
-    var delayInMilliseconds = 2000; //1 second
-    var runningTimer = "";
-
-    setTimeout(function() {
-      //your code to be executed after 1 second
-      const dbRef = ref(database, "auction");
-      onValue(dbRef, (snapshot) => {
-        var products = [];
-        var str = "";
-        let count = 0;
-
-        snapshot.forEach(childSnapshot => {
-          
-          products.push(childSnapshot.val());
-          console.log(childSnapshot.val());
-
-          var countdown = childSnapshot.val().countdownTimer;
-          console.log(countdown);
-
-          var days = 0;
-          var hours = 0;
-          var minutes = 0;
-          var seconds = 0;
-
-          var x = setInterval(function() {
-            var now = new Date().getTime();
-      
-            var year = countdown.slice(0, 4);
-            var month = countdown.slice(5, 7);
-            var day = countdown.slice(8, 10);
-            var countHours = countdown.slice(11, 13);
-            var countMinutes = countdown.slice(14, 16);
-            
-            var arrayMonth = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
-            
-            var countDownDate = new Date(arrayMonth[month-1] + " " + day + ", " + year + " " + countHours + ":" + countMinutes + ":" + "00").getTime();
-      
-            var time_left = countDownDate - now
-      
-            days = Math.floor(time_left / (1000 * 60 * 60 * 24));
-            hours = Math.floor((time_left % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            minutes = Math.floor((time_left % (1000 * 60 * 60)) / (1000 * 60));
-            seconds = Math.floor((time_left % (1000 * 60)) / 1000); 
-
-            console.log(days + "d " + hours + "h " + minutes + "m " + seconds + "s ");
-            runningTimer = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
-
-            if(time_left < 0) {
-              clearInterval(x);
-              runningTimer = "Auction Ended";
-            }
-
-          })
-        })
-      })
-    }, delayInMilliseconds);
+    
 
     function retrieveAllBiddingProductByArtists(){
       const dbRef = ref(database, "auction");
@@ -352,7 +311,14 @@
       onValue(dbRef, (snapshot) => {
         var products = [];
         var str = "";
+        var str2 = "";
         let count = 0;
+        var countdown = "";
+        var artist_id = "";
+        var days = 0;
+        var hours = 0;
+        var minutes = 0;
+        var seconds = 0;
 
         snapshot.forEach(childSnapshot => {
           products.push(childSnapshot.val());
@@ -362,33 +328,92 @@
           var bidding_list = document.getElementById("cardList");
           var con_content = document.getElementById("content");
 
-          console.log(runningTimer);
+          var curDate = new Date();
+          var dd = String(curDate.getDate()).padStart(2, '0');
+          var mm = String(curDate.getMonth() + 1).padStart(2, '0'); //January is 0!
+          var yyyy = curDate.getFullYear();
+  
+          var hours = curDate.getHours();
+          var mins = curDate.getMinutes();
+  
+          curDate = yyyy + '-' + mm + '-' + dd + "T" + hours + ":" + mins; //Current Date and time
+          console.log(curDate);
+
+          if(user_id == childSnapshot.val().userId){
+            countdown = childSnapshot.val().countdownTimer;
+            console.log(countdown);
+  
+            var x = setInterval(function() {
+              var now = new Date().getTime();
+        
+              var year = countdown.slice(0, 4);
+              var month = countdown.slice(5, 7);
+              var day = countdown.slice(8, 10);
+              var countHours = countdown.slice(11, 13);
+              var countMinutes = countdown.slice(14, 16);
+              
+              var arrayMonth = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
+              
+              var countDownDate = new Date(arrayMonth[month-1] + " " + day + ", " + year + " " + countHours + ":" + countMinutes + ":" + "00").getTime();
+        
+              var time_left = countDownDate - now
+        
+              days = Math.floor(time_left / (1000 * 60 * 60 * 24));
+              hours = Math.floor((time_left % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+              minutes = Math.floor((time_left % (1000 * 60 * 60)) / (1000 * 60));
+              seconds = Math.floor((time_left % (1000 * 60)) / 1000); 
+    
+              console.log(days + "d " + hours + "h " + minutes + "m " + seconds + "s ");
+              document.getElementById("countdownTimer").innerHTML = `<span id="countdownTimer">${days + "d " + hours + "h " + minutes + "m " + seconds + "s "}</span></p>`;
+    
+                if(time_left < 0) {
+                  clearInterval(x);
+                  document.getElementById("countdownTimer").innerText = "Auction Ended";
+                }
+
+            })
+          }
 
           //Check for user's posted bids
           if(artistID == user_id){
+            if(curDate > countdown){
+              console.log(days);
               str += `
-              <div class="col mb-3">
-                <div class="card" style="width: 18rem;">
-                  <img src="${childSnapshot.val().productPic}" class="card-img-top" style="width:auto; height:300px;" alt="C:\wamp64\www\Project\assets\img\profile-icon-9.png">
-                  <div class="card-body">
-                    <h5 class="card-title">${childSnapshot.val().title}</h5>
-                    <p class="card-text">${childSnapshot.val().artistName}</p>
-                    <p class="card-text" id=countdownTimer>${runningTimer}</p>
-                    <p class="card-text" id="artistID" hidden>${childSnapshot.val().id}</p>
-                    <button name="${childSnapshot.val().id}" class="btn btn-primary" onclick="retrieveBiddingProductById(this)">View Details</button>
+                <div class="col mb-5">
+                  <div class="card" style="width: 18rem;">
+                    <img src="${childSnapshot.val().productPic}" class="card-img-top" style="width:auto; height:300px;" alt="../Project/assets/img/profile-icon-9.png">
+                    <div class="card-body">
+                      <h5 class="card-title">${childSnapshot.val().title}</h5>
+                      <p class="card-text">${childSnapshot.val().artistName} || <span id="countdownTimer">${days + "d " + hours + "h " + minutes + "m " + seconds + "s "}</span></p>
+                      <p class="card-text" hidden>${childSnapshot.val().id}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
               `;
-              count += 1;
+  
+              document.getElementById('expiredBidding').innerHTML = str;
             }
-
-            if(count > 0){
-              bidding_list.innerHTML = str;
-            }else{
-              var str1 = `<p class="h1" id="noProduct">You have not posted any biddable items</p>`;
-              bidding_list.innerHTML = str1;
-            }
+            
+            var bidding_list = document.getElementById("cardList");
+  
+            if(countdown >= curDate){
+              str2 += `
+                <div class="col mb-5">
+                  <div class="card" style="width: 18rem;">
+                    <img src="${childSnapshot.val().productPic}" class="card-img-top" style="width:auto; height:300px;" alt="../Project/assets/img/profile-icon-9.png">
+                    <div class="card-body">
+                      <h5 class="card-title">${childSnapshot.val().title}</h5>
+                      <p class="card-text">${childSnapshot.val().artistName} || <span id="countdownTimer">${days + "d " + hours + "h " + minutes + "m " + seconds + "s "}</span></p>
+                      <p class="card-text" hidden>${childSnapshot.val().id}</p>
+                      <button name="${childSnapshot.val().id}" class="btn btn-primary" onclick="retrieveBiddingProductById(this)">View Details</button>
+                    </div>
+                  </div>
+                </div>
+              `;
+    
+              bidding_list.innerHTML = str2;
+            }  
+          }      
         });
       })
     }
@@ -403,6 +428,10 @@
         alert(error);
       });
     })
+
+    function reloadWebpage(){
+      location.reload();
+    }
 
   </script>
   

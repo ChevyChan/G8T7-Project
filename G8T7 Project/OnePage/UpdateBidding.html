@@ -42,7 +42,7 @@
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto " href="index.html">Home</a></li>
+          <li><a class="nav-link scrollto " href="home.html">Home</a></li>
           <li><a class="nav-link scrollto " href="listing.html">Products</a></li>
           <li><a class="nav-link scrollto" id="productList" href="#">Live Bidding</a></li>
           <li><a class="nav-link scrollto o" href="#cart">Shopping Cart</a></li>
@@ -71,7 +71,7 @@
       <div class="container">
 
         <div class="d-flex justify-content-between align-items-center">
-          <h2>Update Bidding Details</h2>
+          <h2 style="font-weight:bold;">Update Bidding Details</h2>
           <ol>
             <li><a href="index.html">Home</a></li>
             <li>Update Bidding Details</li>
@@ -84,8 +84,8 @@
     <section class="inner-page">
       <div class="container">
         <form id="registerForm" method="GET" action="#">
-            <div class="form-outline mb-4">
-              <img src="/Project/assets/img/profile-icon-9.png" id="imageSrc" alt="/Project/assets/img/spongebob.png">
+            <div class="form-outline mb-4 mt-4 text-center">
+              <img src="../Project/assets/img/profile-icon-9.png" id="imageSrc" style="width:300px; height:300px; margin-bottom:30px;" alt="../Project/assets/img/spongebob.png">
               <input type="file" class="form-control" id="customFile" />
             </div>
             <!-- 2 column grid layout with text inputs for the first and last names -->
@@ -360,13 +360,6 @@
           updateBiddingProduct(title, startBid, subBid, countdownTimer, videoURL, productPic, prodDesc);
         }
         
-        const queryString = window.location.search;
-        console.log(queryString);
-        const urlParams = new URLSearchParams(queryString);
-        console.log(urlParams);
-        const userID = urlParams.get('user_id');
-        console.log(userID);
-        window.location.href = "ArtistsProductBidList.html?user_id=" + userID;
     })
 
     document.getElementById('btn_delete').addEventListener('click', e => {
@@ -433,6 +426,13 @@
         .then(() => {
             // Data saved successfully!
             alert("Bidding Updated Successfully!");
+            const queryString = window.location.search;
+            console.log(queryString);
+            const urlParams = new URLSearchParams(queryString);
+            console.log(urlParams);
+            const userID = urlParams.get('user_id');
+            console.log(userID);
+            window.location.href = "ArtistsProductBidList.html?user_id=" + userID;
         })
         .catch((error) => {
             // The write failed...
@@ -450,9 +450,9 @@
       console.log(queryString);
       const urlParams = new URLSearchParams(queryString);
       console.log(urlParams);
-      const userID = urlParams.get('userid');
+      const userID = urlParams.get('user_id');
       console.log(userID);
-      window.location.href = "ArtistsProductBidList.html?id=" + userID;
+      window.location.href = "ArtistsProductBidList.html?user_id=" + userID;
     })
     .catch((error) => {
       alert("Error, please try again!");

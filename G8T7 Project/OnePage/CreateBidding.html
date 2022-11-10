@@ -42,7 +42,7 @@
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto " href="index.html">Home</a></li>
+          <li><a class="nav-link scrollto " href="home.html">Home</a></li>
           <li><a class="nav-link scrollto " href="listing.html">Products</a></li>
           <li><a class="nav-link scrollto" id="productList" href="#">Live Bidding</a></li>
           <li><a class="nav-link scrollto o" href="#cart">Shopping Cart</a></li>
@@ -50,7 +50,7 @@
             <ul>
               <li><a id="editProfile" href="#">Edit Profile</a></li>
               <li><a href="#">Purchase History</a></li>
-              <li><a href="income-dashboard.html">Income Dashboard</a></li>
+              <li><a href="../income-dashboard/income-dashboard.html">Income Dashboard</a></li>
               <li><a id="artistBidList" href="#">Your Bidding Products</a></li>
               <li><a href="LoginAccount.html">Logout</a></li>
             </ul>
@@ -71,7 +71,7 @@
       <div class="container">
 
         <div class="d-flex justify-content-between align-items-center">
-          <h2>Create Bidding Details</h2>
+          <h2 style="font-weight:bold;">Create Bidding Details</h2>
           <ol>
             <li><a href="index.html">Home</a></li>
             <li>Create Bidding Details</li>
@@ -106,16 +106,25 @@
   
               <div class="form-outline mb-4">
                 <input type="text" class="form-control" id="inputStartBid" aria-describedby="startBidHelp">
-                <label for="inputStartBid" class="form-label">Starting Bid ($)</label>
+                <label for="inputStartBid" class="form-label">Starting Bid</label>
               </div>
               <div class="form-outline mb-4">
                 <input type="text" class="form-control" id="subBid" aria-describedby="subBidHelp">
-                <label for="subBid" class="form-label">Subsequent Bid ($)</label>
+                <label for="subBid" class="form-label">Subsequent Bid</label>
+              </div>
+              <div class="form-outline" style="margin-bottom:35px;">
+                <select class="form-select" id="ddlCategory" aria-label="Default select example">
+                  <option selected>Select Category</option>
+                  <option value="Painting">Painting</option>
+                  <option value="Sculpture">Sculpture</option>
+                  <option value="Literature">Literature</option>
+                  <option value="Architecture">Architecture</option>
+                </select>
               </div>
               <!-- Countdown input -->
               <div class="form-outline mb-4">
               <input type="datetime-local" id="countdownTimer" name="countdownTimerInput" class="form-control" value=""/>
-              <label class="form-label" for="countdownTimer">End Bidding ($)</label>
+              <label class="form-label" for="countdownTimer">Bidding End Date</label>
               </div>
   
               <!-- Video URL input -->
@@ -133,7 +142,7 @@
               <button type="submit" id="btn_submit" class="btn btn-primary btn-block mb-4">
                   Start Bidding
               </button>
-              <button type="button" id="btn_back" class="btn btn-primary btn-block mb-4">
+              <button type="submit" id="btn_back" class="btn btn-primary btn-block mb-4">
                 Back
             </button>
       </div>
@@ -354,16 +363,17 @@
           var startBid = document.getElementById('inputStartBid').value;
           var subBid = document.getElementById('subBid').value;
           var curBid = startBid;
+          var item_cat = document.getElementById('ddlCategory').value;
           var countdownTimer = document.getElementById('countdownTimer').value;
           var videoURL = document.getElementById('inputVideoURL').value;
           var productPic = ImgURL;  
           var prodDesc = document.getElementById('productDesc').value;     
       
           if(productPic != ""){
-            createBiddingProduct(id, title, artistName, startBid, subBid, curBid, countdownTimer, videoURL, productPic, prodDesc);
+            createBiddingProduct(id, title, artistName, startBid, subBid, curBid, item_cat, countdownTimer, videoURL, productPic, prodDesc);
           }else{
             productPic = imageSrc.src;
-            createBiddingProduct(id, title, artistName, startBid, subBid, curBid, countdownTimer, videoURL, productPic, prodDesc);
+            createBiddingProduct(id, title, artistName, startBid, subBid, curBid, item_cat, countdownTimer, videoURL, productPic, prodDesc);
           }
 
         })
@@ -382,7 +392,7 @@
         window.location.href = "ArtistsProductBidList.html?user_id=" + userID;
     })
 
-    function createBiddingProduct(id, title, artistName, startBid, subBid, curBid, countdownTimer, videoURL, productPic, prodDesc) {
+    function createBiddingProduct(id, title, artistName, startBid, subBid, curBid, item_cat, countdownTimer, videoURL, productPic, prodDesc) {
       const user = auth.currentUser.uid;
       console.log(user);
 
@@ -393,6 +403,7 @@
         startBid : startBid,
         subBid : subBid,
         curBid: curBid,
+        category: item_cat,
         countdownTimer : countdownTimer, 
         videoURL : videoURL,
         productPic : productPic,
