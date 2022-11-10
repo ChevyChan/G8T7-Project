@@ -75,17 +75,21 @@
           <div class="col-xl-12 col-lg-12 text-center">
             <h1>Sales Summary</h1>
             <br/>
-            <div style="font-weight: bold">
+            <div>
+              <strong>
               Filter from 
+              </strong>
               <input type="date" id="fromDate">
+              <strong>
               to 
+              </strong>
               <input type="date" id="toDate">
               <button id="sales" type="button" class="btn btn-primary">Get Sales</button>
-              
             </div>
-            <div id="errorAlert" style="color: red; font-weight: bolder"></div>
+            <div id="errorAlert"></div>
             <br/><br/>
             <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+            <h2 id="revenue" style="color: green; font-weight: bolder">Total revenue: $</h2>
           </div>
         </div>
       </div>
@@ -259,7 +263,7 @@
                     incomeData.push({x: i, y: dateArr[i-1][1], label: dateArr[i-1][0]})
                     totalRevenue += dateArr[i-1][1]
                   }
-                  
+                  document.getElementById('revenue').innerText = "Total revenue: $" + totalRevenue
                   var chart = new CanvasJS.Chart("chartContainer",
                   {
                     animationEnabled: true,
@@ -282,6 +286,15 @@
       
 
       function getSales(){
+          const alertPlaceholder = document.getElementById('errorAlert')
+          const alert = (message) => {
+            alertPlaceholder.innerHTML = [
+              `<div class="alert alert-danger alert-dismissible" role="alert">`,
+              `   <div>${message}</div>`,
+              '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+              '</div>'
+            ].join('')
+          }
           let date = new Date()
           let dateArr = []
           let incomeData = []
@@ -296,14 +309,14 @@
           let dayDiff = (toDate-fromDate) / 1000 / 60 / 60 / 24
 
           if (fromDate == "Invalid Date" || toDate == "Invalid Date"){
-              document.getElementById("errorAlert").innerText = 'Please select 2 dates'
+              alert('Please select 2 dates.')
           }
           else if (dayDiff < 0){
-              document.getElementById("errorAlert").innerText = "'To' date cannot be before the 'From' date"
+              alert("'To' date cannot be before the 'From' date.")
           }
           else {
               //remove any alerts
-              document.getElementById("errorAlert").innerText = " "
+              document.getElementById("errorAlert").innerHTML = ""
               
                 //populate date array with placeholder data first
                 let indexDate = new Date(fromDate);
@@ -339,6 +352,7 @@
                     incomeData.push({x: i, y: dateArr[i-1][1], label: dateArr[i-1][0]})
                     totalRevenue += dateArr[i-1][1]
                   }
+                  document.getElementById('revenue').innerText = "Total revenue: $" + totalRevenue
                   //console.log(incomeData)
                   //console.log(totalRevenue)
                   if (incomeData.length <= 31){
