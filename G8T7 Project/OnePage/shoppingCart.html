@@ -31,8 +31,8 @@
   <script type="module">
     // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
-    import { getAuth , createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
-    import { getDatabase, ref, set ,get, remove, child} from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js";
+    import { getAuth , createUserWithEmailAndPassword , onAuthStateChanged} from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+    import { getDatabase, ref, set ,get, remove, child, onValue} from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js";
     import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-storage.js"
     // TODO: Add SDKs for Firebase products that you want to use
     // https://firebase.google.com/docs/web/setup#available-libraries
@@ -202,6 +202,83 @@
 
     })
 
+    document.getElementById('home').addEventListener('click', (e) => {
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+
+      window.location.href = "home.html?user_id=" + user_id;
+
+    })
+
+    document.getElementById('products').addEventListener('click', (e) => {
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+
+      window.location.href = "listing.html?user_id=" + user_id;
+
+    })
+
+    document.getElementById('incomeDashboard').addEventListener('click', (e) => {
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+
+      window.location.href = "income-dashboard.html?user_id=" + user_id;
+
+    })
+    
+
+    var userId = "";
+    var userCredit = 0;
+    var userName = "";
+    function getUserData(uid) {
+      const db = ref(database, 'users/' + uid);
+      
+      onValue(db, snap => {
+          console.log(snap.val())
+          userId = uid;
+          console.log(userId);
+
+          userCredit = snap.val().credits;
+          userName = snap.val().firstName;
+          console.log(userCredit);
+          console.log(userName);
+          document.getElementById("credits").innerText = "Credits: " + userCredit;
+          document.getElementById("userName").innerText = "Welcome! " + userName;
+      })
+    }
+    
+    onAuthStateChanged(auth, (user) => { 
+        if(user){ 
+          console.log(user); 
+          getUserData(user.uid) 
+        }else{ 
+          "Please try again!"; 
+        } 
+         
+    })
+
+    btn_logout.addEventListener('click', (e) => { 
+      signOut(auth).then(() => { 
+        window.location.href = "index.html"; 
+      }).catch((error) => { 
+        // An error happened. 
+        alert(error); 
+      }); 
+    })
+  
+
     getCart()
 
 
@@ -213,29 +290,30 @@
 <body>
 
    <!-- ======= Header ======= -->
-   <header id="header" class="fixed-top">
+  <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center justify-content-between">
 
-      <h1 class="logo"><a href="index.html">Artistic Shop</a></h1>
+      <h1 class="logo"><a href="#" id="home">Art House</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto " href="home.html">Home</a></li>
-          <li><a class="nav-link scrollto " href="listing.html">Products</a></li>
+          <li><a class="nav-link scrollto " href="#" id="products">Products</a></li>
           <li><a class="nav-link scrollto" id="productList" href="#">Live Bidding</a></li>
           <li><a class="nav-link scrollto o" href="#" id="shoppingCart">Shopping Cart</a></li>
           <li class="dropdown"><a href="#"><span>Profile</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a id="editProfile" href="#">Edit Profile</a></li>
-              <li><a href="purchaseHistory.html" id="purchaseHistory">Purchase History</a></li>
-              <li><a href="income-dashboard.html">Income Dashboard</a></li>
+              <li><a href="#" id="purchaseHistory">Purchase History</a></li>
+              <li><a href="#" id="incomeDashboard">Income Dashboard</a></li>
               <li><a id="artistBidList" href="#">Your Bidding Products</a></li>
-              <li><a href="LoginAccount.html">Logout</a></li>
+              <li><a href="index.html" id="btn_logout">Logout</a></li>
             </ul>
           </li>
-          <li><a class="getstarted scrollto" href="#">Create New Listing</a></li>
+          <li><a class="getstarted scrollto" href="#" onclick="createBiddingProduct()">Create New Bid</a></li>
+          <li><a id="userName"></a></li>
+          <li><a id="credits"></a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -369,6 +447,17 @@
       console.log(searchInput);
       window.location.href= "listing.html?search=" + searchInput;
     })
+
+    function createBiddingProduct(){
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+     
+      window.location.href = "CreateBidding.html?user_id=" + user_id;
+    }
   </script>
 
 </body>
