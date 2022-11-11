@@ -265,11 +265,19 @@
           }
           
           if(unitNumber == ""){
-            document.getElementById('unitError').innerText = "Please enter your Postal Code!";
+            document.getElementById('unitError').innerText = "Please enter your unit number!";
           }
 
-          if(email == "" || password == "" || firstName == "" || lastName == "" || postalCode == "" || address == "" || unitNumber == ""){
-            alert("Please enter all the required fields!");
+          
+
+          if(email == "" && password == "" && firstName == "" && lastName == "" && postalCode == "" && unitNumber == ""){
+            //alert("Please enter all the required fields!");
+            document.getElementById('emailError').innerText = "Please enter your Postal Code!";
+            document.getElementById('passwordError').innerText = "Please enter your Password!";
+            document.getElementById('fNameError').innerText = "Please enter your first name!";
+            document.getElementById('lNameError').innerText = "Please enter your last name!";
+            document.getElementById('postalError').innerText = "Please enter your Postal Code!";
+            document.getElementById('unitError').innerText = "Please enter your unit number!";
           }else{
             createUserWithEmailAndPassword(auth, email, passHash, firstName, lastName, postalCode, address, unitNumber, ImgURL)
             .then((userCredential) => {

@@ -73,7 +73,7 @@
       <div class="container">
 
         <div class="d-flex justify-content-between align-items-center">
-          <h2 style="font-weight:bold;">Create Bidding Details</h2>
+          <h2>Create Bidding Details</h2>
           <ol>
             <li><a href="index.html">Home</a></li>
             <li>Create Bidding Details</li>
@@ -90,6 +90,7 @@
               <img src="https://uxwing.com/wp-content/themes/uxwing/download/logistics-shipping-delivery/search-product-icon.png" style="max-width:400px; max-height:400px; margin-left:30%; margin-bottom:30px; margin-top:30px; border: 3px solid #ccc; background: #eee; padding: 15px 10px;" id="imageSrc" alt="/Project/assets/img/profile-icon-9.png">
               <input type="file" class="form-control" id="customFile" onchange="showImage()" required/>
               <label class="form-label" for="title">Upload your art piece</label>
+              <p style="color:red;" id="imageError"></p>
            </div>
             <!-- 2 column grid layout with text inputs for the first and last names -->
             <div class="row">
@@ -97,12 +98,14 @@
                   <div class="form-outline">
                   <input type="text" id="title" name="inputTitle" class="form-control" placeholder="E.g., Blue Moon" value="" required/>
                   <label class="form-label" for="title">Title</label>
+                  <p style="color:red;" id="titleError"></p>
                   </div>
               </div>
               <div class="col-md-6 mb-4 mt-4">
                   <div class="form-outline">
                   <input type="text" id="artistName" class="form-control" placeholder="E.g., Leonardo DaVinci" value="" required/>
                   <label class="form-label" for="artistName">Artist Name</label>
+                  <p style="color:red;" id="artistError"></p>
                   </div>
               </div>
             </div>
@@ -111,12 +114,14 @@
                 <div class="form-outline">
                   <input type="number" class="form-control" id="inputStartBid" aria-describedby="startBidHelp" required>
                   <label for="inputStartBid" class="form-label">Starting Bid (SGD $)</label>
+                  <p style="color:red;" id="startBidError"></p>
                 </div>
               </div>
               <div class="col-md-6 mb-4">
                 <div class="form-outline mb-4">
                   <input type="number" class="form-control" id="subBid" aria-describedby="subBidHelp" required>
                   <label for="subBid" class="form-label">Subsequent Bid (SGD $)</label>
+                  <p style="color:red;" id="subBidError"></p>
                 </div>
               </div>
             </div>
@@ -130,6 +135,7 @@
                     <option value="Literature">Literature</option>
                     <option value="Architecture">Architecture</option>
                   </select>
+                  <p style="color:red;" id="categoryError"></p>
                 </div>
               </div>
               <div class="col-md-3 mb-4">
@@ -137,6 +143,7 @@
                 <div class="form-outline mb-4">
                   <input type="datetime-local" id="countdownTimer" name="countdownTimerInput" class="form-control" value="" required/>
                   <label class="form-label" for="countdownTimer">Bidding End Date</label>
+                  <p style="color:red;" id="dateError"></p>
                 </div>
               </div>
               <div class="col-md-6 mb-4">
@@ -153,6 +160,7 @@
                 <div class="form-outline mb-4">
                   <textarea class="form-control" id="productDesc" rows="3" maxlength="300" placeholder="Enter your art piece details (Creation Date and what the meaning behind this picture?)" required></textarea>
                   <label for="productDesc" class="form-label">Description</label>
+                  <p style="color:red;" id="descError"></p>
                 </div>
               </div>
             </div>
@@ -165,6 +173,7 @@
                   Back
                 </button>
             </div>
+        </form>
       </div>
     </section>
 
@@ -427,19 +436,64 @@
           var productPic = ImgURL;  
           var prodDesc = document.getElementById('productDesc').value;     
       
-          if(startBid > 0 && subBid > 0){
-            if(countdownTimer > curDate){
-              if(productPic != ""){
-                createBiddingProduct(id, title, artistName, startBid, subBid, curBid, item_cat, countdownTimer, videoURL, productPic, prodDesc);
+          if(title == ""){
+            document.getElementById('titleError').innerText = "Please enter the art title!";
+          }
+
+          if(artistName == ""){
+            document.getElementById('artistError').innerText = "Please enter the artist name!";
+          }
+
+          if(startBid == ""){
+            document.getElementById('startBidError').innerText = "Please enter the starting bid!";
+          }
+
+          if(subBid == ""){
+            document.getElementById('subBidError').innerText = "Please enter your subsequent bid amount!";
+          }
+          
+          if(item_cat == ""){
+            document.getElementById('categoryError').innerText = "Please enter the category of your art!";
+          }
+          
+          if(countdownTimer == ""){
+            document.getElementById('dateError').innerText = "Please enter a valid date!";
+          }
+
+          if(productPic == ""){
+            document.getElementById('imageError').innerText = "Please upload an image!";
+          }
+
+          if(prodDesc == ""){
+            document.getElementById('descError').innerText = "Please enter a description of your art piece!";
+          }
+
+          if(title == "" && artistName == "" && startBid == "" && subBid == "" && item_cat == "" && countdownTimer == "" && productPic == "" && prodDesc == ""){
+            //alert("Please enter all the required fields!");
+            document.getElementById('titleError').innerText = "Please enter the art title!";
+            document.getElementById('artistError').innerText = "Please enter the artist name!";
+            document.getElementById('startBidError').innerText = "Please enter the starting bid!";
+            document.getElementById('subBidError').innerText = "Please enter your subsequent bid amount!";
+            document.getElementById('categoryError').innerText = "Please enter the category of your art!";
+            document.getElementById('dateError').innerText = "Please enter a valid date!";
+            document.getElementById('imageError').innerText = "Please upload an image!";
+            document.getElementById('descError').innerText = "Please enter a description of your art piece!";
+          }else{
+            if(startBid > 0 && subBid > 0){
+              if(countdownTimer > curDate){
+                if(productPic != ""){
+                  createBiddingProduct(id, title, artistName, startBid, subBid, curBid, item_cat, countdownTimer, videoURL, productPic, prodDesc);
+                }else{
+                  productPic = imageSrc.src;
+                  createBiddingProduct(id, title, artistName, startBid, subBid, curBid, item_cat, countdownTimer, videoURL, productPic, prodDesc);
+                }
               }else{
-                productPic = imageSrc.src;
-                createBiddingProduct(id, title, artistName, startBid, subBid, curBid, item_cat, countdownTimer, videoURL, productPic, prodDesc);
+                document.getElementById('dateError').innerText = "Please enter a valid date!";
               }
             }else{
-              alert("Please enter a valid date!");
-            }
-          }else{
-            alert("Please enter a valid price!");
+              document.getElementById('startBidError').innerText = "Please enter a valid start price!";
+              document.getElementById('subBidError').innerText = "Please enter a sub bid price!";
+            } 
           }
         })
         .catch(error => {

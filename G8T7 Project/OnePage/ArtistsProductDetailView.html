@@ -72,7 +72,7 @@
       <div class="container">
 
         <div class="d-flex justify-content-between align-items-center">
-          <h2 style="font-weight:bold;">Live Bidding >> Bidding Details</h2>
+          <h2>Live Bidding >> Bidding Details</h2>
           <ol>
             <li><a href="index.html">Home</a></li>
             <li>Live Bidding</li>
@@ -490,6 +490,17 @@
         console.log(btn_element);
         
         window.location.href = "UpdateBidding.html?id=" + btn_element + "&user_id=" + user_id;
+    }
+
+    function createBiddingProduct(){
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+     
+      window.location.href = "CreateBidding.html?user_id=" + user_id;
     }
 
     editProfile.addEventListener('click', (e) => {

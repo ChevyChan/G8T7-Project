@@ -73,7 +73,7 @@
       <div class="container">
 
         <div class="d-flex justify-content-between align-items-center">
-          <h2 style="font-weight:bold;">Update Bidding Details</h2>
+          <h2>Update Bidding Details</h2>
           <ol>
             <li><a href="index.html">Home</a></li>
             <li>Update Bidding Details</li>
@@ -84,64 +84,98 @@
     </section><!-- End Breadcrumbs -->
 
     <section class="inner-page">
-      <div class="container">
+      <div class="container" style="width:50%;">
         <form id="registerForm" method="GET" action="#">
-            <div class="form-outline mb-4 mt-4 text-center">
-              <img src="../Project/assets/img/profile-icon-9.png" id="imageSrc" style="width:300px; height:300px; margin-bottom:30px;" alt="../Project/assets/img/spongebob.png">
-              <input type="file" class="form-control" id="customFile" />
+          <div class="form-outline mb-4">
+            <img src="https://uxwing.com/wp-content/themes/uxwing/download/logistics-shipping-delivery/search-product-icon.png" style="max-width:400px; max-height:400px; margin-left:30%; margin-bottom:30px; margin-top:30px; border: 3px solid #ccc; background: #eee; padding: 15px 10px;" id="imageSrc" alt="/Project/assets/img/profile-icon-9.png">
+            <input type="file" class="form-control" id="customFile" onchange="showImage()" required/>
+            <label class="form-label" for="title">Upload your art piece</label>
+         </div>
+          <!-- 2 column grid layout with text inputs for the first and last names -->
+          <div class="row">
+            <div class="col-md-6 mb-4 mt-4">
+                <div class="form-outline">
+                <input type="text" id="title" name="inputTitle" class="form-control" placeholder="E.g., Blue Moon" value="" required/>
+                <label class="form-label" for="title">Title</label>
+                <p style="color:red;" id="titleError"></p>
+                </div>
             </div>
-            <!-- 2 column grid layout with text inputs for the first and last names -->
-            <div class="row mt-5">
-              <div class="col-md-6 mb-4">
-                  <div class="form-outline">
-                  <input type="text" id="title" name="inputTitle" class="form-control" value=""/>
-                  <label class="form-label" for="title">Title</label>
-                  </div>
-              </div>
-              <div class="col-md-6 mb-4">
-                  <div class="form-outline">
-                  <input type="text" id="artistName" class="form-control" value=""/>
-                  <label class="form-label" for="artistName">Artist Name</label>
-                  </div>
+            <div class="col-md-6 mb-4 mt-4">
+                <div class="form-outline">
+                <input type="text" id="artistName" class="form-control" placeholder="E.g., Leonardo DaVinci" value="" required/>
+                <label class="form-label" for="artistName">Artist Name</label>
+                <p style="color:red;" id="artistError"></p>
+                </div>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-6 mb-4">
+              <div class="form-outline">
+                <input type="number" class="form-control" id="inputStartBid" aria-describedby="startBidHelp" required>
+                <label for="inputStartBid" class="form-label">Starting Bid (SGD $)</label>
+                <p style="color:red;" id="startBidError"></p>
               </div>
             </div>
-  
+            <div class="col-md-6 mb-4">
               <div class="form-outline mb-4">
-                <input type="text" class="form-control" id="inputStartBid" aria-describedby="startBidHelp">
-                <label for="inputStartBid" class="form-label">Starting Bid</label>
+                <input type="number" class="form-control" id="subBid" aria-describedby="subBidHelp" required>
+                <label for="subBid" class="form-label">Subsequent Bid (SGD $)</label>
+                <p style="color:red;" id="subBidError"></p>
               </div>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-md-3 mb-4">
+              <div class="form-outline" style="margin-bottom:35px;">
+                <select class="form-select" id="ddlCategory" aria-label="Default select example" required>
+                  <option selected>Select Category</option>
+                  <option value="Painting">Painting</option>
+                  <option value="Sculpture">Sculpture</option>
+                  <option value="Literature">Literature</option>
+                  <option value="Architecture">Architecture</option>
+                </select>
+                <p style="color:red;" id="categoryError"></p>
+              </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <!-- Countdown input -->
               <div class="form-outline mb-4">
-                <input type="text" class="form-control" id="subBid" aria-describedby="subBidHelp">
-                <label for="subBid" class="form-label">Subsequent Bid</label>
+                <input type="datetime-local" id="countdownTimer" name="countdownTimerInput" class="form-control" value="" required/>
+                <label class="form-label" for="countdownTimer">Bidding End Date</label>
+                <p style="color:red;" id="dateError"></p>
               </div>
-              <!-- Countdown input -->
-              <div class="form-outline mb-4">
-              <input type="datetime-local" id="countdownTimer" name="countdownTimerInput" class="form-control" value=""/>
-              <label class="form-label" for="countdownTimer">End Bidding</label>
-              </div>
-  
+            </div>
+            <div class="col-md-6 mb-4">
               <!-- Video URL input -->
               <div class="form-outline mb-4">
-              <input type="url" id="inputVideoURL" name="videoURLInput" class="form-control" value=""/>
-              <label class="form-label" for="inputVideoURL">Video URL</label>
+                <input type="url" id="inputVideoURL" name="videoURLInput" class="form-control" placeholder="E.g., https://www.youtube.com/watch?v=...." value=""/>
+                <label class="form-label" for="inputVideoURL">Video URL</label>
               </div>
-
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-md-12 mb-4">
               <!-- Product Description input -->
               <div class="form-outline mb-4">
-                <textarea class="form-control" id="productDesc" rows="3"></textarea>
+                <textarea class="form-control" id="productDesc" rows="3" maxlength="300" placeholder="Enter your art piece details (Creation Date and what the meaning behind this picture?)" required></textarea>
                 <label for="productDesc" class="form-label">Description</label>
+                <p style="color:red;" id="descError"></p>
               </div>
-  
+            </div>
+          </div>
+          <div class="row mt-2 mb-4" style="width:50%; margin-left:20%;">
               <!-- Submit button -->
-              <button type="submit" id="btn_submit" class="btn btn-primary btn-block mb-4">
-                  Update Bidding
+              <button type="submit" id="btn_submit" class="btn btn-primary btn-block mb-3">
+                Update Bidding
               </button>
-              <button type="submit" id="btn_delete" class="btn btn-danger btn-block mb-4">
+              <button type="button" id="btn_delete" class="btn btn-danger btn-block mb-3">
                 Delete Bidding
               </button>
-              <button type="button" id="btn_back" class="btn btn-primary btn-block mb-4">
+              <button type="button" id="btn_back" class="btn btn-warning btn-block">
                 Back
               </button>
+          </div>
+        </form>
       </div>
     </section>
 
@@ -375,6 +409,17 @@
 
         UploadProcess();
         
+        var curDate = new Date();
+        console.log(curDate);
+        var dd = String(curDate.getDate()).padStart(2, '0');
+        var mm = String(curDate.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = curDate.getFullYear();
+
+        var hours = curDate.getHours();
+        var mins = curDate.getMinutes();
+
+        curDate = yyyy + '-' + mm + '-' + dd + "T" + hours + ":" + mins; //Current Date and time
+
         var title = document.getElementById('title').value;
         var startBid = document.getElementById('inputStartBid').value;
         var subBid = document.getElementById('subBid').value;
@@ -382,14 +427,62 @@
         var videoURL = document.getElementById('inputVideoURL').value;
         var productPic = ImgURL;
         var prodDesc = document.getElementById('productDesc').value;  
+        var prodCat = document.getElementById('ddlCategory').value;
     
-        if(productPic != ""){
-          updateBiddingProduct(title, startBid, subBid, countdownTimer, videoURL, productPic, prodDesc);
-        }else{
-          productPic = imageSrc.src;
-          updateBiddingProduct(title, startBid, subBid, countdownTimer, videoURL, productPic, prodDesc);
+        if(title == ""){
+          document.getElementById('titleError').innerText = "Please enter the art title!";
+        }
+
+        if(artistName == ""){
+          document.getElementById('artistError').innerText = "Please enter the artist name!";
+        }
+
+        if(startBid == ""){
+          document.getElementById('startBidError').innerText = "Please enter the starting bid!";
+        }
+
+        if(subBid == ""){
+          document.getElementById('subBidError').innerText = "Please enter your subsequent bid amount!";
         }
         
+        if(prodCat == ""){
+          document.getElementById('categoryError').innerText = "Please enter the category of your art!";
+        }
+        
+        if(countdownTimer == ""){
+          document.getElementById('dateError').innerText = "Please enter a valid date!";
+        }
+
+        if(prodDesc == ""){
+          document.getElementById('descError').innerText = "Please enter a description of your art piece!";
+        }
+
+        if(title == "" && artistName == "" && startBid == "" && subBid == "" && item_cat == "" && countdownTimer == "" && prodDesc == ""){
+          //alert("Please enter all the required fields!");
+          document.getElementById('titleError').innerText = "Please enter the art title!";
+          document.getElementById('artistError').innerText = "Please enter the artist name!";
+          document.getElementById('startBidError').innerText = "Please enter the starting bid!";
+          document.getElementById('subBidError').innerText = "Please enter your subsequent bid amount!";
+          document.getElementById('categoryError').innerText = "Please enter the category of your art!";
+          document.getElementById('dateError').innerText = "Please enter a valid date!";
+          document.getElementById('descError').innerText = "Please enter a description of your art piece!";
+        }else{
+          if(startBid > 0 && subBid > 0){
+            if(countdownTimer > curDate){
+              if(productPic != ""){ 
+                updateBiddingProduct(title, startBid, subBid, prodCat, countdownTimer, videoURL, productPic, prodDesc);
+              }else{
+                productPic = imageSrc.src;
+                updateBiddingProduct(title, startBid, subBid, prodCat, countdownTimer, videoURL, productPic, prodDesc);
+              }
+            }else{
+              document.getElementById('dateError').innerText = "Please enter a valid date!";
+            }
+          }else{
+            document.getElementById('startBidError').innerText = "Please enter a valid start price!";
+            document.getElementById('subBidError').innerText = "Please enter a sub bid price!";
+          } 
+        }
     })
 
     document.getElementById('btn_delete').addEventListener('click', e => {
@@ -435,7 +528,7 @@
         document.getElementById('subBid').value = snapshot.val().subBid;
         document.getElementById('inputVideoURL').value = snapshot.val().videoURL;
         document.getElementById('countdownTimer').value = snapshot.val().countdownTimer;
-        //document.getElementById('customFile').value = snapshot.val().productPic;
+        document.getElementById('ddlCategory').value = snapshot.val().category;
         var imageSrc = document.getElementById('imageSrc');
         imageSrc.setAttribute('src', snapshot.val().productPic);
         document.getElementById('productDesc').value = snapshot.val().prodDesc;
@@ -443,11 +536,12 @@
       }) 
     }
 
-    function updateBiddingProduct(title, startBid, subBid, countdownTimer, videoURL, productPic, prodDesc) {
+    function updateBiddingProduct(title, startBid, subBid, category, countdownTimer, videoURL, productPic, prodDesc) {
         update(ref(database, 'auction/' + id), {
             title : title,
             startBid: startBid,
             subBid: subBid,
+            category: category,
             countdownTimer: countdownTimer, 
             videoURL: videoURL,
             productPic: productPic,
@@ -541,6 +635,17 @@
       window.location.href = "ArtistsProductBidList.html?user_id=" + user_id;
   
     })
+
+    function createBiddingProduct(){
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+     
+      window.location.href = "CreateBidding.html?user_id=" + user_id;
+    }
   </script>
 </body>
 
