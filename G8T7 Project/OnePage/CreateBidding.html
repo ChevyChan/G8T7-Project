@@ -384,7 +384,7 @@
         console.log("Upload " + progress + "%");
       },
       (error) => {
-        alert("Error, please try again!");
+        console.log("Error, please try again!");
       },
       () =>{
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
@@ -469,7 +469,7 @@
           }
 
           if(title == "" && artistName == "" && startBid == "" && subBid == "" && item_cat == "" && countdownTimer == "" && productPic == "" && prodDesc == ""){
-            //alert("Please enter all the required fields!");
+            console.log("Please enter all the required fields!");
             document.getElementById('titleError').innerText = "Please enter the art title!";
             document.getElementById('artistError').innerText = "Please enter the artist name!";
             document.getElementById('startBidError').innerText = "Please enter the starting bid!";
@@ -532,7 +532,7 @@
       })
       .then(() => {
         // Data saved successfully!
-        alert("Bidding Started!");
+        console.log("Bidding Started!");
 
         const queryString = window.location.search;
         console.log(queryString);
@@ -544,7 +544,7 @@
       })
       .catch((error) => {
         // The write failed...
-        alert(error);
+        console.log(error);
       });
   }
 
@@ -553,7 +553,7 @@
       window.location.href = "index.html";
     }).catch((error) => {
       // An error happened.
-      alert(error);
+      console.log(error);
     });
   })
 

@@ -152,6 +152,9 @@
                   <label for="productDesc" class="form-label">Description</label>
                 </div>
               </div>
+
+              <p id="creditStatus" style="color:red"></p>
+
               <div class="row mt-2 mb-4" style="width:50%; margin-left:20%;">
                 <!-- Submit button -->
                 <button type="submit" id="btn_submit" class="btn btn-primary btn-block mb-4">
@@ -522,7 +525,7 @@
             })
             .catch((error) => {
                 // The write failed...
-                alert(error);
+                console.log(error);
             });
 
             update(ref(database, 'users/' + newBidUser), {
@@ -533,7 +536,7 @@
             })
             .catch((error) => {
                 // The write failed...
-                alert(error);
+                console.log(error);
             });
 
             update(ref(database, 'auction/' + id), {
@@ -542,11 +545,11 @@
             })
             .then(() => {
                 // Data saved successfully!
-                alert("Bid Successfully!");
+                console.log("Bid Successfully!");
             })
             .catch((error) => {
                 // The write failed...
-                alert(error);
+                console.log(error);
             });
           }else{
             update(ref(database, 'users/' + newBidUser), {
@@ -557,7 +560,7 @@
             })
             .catch((error) => {
                 // The write failed...
-                alert(error);
+                console.log(error);
             });
 
             update(ref(database, 'auction/' + id), {
@@ -566,15 +569,16 @@
             })
             .then(() => {
                 // Data saved successfully!
-                alert("Bid Successfully!");
+                console.log("Bid Successfully!");
             })
             .catch((error) => {
                 // The write failed...
-                alert(error);
+                console.log(error);
             });
           }
         }else{
-          alert("Insufficient Credit! Please top up and try again!");
+          console.log("Insufficient Credit! Please top up and try again!");
+          document.getElementById("creditStatus").innerText = "Insufficient Credit! Please top up and try again!";
         }
            
     }

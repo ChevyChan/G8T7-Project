@@ -209,7 +209,7 @@
             console.log("Upload " + progress + "%");
           },
           (error) => {
-            alert("Error, please try again!");
+            console.log("Error, please try again!");
           },
           () =>{
             getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
@@ -271,7 +271,7 @@
           
 
           if(email == "" && password == "" && firstName == "" && lastName == "" && postalCode == "" && unitNumber == ""){
-            //alert("Please enter all the required fields!");
+            console.log("Please enter all the required fields!");
             document.getElementById('emailError').innerText = "Please enter your Postal Code!";
             document.getElementById('passwordError').innerText = "Please enter your Password!";
             document.getElementById('fNameError').innerText = "Please enter your first name!";
@@ -299,12 +299,12 @@
                   .then(() => {
                     // Data saved successfully!
                     //SendEmail(email, firstName);
-                    alert("User Created Successfully!");
+                    console.log("User Created Successfully!");
                     window.location.href = "index.html";
                   })
                   .catch((error) => {
                     // The write failed...
-                    alert(error);
+                    console.log(error);
                   });
     
                 
@@ -313,7 +313,7 @@
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 
-                alert(errorMessage);
+                console.log(errorMessage);
             });
           }
         })
