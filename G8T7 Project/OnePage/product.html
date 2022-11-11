@@ -179,7 +179,7 @@
     // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
     import { getAuth , createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
-    import { getDatabase, ref, set , onValue , remove } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js";
+    import { getDatabase, ref, set , onValue , remove , get , child , update } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js";
     import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-storage.js"
     // TODO: Add SDKs for Firebase products that you want to use
     // https://firebase.google.com/docs/web/setup#available-libraries
@@ -346,6 +346,9 @@ btn_update.addEventListener('click', (e) => {
               <p>
                 ${childData.prodDesc}
               </p>
+              <hr>
+              <br>
+              <button type="button" class="btn btn-primary" id="btn_atc">Add to Cart</button>
             </div>
           </div>
 
@@ -354,7 +357,44 @@ btn_update.addEventListener('click', (e) => {
       </div>
     </section>
 `
-document.getElementById('portfolio').innerHTML=str}}
+function addToWinnerCart() {
+    const dbRef = ref(getDatabase());
+      get(child(dbRef, `users/${user}/cart`)).then((snapshot) => {
+      if (snapshot.exists()) {
+          console.log(snapshot.val())
+          //update cart
+          const db = getDatabase();
+          let up = {}
+          up[`/users/${user}/cart/` + product_id] = childData.title
+          update(ref(db),up)
+          document.getElementById("btn_atc").setAttribute("class","btn btn-success")
+          document.getElementById("btn_atc").innerHTML="Added!"
+      } else {
+          console.log("No data available");
+          //add cart branch to database
+          get(child(dbRef, `users/${user}/`)).then((snapshot) => {
+          if (snapshot.exists()) {
+              console.log(snapshot.val())
+              //update cart
+              const db = getDatabase();
+              let up = {}
+              up[`/users/${user}/cart/` + product_id] = childData.title
+              update(ref(db),up)
+          } else {
+              console.log("No data available");
+          }
+          }).catch((error) => {
+          console.error(error);
+          });
+      }
+      }).catch((error) => {
+      console.error(error);
+      });
+  }
+  document.getElementById('portfolio').innerHTML=str
+  btn_atc.addEventListener('click', (e) => {
+  addToWinnerCart()
+    })}}
       });
 })
 
