@@ -436,6 +436,7 @@
       e.preventDefault();
 
       var title = "";
+      var lastBidUser = "";
 
       const queryString = window.location.search;
       console.log(queryString);
@@ -471,16 +472,20 @@
           
           var id = snapshot.val().id;
           title = snapshot.val().title;
+          lastBidUser = snapshot.val().lastBidUser;
         })
 
       var startBid = document.getElementById('inputStartBid').value;
       var subBid = document.getElementById('subBid').value;
-      curBid = parseInt(curBid) + parseInt(subBid);
-      console.log(curBid);
-      console.log(subBid);
-      var newBidUser = user_id;
+      if(lastBidUser == ""){
+        curBid = parseInt(startBid);
+      }else{
+        curBid = parseInt(curBid) + parseInt(subBid);
+        console.log(curBid);
+        console.log(subBid);
+      }
   
-      updateBiddingProduct(curBid, newBidUser, credits, title, dbEmail, dbName);
+      updateBiddingProduct(curBid, user_id, credits, title, dbEmail, dbName);
       
       
       window.location.href = "ProductBiddingDetails.html?product_id=" + product_id + "&user_id=" + user_id;
@@ -520,6 +525,30 @@
                 alert(error);
             });
 
+            update(ref(database, 'users/' + newBidUser), {
+              credits: credit_balance
+            })
+            .then(() => {
+              //Continue
+            })
+            .catch((error) => {
+                // The write failed...
+                alert(error);
+            });
+
+            update(ref(database, 'auction/' + id), {
+              curBid: curBid,
+              lastBidUser: newBidUser
+            })
+            .then(() => {
+                // Data saved successfully!
+                alert("Bid Successfully!");
+            })
+            .catch((error) => {
+                // The write failed...
+                alert(error);
+            });
+          }else{
             update(ref(database, 'users/' + newBidUser), {
               credits: credit_balance
             })
