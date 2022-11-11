@@ -437,6 +437,17 @@ window.onload=retrieveAllProducts()
       window.location.href = "ProductBiddingList.html?user_id=" + user_id; 
  
     })
+    document.getElementById('shoppingCart').addEventListener('click', (e) => {
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+
+      window.location.href = "shoppingCart.html?user_id=" + user_id;
+
+    })
   </script>
 </body>
 
