@@ -54,7 +54,7 @@
               <li><a href="index.html" id="btn_logout">Logout</a></li>
             </ul>
           </li>
-          <li><a class="getstarted scrollto" href="#" onclick="createBiddingProduct()">Create New Bid</a></li>
+          <li><a class="getstarted scrollto" href="#" id="createBid">Create New Bid</a></li>
           <li><a id="userName"></a></li>
           <li><a id="credits"></a></li>
         </ul>
@@ -441,6 +441,9 @@ btn_logout.addEventListener('click', (e) => {
     })
     listing.addEventListener('click', (e) => { 
       window.location.href = "listing.html?user_id=" + user_id; 
+    })
+    document.getElementById('createBid').addEventListener('click', (e) => {  
+      window.location.href = "CreateBidding.html?user_id=" + user_id;
     })
 
     var userId = "";

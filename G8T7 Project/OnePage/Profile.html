@@ -54,7 +54,7 @@
               <li><a href="index.html" id="btn_logout">Logout</a></li>
             </ul>
           </li>
-          <li><a class="getstarted scrollto" href="#" onclick="createBiddingProduct()">Create New Bid</a></li>
+          <li><a class="getstarted scrollto" href="#" id="createBid">Create New Bid</a></li>
           <li><a id="userName"></a></li>
           <li><a id="credits"></a></li>
         </ul>
@@ -542,6 +542,13 @@
         
     }
 
+    const queryString = window.location.search;
+    console.log(queryString);
+    const urlParams = new URLSearchParams(queryString);
+    console.log(urlParams);
+    const user_id = urlParams.get('user_id');
+    console.log(user_id);
+
     function redirectPage(){
       const queryString = window.location.search;
       console.log(queryString);
@@ -563,147 +570,52 @@
     }
 
     document.getElementById('home').addEventListener('click', (e) => {
-      const queryString = window.location.search;
-      console.log(queryString);
-      const urlParams = new URLSearchParams(queryString);
-      console.log(urlParams);
-      const user_id = urlParams.get('user_id');
-      console.log(user_id);
-
       window.location.href = "home.html?user_id=" + user_id;
-
     })
 
     document.getElementById('shoppingCart').addEventListener('click', (e) => {
-      const queryString = window.location.search;
-      console.log(queryString);
-      const urlParams = new URLSearchParams(queryString);
-      console.log(urlParams);
-      const user_id = urlParams.get('user_id');
-      console.log(user_id);
-
       window.location.href = "shoppingCart.html?user_id=" + user_id;
-
     })
 
     document.getElementById('products').addEventListener('click', (e) => {
-      const queryString = window.location.search;
-      console.log(queryString);
-      const urlParams = new URLSearchParams(queryString);
-      console.log(urlParams);
-      const user_id = urlParams.get('user_id');
-      console.log(user_id);
-
       window.location.href = "listing.html?user_id=" + user_id;
-
     })
 
     document.getElementById('purchaseHistory').addEventListener('click', (e) => {
-      const queryString = window.location.search;
-      console.log(queryString);
-      const urlParams = new URLSearchParams(queryString);
-      console.log(urlParams);
-      const user_id = urlParams.get('user_id');
-      console.log(user_id);
-
       window.location.href = "purchaseHistory.html?user_id=" + user_id;
-
     })
 
     document.getElementById('incomeDashboard').addEventListener('click', (e) => {
-      const queryString = window.location.search;
-      console.log(queryString);
-      const urlParams = new URLSearchParams(queryString);
-      console.log(urlParams);
-      const user_id = urlParams.get('user_id');
-      console.log(user_id);
-
       window.location.href = "income-dashboard.html?user_id=" + user_id;
-
     })
 
     editProfile.addEventListener('click', (e) => {
-      const queryString = window.location.search;
-      console.log(queryString);
-      const urlParams = new URLSearchParams(queryString);
-      console.log(urlParams);
-      const user_id = urlParams.get('user_id');
-      console.log(user_id);
-
       window.location.href = "Profile.html?user_id=" + user_id;
-
     })    
 
     document.getElementById('shoppingCart').addEventListener('click', (e) => {
-      const queryString = window.location.search;
-      console.log(queryString);
-      const urlParams = new URLSearchParams(queryString);
-      console.log(urlParams);
-      const user_id = urlParams.get('user_id');
-      console.log(user_id);
-
       window.location.href = "shoppingCart.html?user_id=" + user_id;
-
     })
 
     artistBidList.addEventListener('click', (e) => {
-      const queryString = window.location.search;
-      console.log(queryString);
-      const urlParams = new URLSearchParams(queryString);
-      console.log(urlParams);
-      const user_id = urlParams.get('user_id');
-      console.log(user_id);
-
       window.location.href = "ArtistsProductBidList.html?user_id=" + user_id;
-
     })
 
     biddingList.addEventListener('click', (e) => {
-      const queryString = window.location.search;
-      console.log(queryString);
-      const urlParams = new URLSearchParams(queryString);
-      console.log(urlParams);
-      const user_id = urlParams.get('user_id');
-      console.log(user_id);
-
       window.location.href = "ProductBiddingList.html?user_id=" + user_id;
-
     })
 
     document.getElementById('shoppingCart').addEventListener('click', (e) => {
-      const queryString = window.location.search;
-      console.log(queryString);
-      const urlParams = new URLSearchParams(queryString);
-      console.log(urlParams);
-      const user_id = urlParams.get('user_id');
-      console.log(user_id);
-
       window.location.href = "shoppingCart.html?user_id=" + user_id;
-
     })
 
     btn_back.addEventListener('click', (e) => {
-      const queryString = window.location.search;
-      console.log(queryString);
-      const urlParams = new URLSearchParams(queryString);
-      console.log(urlParams);
-      const user_id = urlParams.get('user_id');
-      console.log(user_id);
-  
       window.location.href = "ArtistsProductBidList.html?user_id=" + user_id;
-  
     })
 
-    function createBiddingProduct(){
-      const queryString = window.location.search;
-      console.log(queryString);
-      const urlParams = new URLSearchParams(queryString);
-      console.log(urlParams);
-      const user_id = urlParams.get('user_id');
-      console.log(user_id);
-     
+    document.getElementById('createBid').addEventListener('click', (e) => {  
       window.location.href = "CreateBidding.html?user_id=" + user_id;
-    }
+      })
   </script>
 
   <script src="https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.js"></script>
