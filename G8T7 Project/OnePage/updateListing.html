@@ -42,16 +42,16 @@
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto " href="home.html">Home</a></li>
-          <li><a class="nav-link scrollto " href="listing.html">Products</a></li>
+          <li><a class="nav-link scrollto " id="home" href="#">Home</a></li>
+          <li><a class="nav-link scrollto " id="listing" href="#">Products</a></li>
           <li><a class="nav-link scrollto" id="productList" href="#">Live Bidding</a></li>
           <li><a class="nav-link scrollto o" href="#" id="shoppingCart">Shopping Cart</a></li>
           <li class="dropdown"><a href="#"><span>Profile</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a id="editProfile" href="#">Edit Profile</a></li>
-              <li><a href="purchaseHistory.html" id="purchaseHistory">Purchase History</a></li>
-              <li><a href="income-dashboard.html">Income Dashboard</a></li>
-              <li><a id="artistBidList" id="artistBidList">Your Bidding Products</a></li>
+              <li><a href="#" id="purchaseHistory">Purchase History</a></li>
+              <li><a href="#" id="income_dashboard">Income Dashboard</a></li>
+              <li><a id="artistBidList" href="#">Your Bidding Products</a></li>
               <li><a href="index.html" id="btn_logout">Logout</a></li>
             </ul>
           </li>
@@ -60,7 +60,7 @@
           <li><a id="credits"></a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
-      </nav><!-- .navbar -->
+      </nav><!-- .navbar --><!-- .navbar -->
 
 
     </div>
@@ -425,6 +425,83 @@
 
       window.location.href = "shoppingCart.html?user_id=" + user_id;
 
+    })
+    home.addEventListener('click', (e) => { 
+      const queryString = window.location.search; 
+      console.log(queryString); 
+      const urlParams = new URLSearchParams(queryString); 
+      console.log(urlParams); 
+      const user_id = urlParams.get('user_id'); 
+      console.log(user_id); 
+ 
+      window.location.href = "home.html?user_id=" + user_id; 
+ 
+    })
+    listing.addEventListener('click', (e) => { 
+      const queryString = window.location.search; 
+      console.log(queryString); 
+      const urlParams = new URLSearchParams(queryString); 
+      console.log(urlParams); 
+      const user_id = urlParams.get('user_id'); 
+      console.log(user_id); 
+ 
+      window.location.href = "listing.html?user_id=" + user_id; 
+ 
+    })
+    income_dashboard.addEventListener('click', (e) => { 
+      const queryString = window.location.search; 
+      console.log(queryString); 
+      const urlParams = new URLSearchParams(queryString); 
+      console.log(urlParams); 
+      const user_id = urlParams.get('user_id'); 
+      console.log(user_id); 
+ 
+      window.location.href = "income-dashboard.html?user_id=" + user_id; 
+ 
+    })
+    purchaseHistory.addEventListener('click', (e) => { 
+      const queryString = window.location.search; 
+      console.log(queryString); 
+      const urlParams = new URLSearchParams(queryString); 
+      console.log(urlParams); 
+      const user_id = urlParams.get('user_id'); 
+      console.log(user_id); 
+ 
+      window.location.href = "purchaseHistory.html?user_id=" + user_id; 
+ 
+    })
+    editProfile.addEventListener('click', (e) => { 
+      const queryString = window.location.search; 
+      console.log(queryString); 
+      const urlParams = new URLSearchParams(queryString); 
+      console.log(urlParams); 
+      const user_id = urlParams.get('user_id'); 
+      console.log(user_id); 
+ 
+      window.location.href = "Profile.html?user_id=" + user_id; 
+ 
+    })
+    shoppingCart.addEventListener('click', (e) => { 
+      const queryString = window.location.search; 
+      console.log(queryString); 
+      const urlParams = new URLSearchParams(queryString); 
+      console.log(urlParams); 
+      const user_id = urlParams.get('user_id'); 
+      console.log(user_id); 
+ 
+      window.location.href = "shoppingCart.html?user_id=" + user_id; 
+ 
+    })
+    listing.addEventListener('click', (e) => { 
+      const queryString = window.location.search; 
+      console.log(queryString); 
+      const urlParams = new URLSearchParams(queryString); 
+      console.log(urlParams); 
+      const user_id = urlParams.get('user_id'); 
+      console.log(user_id); 
+ 
+      window.location.href = "listing.html?user_id=" + user_id; 
+ 
     })
   </script>
 
