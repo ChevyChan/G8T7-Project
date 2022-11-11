@@ -95,7 +95,7 @@
           <!--1st item-->
           <div class="col mb-4" style="margin-left:33%;">
             <div class="col mb-4">
-              <img src="assets\img\coffee-2306471_1920.jpg" style="border-radius:50%; max-width:300px; max-height:300px;" class="card-img-top" alt="..\Project\assets\img\profile-icon-9.png">
+              <img src="assets\img\coffee-2306471_1920.jpg" style="border-radius:50%; max-width:300px; max-height:300px;" class="card-img-top" alt="assets\img\profile-icon-9.png">
               <h2 class="text-center mt-4">Please check again later!</h2>
             </div>
           </div>
@@ -108,7 +108,7 @@
             <h2 class="mt-4 mb-3">Expired Bidding Products</h2>
           <div id="expiredBidding"  class="row row-cols-auto mt-4 text-center">
             <div class="col mb-4 mx-auto text-center">
-              <img src="assets\img\brandenburger-tor-201939_1920.jpg" style="border-radius:50%; max-width:300px; max-height:300px;" class="card-img-top" alt="C..\Project\assets\img\profile-icon-9.png">
+              <img src="assets\img\brandenburger-tor-201939_1920.jpg" style="border-radius:50%; max-width:300px; max-height:300px;" class="card-img-top" alt="assets\img\profile-icon-9.png">
               <h2 class="text-center mt-4">Please check again later!</h2>
             </div>
           </div>
@@ -385,15 +385,18 @@
 
             })*/
           }
+          var bidding_list = document.getElementById("cardList");
 
           //Check for user's posted bids
           if(artistID == user_id){
+            
+            
             if(curDate > countdown){
               console.log(days);
               str += `
                 <div class="col mb-5">
                   <div class="card" style="width: 18rem;">
-                    <img src="${childSnapshot.val().productPic}" class="card-img-top" style="width:auto; max-width:300px; max-height:300px;" alt="../Project/assets/img/profile-icon-9.png">
+                    <img src="${childSnapshot.val().productPic}" class="card-img-top" style="width:auto; max-width:300px; max-height:300px; border: 3px solid #ccc; background: #eee; padding: 15px 10px;" alt="assets\img\profile-icon-9.png">
                     <div class="card-body">
                       <h5 class="card-title">${childSnapshot.val().title}</h5>
                       <p class="card-text">${childSnapshot.val().artistName} || <span>$${curBidPrice}</span></p>
@@ -406,13 +409,13 @@
               document.getElementById('expiredBidding').innerHTML = str;
             }
             
-            var bidding_list = document.getElementById("cardList");
+            
   
             if(countdown >= curDate){
               str2 += `
                 <div class="col mb-5">
                   <div class="card" style="width: 18rem;">
-                    <img src="${childSnapshot.val().productPic}" class="card-img-top" style="width:auto; max-width:300px; max-height:300px;" alt="../Project/assets/img/profile-icon-9.png">
+                    <img src="${childSnapshot.val().productPic}" class="card-img-top" style="width:auto; max-width:300px; max-height:300px; border: 3px solid #ccc; background: #eee; padding: 15px 10px;" alt="assets\img\profile-icon-9.png">
                     <div class="card-body">
                       <h5 class="card-title">${childSnapshot.val().title}</h5>
                       <p class="card-text">${childSnapshot.val().artistName} || <span>$${curBidPrice}</span></p>

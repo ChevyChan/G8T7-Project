@@ -169,7 +169,7 @@
                 <button type="submit" id="btn_submit" class="btn btn-primary btn-block mb-3">
                   Start Bidding
                 </button>
-                <button type="button" id="btn_back" class="btn btn-primary btn-block">
+                <button type="button" id="btn_back" class="btn btn-warning btn-block">
                   Back
                 </button>
             </div>
@@ -434,7 +434,8 @@
           var countdownTimer = document.getElementById('countdownTimer').value;
           var videoURL = document.getElementById('inputVideoURL').value;
           var productPic = ImgURL;  
-          var prodDesc = document.getElementById('productDesc').value;     
+          var prodDesc = document.getElementById('productDesc').value;
+          var uploadPic = document.getElementById('customFile').value;  
       
           if(title == ""){
             document.getElementById('titleError').innerText = "Please enter the art title!";
@@ -460,7 +461,7 @@
             document.getElementById('dateError').innerText = "Please enter a valid date!";
           }
 
-          if(productPic == ""){
+          if(uploadPic == ""){
             document.getElementById('imageError').innerText = "Please upload an image!";
           }
 

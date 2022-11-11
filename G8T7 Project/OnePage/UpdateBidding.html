@@ -418,7 +418,14 @@
         var hours = curDate.getHours();
         var mins = curDate.getMinutes();
 
-        curDate = yyyy + '-' + mm + '-' + dd + "T" + hours + ":" + mins; //Current Date and time
+        var min_array = [];
+        min_array.push(mins);
+
+        if(min_array.length == 1){
+          curDate = yyyy + '-' + mm + '-' + dd + "T" + hours + ":" + "0" + mins; //Current Date and time
+        }else{
+          curDate = yyyy + '-' + mm + '-' + dd + "T" + hours + ":" + mins;
+        }
 
         var title = document.getElementById('title').value;
         var startBid = document.getElementById('inputStartBid').value;
@@ -476,7 +483,7 @@
                 updateBiddingProduct(title, startBid, subBid, prodCat, countdownTimer, videoURL, productPic, prodDesc);
               }
             }else{
-              document.getElementById('dateError').innerText = "Please enter a valid date!";
+              document.getElementById('dateError').innerText = "Please enter a valid date and time!";
             }
           }else{
             document.getElementById('startBidError').innerText = "Please enter a valid start price!";
