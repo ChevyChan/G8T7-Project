@@ -42,9 +42,8 @@
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto" id="home" href="#">Home</a></li>
           <li><a class="nav-link scrollto" id="products" href="#">Products</a></li>
-          <li><a class="nav-link scrollto" id="productList" href="#">Live Bidding</a></li>
+          <li><a class="nav-link scrollto" id="biddingList" href="#">Live Bidding</a></li>
           <li><a class="nav-link scrollto o" href="#" id="shoppingCart">Shopping Cart</a></li>
           <li class="dropdown"><a href="#"><span>Profile</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
@@ -548,42 +547,6 @@
       });
   }
 
-  editProfile.addEventListener('click', (e) => {
-    const queryString = window.location.search;
-    console.log(queryString);
-    const urlParams = new URLSearchParams(queryString);
-    console.log(urlParams);
-    const user_id = urlParams.get('user_id');
-    console.log(user_id);
-
-    window.location.href = "Profile.html?user_id=" + user_id;
-
-  })    
-
-  artistBidList.addEventListener('click', (e) => {
-    const queryString = window.location.search;
-    console.log(queryString);
-    const urlParams = new URLSearchParams(queryString);
-    console.log(urlParams);
-    const user_id = urlParams.get('user_id');
-    console.log(user_id);
-
-    window.location.href = "ArtistsProductBidList.html?user_id=" + user_id;
-
-  })
-
-  productList.addEventListener('click', (e) => {
-    const queryString = window.location.search;
-    console.log(queryString);
-    const urlParams = new URLSearchParams(queryString);
-    console.log(urlParams);
-    const user_id = urlParams.get('user_id');
-    console.log(user_id);
-
-    window.location.href = "ProductBiddingList.html?user_id=" + user_id;
-
-  })
-
   btn_logout.addEventListener('click', (e) => {
     signOut(auth).then(() => {
       window.location.href = "index.html";
@@ -604,18 +567,6 @@
       imgSrc.setAttribute('src', x);
     }
 
-    document.getElementById('shoppingCart').addEventListener('click', (e) => {
-      const queryString = window.location.search;
-      console.log(queryString);
-      const urlParams = new URLSearchParams(queryString);
-      console.log(urlParams);
-      const user_id = urlParams.get('user_id');
-      console.log(user_id);
-
-      window.location.href = "shoppingCart.html?user_id=" + user_id;
-
-    })
-
     document.getElementById('home').addEventListener('click', (e) => {
       const queryString = window.location.search;
       console.log(queryString);
@@ -628,7 +579,19 @@
 
     })
 
-    document.getElementById('listing').addEventListener('click', (e) => {
+    document.getElementById('shoppingCart').addEventListener('click', (e) => {
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+
+      window.location.href = "shoppingCart.html?user_id=" + user_id;
+
+    })
+
+    document.getElementById('products').addEventListener('click', (e) => {
       const queryString = window.location.search;
       console.log(queryString);
       const urlParams = new URLSearchParams(queryString);
@@ -661,6 +624,66 @@
       console.log(user_id);
 
       window.location.href = "income-dashboard.html?user_id=" + user_id;
+
+    })
+
+    editProfile.addEventListener('click', (e) => {
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+
+      window.location.href = "Profile.html?user_id=" + user_id;
+
+    })    
+
+    document.getElementById('shoppingCart').addEventListener('click', (e) => {
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+
+      window.location.href = "shoppingCart.html?user_id=" + user_id;
+
+    })
+
+    artistBidList.addEventListener('click', (e) => {
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+
+      window.location.href = "ArtistsProductBidList.html?user_id=" + user_id;
+
+    })
+
+    biddingList.addEventListener('click', (e) => {
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+
+      window.location.href = "ProductBiddingList.html?user_id=" + user_id;
+
+    })
+
+    document.getElementById('shoppingCart').addEventListener('click', (e) => {
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+
+      window.location.href = "shoppingCart.html?user_id=" + user_id;
 
     })
   </script>
