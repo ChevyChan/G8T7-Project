@@ -386,7 +386,7 @@
         console.log("Upload " + progress + "%");
       },
       (error) => {
-        alert("Error, please try again!");
+        console.log("Error, please try again!");
       },
       () =>{
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
@@ -464,7 +464,7 @@
         }
 
         if(title == "" && artistName == "" && startBid == "" && subBid == "" && item_cat == "" && countdownTimer == "" && prodDesc == ""){
-          //alert("Please enter all the required fields!");
+          console.log("Please enter all the required fields!");
           document.getElementById('titleError').innerText = "Please enter the art title!";
           document.getElementById('artistError').innerText = "Please enter the artist name!";
           document.getElementById('startBidError').innerText = "Please enter the starting bid!";
@@ -555,7 +555,7 @@
         })
         .then(() => {
             // Data saved successfully!
-            alert("Bidding Updated Successfully!");
+            console.log("Bidding Updated Successfully!");
             const queryString = window.location.search;
             console.log(queryString);
             const urlParams = new URLSearchParams(queryString);
@@ -566,7 +566,7 @@
         })
         .catch((error) => {
             // The write failed...
-            alert(error);
+            console.log(error);
         });
     }
 
@@ -574,7 +574,7 @@
   function deleteBiddingProduct(id){
     remove(ref(database, "auction/" + id))
     .then(() => {
-      alert("Bidding Item has been deleted!");
+      console.log("Bidding Item has been deleted!");
 
       const queryString = window.location.search;
       console.log(queryString);
@@ -585,7 +585,7 @@
       window.location.href = "ArtistsProductBidList.html?user_id=" + userID;
     })
     .catch((error) => {
-      alert("Error, please try again!");
+      console.log("Error, please try again!");
     })
   }
 

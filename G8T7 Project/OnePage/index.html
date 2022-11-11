@@ -64,6 +64,9 @@
 						</button>
 					</div>
 
+					<p id="warning"></p>
+					<p id="status" style="color:white; text-align:center"></p>
+
 					<div class="text-center p-t-90">
 						<a class="txt1" href="Register.html">
 							Register
@@ -164,7 +167,9 @@
 				.then((userCredential) => {
 				  // Signed in 
 				  const user = userCredential.user;
-				  alert("Welcome!");
+				  console.log("Welcome!");
+				  document.getElementById('warning').innerText = "Warning:";
+				  document.getElementById('status').innerText = "Welcome!"
 	
 				  var date = new Date();
 				  update(ref(database, 'users/' + user.uid),{
@@ -177,10 +182,12 @@
 				 const errorCode = error.code;
 				 const errorMessage = error.message;
 	
-				 alert(errorMessage);
+				 console.log(errorMessage);
 			   });
 			  }else{
-				alert("Invalid Password. Please try again!");
+				console.log("Invalid Password. Please try again!");
+				document.getElementById('warning').innerText = "Warning:";
+				document.getElementById('status').innerText = "Invalid Username or Password. Please try again!";
 			  }
 			});
 			

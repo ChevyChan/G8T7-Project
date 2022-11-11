@@ -143,6 +143,9 @@
             </div>
           </div>
         </div>
+
+        <p id="passwordStatus" style="text-align:center; color:red"></p>
+
         <div class="row mt-5 mx-auto" style="width:40%;">
           <button type="submit" id="btn_edit" class="btn btn-danger">Update</button>
           <button type="submit" id="btn_back" class="btn btn-primary mt-4">Back</button>
@@ -358,7 +361,7 @@
         console.log("Upload " + progress + "%");
       },
       (error) => {
-        alert("Error, please try again!");
+        console.log("Error, please try again!");
       },
       () =>{
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
@@ -417,7 +420,8 @@
               updateProfile(email, passHash, firstName, lastName, postalCode, address, unitNumber, profilePic_url, oldPassword);
             }
         }else{
-          alert("Wrong Password! Please try again!");
+          console.log("Wrong Password! Please try again!");
+          document.getElementById("passwordStatus").innerText = "Wrong Password! Please try again!";
         }
       });
 
@@ -478,10 +482,11 @@
              const errorCode = error.code;
              const errorMessage = error.message;
 
-             alert(errorMessage);
+             console.log(errorMessage);
            });
         }else{
-          alert("Invalid Password. Please try again!");
+          console.log("Invalid Password. Please try again!");
+          document.getElementById("passwordStatus").innerText = "Invalid Password. Please try again!";
         }
       });
       
@@ -504,7 +509,8 @@
                 })
                 .then(() => {
                     // Data saved successfully!
-                    alert("Profile Updated Successfully!");  
+                    console.log("Profile Updated Successfully!"); 
+                    document.getElementById("passwordStatus").innerText = "Profile Updated Successfully!";
                     redirectPage();               
                 })
           }).catch((error) => {
@@ -529,13 +535,14 @@
           })
           .then(() => {
               // Data saved successfully!
-              alert("Profile Updated Successfully!");
+              console.log("Profile Updated Successfully!");
+              document.getElementById("passwordStatus").innerText = "Profile Updated Successfully!";
               redirectPage();
               
           })
           .catch((error) => {
               // The write failed...
-              alert(error);
+              console.log(error);
           });     
         }
 
