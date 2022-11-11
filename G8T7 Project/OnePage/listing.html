@@ -36,7 +36,7 @@
   <<header id="header" class="fixed-top">
     <div class="container d-flex align-items-center justify-content-between">
 
-      <h1 class="logo"><a href="index.html">Art House</a></h1>
+      <h1 class="logo"><a href="#" id="home">Art House</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
@@ -51,7 +51,7 @@
               <li><a href="#" id="purchaseHistory">Purchase History</a></li>
               <li><a href="#" id="income_dashboard">Income Dashboard</a></li>
               <li><a id="artistBidList" href="#">Your Bidding Products</a></li>
-              <li><a href="index.html" id="btn_logout">Logout</a></li>
+              <li><a href="#" id="btn_logout">Logout</a></li>
             </ul>
           </li>
           <li><a class="getstarted scrollto" href="#" id="createBid">Create New Bid</a></li>
@@ -444,6 +444,9 @@ btn_logout.addEventListener('click', (e) => {
     })
     document.getElementById('createBid').addEventListener('click', (e) => {  
       window.location.href = "CreateBidding.html?user_id=" + user_id;
+    })
+    document.getElementById('home').addEventListener('click', (e) => {
+      window.location.href = "home.html?user_id=" + user_id;
     })
 
     var userId = "";

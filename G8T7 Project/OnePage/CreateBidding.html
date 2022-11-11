@@ -51,7 +51,7 @@
               <li><a href="#" id="purchaseHistory">Purchase History</a></li>
               <li><a href="#" id="incomeDashboard">Income Dashboard</a></li>
               <li><a id="artistBidList" href="#">Your Bidding Products</a></li>
-              <li><a href="index.html" id="btn_logout">Logout</a></li>
+              <li><a href="#" id="btn_logout">Logout</a></li>
             </ul>
           </li>
           <li><a class="getstarted scrollto" href="#" onclick="createBiddingProduct()">Create New Bid</a></li>
@@ -74,7 +74,7 @@
         <div class="d-flex justify-content-between align-items-center">
           <h2>Create Bidding Details</h2>
           <ol>
-            <li><a href="index.html">Home</a></li>
+            <li><a href="home.html">Home</a></li>
             <li>Create Bidding Details</li>
           </ol>
         </div>
@@ -266,7 +266,7 @@
   <script type="module">
     // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
-    import { getAuth, onAuthStateChanged} from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+    import { getAuth, signOut, onAuthStateChanged} from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
     import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js";
     import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-storage.js";
     // TODO: Add SDKs for Firebase products that you want to use

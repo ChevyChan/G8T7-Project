@@ -36,7 +36,7 @@
   <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center justify-content-between">
 
-      <h1 class="logo"><a href="home.html">Art House</a></h1>
+      <h1 class="logo"><a href="#" id="home">Art House</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
@@ -51,10 +51,10 @@
               <li><a href="#" id="purchaseHistory">Purchase History</a></li>
               <li><a href="#" id="income_dashboard">Income Dashboard</a></li>
               <li><a id="artistBidList" href="#">Your Bidding Products</a></li>
-              <li><a href="index.html" id="btn_logout">Logout</a></li>
+              <li><a href="#" id="btn_logout">Logout</a></li>
             </ul>
           </li>
-          <li><a class="getstarted scrollto" href="#" onclick="createBiddingProduct()">Create New Bid</a></li>
+          <li><a class="getstarted scrollto" href="#" id="createBid">Create New Bid</a></li>
           <li><a id="userName"></a></li>
           <li><a id="credits"></a></li>
         </ul>
@@ -201,7 +201,35 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
-  <script>
+
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+    import { getAuth , createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js";
+    import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-storage.js"
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyDaa4E6_70V4giloehQSPALsd247XEqH3k",
+      authDomain: "ihelpartists-app.firebaseapp.com",
+      databaseURL: "https://ihelpartists-app-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "ihelpartists-app",
+      storageBucket: "ihelpartists-app.appspot.com",
+      messagingSenderId: "1078317726292",
+      appId: "1:1078317726292:web:0cadf1ec10d51359fdcbc1",
+      measurementId: "G-P21FPFFWWT"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    // Initialize Firebase Authentication and get a reference to the service
+    const auth = getAuth(app);
+    const database = getDatabase(app);
+
     btn_submit.addEventListener('click', (e) => {
       var searchInput = document.getElementById("searchInput").value;
       console.log(searchInput);
@@ -249,7 +277,15 @@
     listing.addEventListener('click', (e) => { 
       window.location.href = "listing.html?user_id=" + user_id; 
     })
-  </script>
+    document.getElementById('createBid').addEventListener('click', (e) => {
+      window.location.href = "CreateBidding.html?user_id=" + user_id;
+    })
+    document.getElementById('home').addEventListener('click', (e) => {
+      window.location.href = "home.html?user_id=" + user_id;
+    })
+
+</script>
+
 
 </body>
 

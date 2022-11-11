@@ -39,7 +39,7 @@
   <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center justify-content-between">
 
-      <h1 class="logo"><a href="home.html">Art House</a></h1>
+      <h1 class="logo"><a href="#" id="home">Art House</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
@@ -54,7 +54,7 @@
               <li><a href="#" id="purchaseHistory">Purchase History</a></li>
               <li><a href="#" id="incomeDashboard">Income Dashboard</a></li>
               <li><a id="artistBidList" href="#">Your Bidding Products</a></li>
-              <li><a href="index.html" id="btn_logout">Logout</a></li>
+              <li><a href="#" id="btn_logout">Logout</a></li>
             </ul>
           </li>
           <li><a class="getstarted scrollto" href="#" id="createBid">Create New Bid</a></li>
@@ -119,7 +119,7 @@
               <div class="col-lg-2 col-md-6 footer-links">
                 <h4>Useful Links</h4>
                 <ul>
-                  <li><i class="bx bx-chevron-right"></i> <a href="index.html">Home</a></li>
+                  <li><i class="bx bx-chevron-right"></i> <a href="home.html">Home</a></li>
                   <li><i class="bx bx-chevron-right"></i> <a href="listing.html">Products</a></li>
                   <li><i class="bx bx-chevron-right"></i> <a href="#">Live Bidding</a></li>
                   <li><i class="bx bx-chevron-right"></i> <a href="shoppingCart.html">Shopping Cart</a></li>
@@ -184,7 +184,7 @@
       <script type="module">
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
-        import { getAuth , createUserWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+        import { getAuth , createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
         import { getDatabase, get, ref, set, remove, child, onValue } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js";
         import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-storage.js"
         // TODO: Add SDKs for Firebase products that you want to use
@@ -210,50 +210,46 @@
         const database = getDatabase(app);
       
         //get user id from url  
-          const queryString = window.location.search; 
-          console.log(queryString); 
-          const urlParams = new URLSearchParams(queryString); 
-          console.log(urlParams); 
-          const user_id = urlParams.get('user_id'); 
-          console.log(user_id);
-        document.getElementById('products').addEventListener('click', (e) => {  
-          
+        const queryString = window.location.search; 
+        console.log(queryString); 
+        const urlParams = new URLSearchParams(queryString); 
+        console.log(urlParams); 
+        const user_id = urlParams.get('user_id'); 
+        console.log(user_id);
+
+        document.getElementById('products').addEventListener('click', (e) => {
           window.location.href = "listing.html?user_id=" + user_id;
         })
         
-        document.getElementById('incomeDashboard').addEventListener('click', (e) => {  
-
+        document.getElementById('incomeDashboard').addEventListener('click', (e) => {
           window.location.href = "income-dashboard.html?user_id=" + user_id;
         })
         
-        document.getElementById('purchaseHistory').addEventListener('click', (e) => {  
-
+        document.getElementById('purchaseHistory').addEventListener('click', (e) => {
           window.location.href = "purchaseHistory.html?user_id=" + user_id;
         })
 
         editProfile.addEventListener('click', (e) => {
-
           window.location.href = "Profile.html?user_id=" + user_id;
         })    
 
         document.getElementById('shoppingCart').addEventListener('click', (e) => {
-
           window.location.href = "shoppingCart.html?user_id=" + user_id;
         })
 
         artistBidList.addEventListener('click', (e) => {
-
           window.location.href = "ArtistsProductBidList.html?user_id=" + user_id;
         })
 
         productList.addEventListener('click', (e) => {
-
           window.location.href = "ProductBiddingList.html?user_id=" + user_id;
         })
 
         document.getElementById('createBid').addEventListener('click', (e) => {  
-          
           window.location.href = "CreateBidding.html?user_id=" + user_id;
+        })
+        document.getElementById('home').addEventListener('click', (e) => {
+        window.location.href = "home.html?user_id=" + user_id;
         })
 
 
