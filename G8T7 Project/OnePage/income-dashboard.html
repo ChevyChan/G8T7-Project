@@ -315,7 +315,7 @@
                       let auction = snapshot.val()
                       for (let aucID in auction){
                           //check if user has sold the current auction item
-                          if (auction[aucID]['userId'] == userID && auction[aucID]['lastBidUser'] != undefined && isoDateTime>auction[aucID]['countdownTimer']){
+                          if (auction[aucID]['userId'] == user_id && auction[aucID]['lastBidUser'] != undefined && isoDateTime>auction[aucID]['countdownTimer']){
                               let soldDate = new Date(auction[aucID]['countdownTimer']);
                               soldDate.setHours(0,0,0,0);
                               if(fromDate <= soldDate && toDate >= soldDate){
@@ -403,7 +403,7 @@
                       let auction = snapshot.val()
                       for (let aucID in auction){
                           //check if user has sold the current auction item
-                          if (auction[aucID]['userId'] == userID && auction[aucID]['lastBidUser'] != undefined && isoDateTime>auction[aucID]['countdownTimer']){
+                          if (auction[aucID]['userId'] == user_id && auction[aucID]['lastBidUser'] != undefined && isoDateTime>auction[aucID]['countdownTimer']){
                               let soldDate = new Date(auction[aucID]['countdownTimer']);
                               soldDate.setHours(0,0,0,0);
                               if(fromDate <= soldDate && toDate >= soldDate){
