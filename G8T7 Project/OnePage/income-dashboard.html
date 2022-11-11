@@ -57,7 +57,7 @@
               <li><a href="index.html" id="btn_logout">Logout</a></li>
             </ul>
           </li>
-          <li><a class="getstarted scrollto" href="#" onclick="createBiddingProduct()">Create New Bid</a></li>
+          <li><a class="getstarted scrollto" href="#" id="createBid">Create New Bid</a></li>
           <li><a id="userName"></a></li>
           <li><a id="credits"></a></li>
         </ul>
@@ -228,7 +228,7 @@
         
         document.getElementById('purchaseHistory').addEventListener('click', (e) => {  
 
-          window.location.href = "income-dashboard.html?user_id=" + user_id;
+          window.location.href = "purchaseHistory.html?user_id=" + user_id;
         })
 
         editProfile.addEventListener('click', (e) => {
@@ -251,10 +251,11 @@
           window.location.href = "ProductBiddingList.html?user_id=" + user_id;
         })
 
-        function createBiddingProduct(){
-        
+        document.getElementById('createBid').addEventListener('click', (e) => {  
+          
           window.location.href = "CreateBidding.html?user_id=" + user_id;
-        }
+        })
+
 
         function getDefaultSales(){
             let date = new Date()
