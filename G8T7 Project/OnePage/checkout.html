@@ -35,8 +35,8 @@
   <script type="module">
     // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
-    import { getAuth , createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
-    import { getDatabase, ref, set ,get, remove, child} from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js";
+    import { getAuth , createUserWithEmailAndPassword, onAuthStateChanged} from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+    import { getDatabase, ref, set ,get, remove, child, onValue} from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js";
     import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-storage.js"
     // TODO: Add SDKs for Firebase products that you want to use
     // https://firebase.google.com/docs/web/setup#available-libraries
@@ -62,11 +62,12 @@
 
     //set userID according to url
     const queryString = window.location.search; 
-      console.log(queryString); 
-      const urlParams = new URLSearchParams(queryString); 
-      console.log(urlParams); 
-      const userID = urlParams.get('user_id'); 
-      console.log(userID);
+    console.log(queryString); 
+    const urlParams = new URLSearchParams(queryString); 
+    console.log(urlParams); 
+    const userID = urlParams.get('user_id'); 
+    console.log(userID);
+
     //read cart
     function getCart(){
         const dbRef = ref(getDatabase());
@@ -114,7 +115,6 @@
                             break
                         }
                     }
-                    
     
                 }).catch((error) => {
                 console.error(error);
@@ -136,7 +136,7 @@
                                 <tr class="border-bottom" id="item${id}">
                                     <td>
                                         <div class="d-flex align-items-center">
-                                            <div> <img class="pic" src="https://images.pexels.com/photos/7322083/pexels-photo-7322083.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" alt=""> </div>
+                                            <div> <img class="pic" src=${prodSnap[prodID].productPic} alt="" style='height:70px'> </div>
                                             <div class="ps-3 d-flex flex-column justify-content">
                                                 <p class="fw-bold">${data[id]}</p>
                                             </div>
@@ -155,6 +155,9 @@
                                 </tr>
                                 `
                                 document.getElementById(id).addEventListener("click",function(){removeItem("item"+id)})
+                                document.getElementById('orderSummary').innerHTML += `<p>${data[id]}</p><p>$${price}</p>`
+                                document.getElementById('totalPrice').innerText += price
+                                
                             }).catch((error) => {
                             console.error(error);
                             });
@@ -182,7 +185,10 @@
         }).catch((error) => {
         console.error(error);
         });
+
+        
     }
+
 
     function removeItem(itemID){
       console.log(itemID)
@@ -217,10 +223,6 @@
       
     }
     
-    document.getElementById('pay').addEventListener('click', addToHistory)
-
-    
-
     document.getElementById('purchaseHistory').addEventListener('click', (e) => {
       const queryString = window.location.search;
       console.log(queryString);
@@ -245,7 +247,7 @@
 
     })
 
-    document.getElementById('productList').addEventListener('click', (e) => {
+    document.getElementById('home').addEventListener('click', (e) => {
       const queryString = window.location.search;
       console.log(queryString);
       const urlParams = new URLSearchParams(queryString);
@@ -253,7 +255,7 @@
       const user_id = urlParams.get('user_id');
       console.log(user_id);
 
-      window.location.href = "ProductBiddingList.html?user_id=" + user_id;
+      window.location.href = "home.html?user_id=" + user_id;
 
     })
 
@@ -269,6 +271,54 @@
 
     })
 
+    document.getElementById('purchaseHistory').addEventListener('click', (e) => {
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+
+      window.location.href = "purchaseHistory.html?user_id=" + user_id;
+
+    })
+
+    document.getElementById('products').addEventListener('click', (e) => {
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+
+      window.location.href = "listing.html?user_id=" + user_id;
+
+    })
+
+    document.getElementById('productList').addEventListener('click', (e) => {
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+
+      window.location.href = "ProductBiddingList.html?user_id=" + user_id;
+
+    })
+
+    document.getElementById('incomeDashboard').addEventListener('click', (e) => {
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+
+      window.location.href = "income-dashboard.html?user_id=" + user_id;
+
+    })
+
     document.getElementById('artistBidList').addEventListener('click', (e) => {
       const queryString = window.location.search;
       console.log(queryString);
@@ -281,17 +331,45 @@
 
     })
 
-    // document.getElementById('sales').addEventListener('click', (e) => {
-    //   const queryString = window.location.search;
-    //   console.log(queryString);
-    //   const urlParams = new URLSearchParams(queryString);
-    //   console.log(urlParams);
-    //   const user_id = urlParams.get('user_id');
-    //   console.log(user_id);
+    var userId = "";
+    var userCredit = 0;
+    var userName = "";
+    function getUserData(uid) {
+      const db = ref(database, 'users/' + uid);
+      
+      onValue(db, snap => {
+          console.log(snap.val())
+          userId = uid;
+          console.log(userId);
 
-    //   window.location.href = "retrieveSales.html?user_id=" + user_id;
+          userCredit = snap.val().credits;
+          userName = snap.val().firstName;
+          console.log(userCredit);
+          console.log(userName);
+          document.getElementById("credits").innerText = "Credits: SGD$" + userCredit;
+          document.getElementById("userName").innerText = "Welcome! " + userName;
+          document.getElementById("orderAcc").innerText = userName + "'s Order";
+      })
+    }
+    
+    onAuthStateChanged(auth, (user) => { 
+        if(user){ 
+          console.log(user); 
+          getUserData(user.uid) 
+        }else{ 
+          "Please try again!"; 
+        } 
+         
+    })
 
-    // })
+    btn_logout.addEventListener('click', (e) => { 
+      signOut(auth).then(() => { 
+        window.location.href = "index.html"; 
+      }).catch((error) => { 
+        // An error happened. 
+        alert(error); 
+      }); 
+    })
 
     getCart()
 
@@ -305,29 +383,30 @@
 <body>
 
    <!-- ======= Header ======= -->
-   <header id="header" class="fixed-top">
+  <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center justify-content-between">
 
-      <h1 class="logo"><a href="index.html">Artistic Shop</a></h1>
+      <h1 class="logo"><a href="#" id="home">Art House</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto " href="home.html">Home</a></li>
-          <li><a class="nav-link scrollto " href="listing.html">Products</a></li>
+          <li><a class="nav-link scrollto " href="#" id="products">Products</a></li>
           <li><a class="nav-link scrollto" id="productList" href="#">Live Bidding</a></li>
           <li><a class="nav-link scrollto o" href="#" id="shoppingCart">Shopping Cart</a></li>
           <li class="dropdown"><a href="#"><span>Profile</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a id="editProfile" href="#">Edit Profile</a></li>
-              <li><a href="purchaseHistory.html" id="purchaseHistory">Purchase History</a></li>
-              <li><a href="income-dashboard.html">Income Dashboard</a></li>
+              <li><a href="#" id="purchaseHistory">Purchase History</a></li>
+              <li><a href="#" id="incomeDashboard">Income Dashboard</a></li>
               <li><a id="artistBidList" href="#">Your Bidding Products</a></li>
-              <li><a href="LoginAccount.html">Logout</a></li>
+              <li><a href="index.html" id="btn_logout">Logout</a></li>
             </ul>
           </li>
-          <li><a class="getstarted scrollto" href="#">Create New Listing</a></li>
+          <li><a class="getstarted scrollto" href="#" onclick="createBiddingProduct()">Create New Bid</a></li>
+          <li><a id="userName"></a></li>
+          <li><a id="credits"></a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -335,6 +414,7 @@
 
     </div>
   </header><!-- End Header -->
+
 
   <main id="main">
 
@@ -355,23 +435,6 @@
     </section><!-- End Breadcrumbs -->
 
     <!-- Body section -->
-    <div id="main">
-      <div class="container">
-          <div class="row">
-            <div class="col">
-              <h1>Items in Cart</h1>
-              <ul id="cartList" class="list-group">
-              </ul>
-            </div>
-          </div>
-          <div class="row">
-            <div class="d-grid col-12 mx-auto my-3">
-              <button class="btn btn-success" id="pay" type="button">Checkout</button>
-              <!-- <button class="btn btn-success" id="sales" type="button">Retrieve Sales</button> -->
-            </div>
-          </div>
-      </div>
-    </div>
 
     <div class="container mt-4 p-0">
         <div class="row px-md-4 px-2 pt-4">
@@ -385,6 +448,7 @@
                                     <!-- cart will be here -->
                                 </tbody>
                             </table>
+                            <button class="btn btn-success" id="pay" type="button" style="width:100%;margin-bottom:10px">Checkout</button>
                         </div>
                     </div>
                 </div>
@@ -392,22 +456,20 @@
             <div class="col-lg-4 payment-summary">
                 <p class="fw-bold pt-lg-0 pt-4 pb-2">Payment Summary</p>
                 <div class="card px-md-3 px-2 pt-4">
-                    <div class="unregistered mb-4"> <span class="py-1">unregistered account</span> </div>
-                    <div class="d-flex justify-content-between pb-3"> <small class="text-muted">Transaction code</small>
-                        <p class="">VC115665</p>
-                    </div>
+                    <div class="unregistered mb-4"> <span class="py-1" id="orderAcc">unregistered account</span> </div>
                     <div class="d-flex justify-content-between b-bottom"> <input type="text" class="ps-2" placeholder="COUPON CODE">
                         <div class="btn btn-primary">Apply</div>
                     </div>
                     <div class="d-flex flex-column b-bottom">
-                        <div class="d-flex justify-content-between py-3"> <small class="text-muted">Order Summary</small>
-                            <p>$122</p>
+                        <div class="d-flex justify-content-between py-3"> 
+                          <small class="text-muted">Order Summary</small>
                         </div>
+                        <p id="orderSummary" class="d-flex justify-content-between"></p>
                         <div class="d-flex justify-content-between pb-3"> <small class="text-muted">Additional Service</small>
                             <p>$22</p>
                         </div>
                         <div class="d-flex justify-content-between"> <small class="text-muted">Total Amount</small>
-                            <p>$132</p>
+                            <p id="totalPrice"></p>
                         </div>
                     </div>
                     <div class="sale my-3"> <span>sale<span class="px-1">expiring</span><span>in</span>:</span><span class="red">21<span class="ps-1">hours</span>,31<span class="ps-1 ">minutes</span></span> </div>
