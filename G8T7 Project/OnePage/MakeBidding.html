@@ -403,10 +403,9 @@
 
           if(existingBidder == childSnapshot.val().userID){
             old_bidder_credits = childSnapshot.val().credits;
+            console.log(old_bidder_credits);
+            return old_bidder_credits;
           }
-
-          console.log(old_bidder_credits);
-          return old_bidder_credits;
         }) 
       })
     }
@@ -498,7 +497,7 @@
       console.log(res.status);
     })
   }
-  
+
     function updateBiddingProduct(curBid, newBidUser, credits, productName, email, name) {
 
         if(credits >= curBid){
