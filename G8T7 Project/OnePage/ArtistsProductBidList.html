@@ -36,7 +36,7 @@
   <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center justify-content-between">
 
-      <h1 class="logo"><a href="index.html">Artistic Shop</a></h1>
+      <h1 class="logo"><a href="index.html">Art House</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
@@ -49,13 +49,15 @@
           <li class="dropdown"><a href="#"><span>Profile</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a id="editProfile" href="#">Edit Profile</a></li>
-              <li><a href="#">Purchase History</a></li>
-              <li><a href="../income-dashboard/income-dashboard.html">Income Dashboard</a></li>
+              <li><a href="purchaseHistory.html" id="purchaseHistory">Purchase History</a></li>
+              <li><a href="income-dashboard.html">Income Dashboard</a></li>
               <li><a id="artistBidList" href="#">Your Bidding Products</a></li>
-              <li><a href="LoginAccount.html" id="btn_logout">Logout</a></li>
+              <li><a id="credits"></a></li>
+              <li><a href="index.html" id="btn_logout">Logout</a></li>
             </ul>
           </li>
           <li><a class="getstarted scrollto" href="#" onclick="createBiddingProduct()">Create New Bid</a></li>
+          <li><a id="userName"></a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -67,7 +69,7 @@
   <main id="main">
 
     <!-- ======= Breadcrumbs ======= -->
-    <section class="breadcrumbs">
+    <section class="breadcrumbs bg-warning">
       <div class="container">
 
         <div class="d-flex justify-content-between align-items-center">
@@ -81,23 +83,37 @@
       </div>
     </section><!-- End Breadcrumbs -->
 
-    <section class="inner-page">
-      <div class="container" id="content">
-        <p class="h1" id="noProduct" hidden>You have not posted any biddable items</p>
-        <div class="row row-cols-auto mt-5" id="cardList">
-          <div class="col mb-4" hidden>
-            <div class="card" style="width: 18rem;">
-              <img src="..." class="card-img-top" alt="C:\wamp64\www\Project\assets\img\profile-icon-9.png">
-              <div class="card-body">
-                <h5 class="card-title">title</h5>
-                <p class="card-text">artistName</p>
-                <p class="card-text" id="artistID" hidden>id</p>
-                <button name="idName" class="btn btn-primary" onclick="retrieveBiddingProductById(this)">View Details</button>
-                <button name="idName" class="btn btn-primary" onclick="updateBiddingProductById(this)">Update Bidding</button>
-              </div>
+    <section class="inner-page text-center">
+      <div class="container">
+        <h2 class="mt-4">Active Bidding Products
+          <a href="" class="btn btn-info btn-info" onclick="reloadWebpage()">
+            <span class="glyphicon glyphicon-refresh"></span> Refresh
+          </a>
+        </h2>
+        
+        <div id="cardList" class="row row-cols-auto mt-5">
+          <!--1st item-->
+          <div class="col mb-4" style="margin-left:33%;">
+            <div class="col mb-4">
+              <img src="assets\img\coffee-2306471_1920.jpg" style="border-radius:50%; max-width:300px; max-height:300px;" class="card-img-top" alt="assets\img\profile-icon-9.png">
+              <h2 class="text-center mt-4">Please check again later!</h2>
             </div>
           </div>
         </div>
+        
+        <hr>
+
+        <!--Add bids that are expired here!-->
+        <div id="previousBids">
+            <h2 class="mt-4 mb-3">Expired Bidding Products</h2>
+          <div id="expiredBidding"  class="row row-cols-auto mt-4 text-center">
+            <div class="col mb-4 mx-auto text-center">
+              <img src="assets\img\brandenburger-tor-201939_1920.jpg" style="border-radius:50%; max-width:300px; max-height:300px;" class="card-img-top" alt="assets\img\profile-icon-9.png">
+              <h2 class="text-center mt-4">Please check again later!</h2>
+            </div>
+          </div>
+        </div> 
+
       </div>
     </section>
 
@@ -271,6 +287,8 @@
       })
       
     var userId = "";
+    var userCredit = 0;
+    var userName = "";
     function getUserData(uid) {
       const db = ref(database, 'users/' + uid);
       
@@ -278,65 +296,17 @@
           console.log(snap.val())
           userId = uid;
           console.log(userId);
+
+          userCredit = snap.val().credits;
+          userName = snap.val().firstName;
+          console.log(userCredit);
+          console.log(userName);
+          document.getElementById("credits").innerText = "Credits: " + userCredit;
+          document.getElementById("userName").innerText = "Welcome! " + userName;
       })
     }
 
-    var delayInMilliseconds = 2000; //1 second
-    var runningTimer = "";
-
-    setTimeout(function() {
-      //your code to be executed after 1 second
-      const dbRef = ref(database, "auction");
-      onValue(dbRef, (snapshot) => {
-        var products = [];
-        var str = "";
-        let count = 0;
-
-        snapshot.forEach(childSnapshot => {
-          
-          products.push(childSnapshot.val());
-          console.log(childSnapshot.val());
-
-          var countdown = childSnapshot.val().countdownTimer;
-          console.log(countdown);
-
-          var days = 0;
-          var hours = 0;
-          var minutes = 0;
-          var seconds = 0;
-
-          var x = setInterval(function() {
-            var now = new Date().getTime();
-      
-            var year = countdown.slice(0, 4);
-            var month = countdown.slice(5, 7);
-            var day = countdown.slice(8, 10);
-            var countHours = countdown.slice(11, 13);
-            var countMinutes = countdown.slice(14, 16);
-            
-            var arrayMonth = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
-            
-            var countDownDate = new Date(arrayMonth[month-1] + " " + day + ", " + year + " " + countHours + ":" + countMinutes + ":" + "00").getTime();
-      
-            var time_left = countDownDate - now
-      
-            days = Math.floor(time_left / (1000 * 60 * 60 * 24));
-            hours = Math.floor((time_left % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            minutes = Math.floor((time_left % (1000 * 60 * 60)) / (1000 * 60));
-            seconds = Math.floor((time_left % (1000 * 60)) / 1000); 
-
-            console.log(days + "d " + hours + "h " + minutes + "m " + seconds + "s ");
-            runningTimer = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
-
-            if(time_left < 0) {
-              clearInterval(x);
-              runningTimer = "Auction Ended";
-            }
-
-          })
-        })
-      })
-    }, delayInMilliseconds);
+    
 
     function retrieveAllBiddingProductByArtists(){
       const dbRef = ref(database, "auction");
@@ -352,57 +322,145 @@
       onValue(dbRef, (snapshot) => {
         var products = [];
         var str = "";
+        var str2 = "";
         let count = 0;
+        var countdown = "";
+        var artist_id = "";
+        var days = 0;
+        var hours = 0;
+        var minutes = 0;
+        var seconds = 0;
 
         snapshot.forEach(childSnapshot => {
           products.push(childSnapshot.val());
           console.log(childSnapshot.val());
 
           var artistID = childSnapshot.val().userId;
+          var curBidPrice = childSnapshot.val().curBid;
           var bidding_list = document.getElementById("cardList");
           var con_content = document.getElementById("content");
 
-          console.log(runningTimer);
+          var curDate = new Date();
+          var dd = String(curDate.getDate()).padStart(2, '0');
+          var mm = String(curDate.getMonth() + 1).padStart(2, '0'); //January is 0!
+          var yyyy = curDate.getFullYear();
+  
+          var hours = curDate.getHours();
+          var mins = curDate.getMinutes();
+  
+          curDate = yyyy + '-' + mm + '-' + dd + "T" + hours + ":" + mins; //Current Date and time
+          console.log(curDate);
+
+          if(user_id == childSnapshot.val().userId){
+            countdown = childSnapshot.val().countdownTimer;
+            console.log(countdown);
+  
+            /*var x = setInterval(function() {
+              var now = new Date().getTime();
+        
+              var year = countdown.slice(0, 4);
+              var month = countdown.slice(5, 7);
+              var day = countdown.slice(8, 10);
+              var countHours = countdown.slice(11, 13);
+              var countMinutes = countdown.slice(14, 16);
+              
+              var arrayMonth = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
+              
+              var countDownDate = new Date(arrayMonth[month-1] + " " + day + ", " + year + " " + countHours + ":" + countMinutes + ":" + "00").getTime();
+        
+              var time_left = countDownDate - now
+        
+              days = Math.floor(time_left / (1000 * 60 * 60 * 24));
+              hours = Math.floor((time_left % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+              minutes = Math.floor((time_left % (1000 * 60 * 60)) / (1000 * 60));
+              seconds = Math.floor((time_left % (1000 * 60)) / 1000); 
+    
+              console.log(days + "d " + hours + "h " + minutes + "m " + seconds + "s ");
+              document.getElementById("countdownTimer").innerHTML = `<span id="countdownTimer">${days + "d " + hours + "h " + minutes + "m " + seconds + "s "}</span></p>`;
+    
+                if(time_left < 0) {
+                  clearInterval(x);
+                  document.getElementById("countdownTimer").innerText = "Auction Ended";
+                }
+
+            })*/
+          }
+          var bidding_list = document.getElementById("cardList");
 
           //Check for user's posted bids
           if(artistID == user_id){
+            
+            
+            if(curDate > countdown){
+              console.log(days);
               str += `
-              <div class="col mb-3">
-                <div class="card" style="width: 18rem;">
-                  <img src="${childSnapshot.val().productPic}" class="card-img-top" style="width:auto; height:300px;" alt="C:\wamp64\www\Project\assets\img\profile-icon-9.png">
-                  <div class="card-body">
-                    <h5 class="card-title">${childSnapshot.val().title}</h5>
-                    <p class="card-text">${childSnapshot.val().artistName}</p>
-                    <p class="card-text" id=countdownTimer>${runningTimer}</p>
-                    <p class="card-text" id="artistID" hidden>${childSnapshot.val().id}</p>
-                    <button name="${childSnapshot.val().id}" class="btn btn-primary" onclick="retrieveBiddingProductById(this)">View Details</button>
+                <div class="col mb-5">
+                  <div class="card" style="width: 18rem;">
+                    <img src="${childSnapshot.val().productPic}" class="card-img-top" style="width:auto; max-width:300px; max-height:300px; border: 3px solid #ccc; background: #eee; padding: 15px 10px;" alt="assets\img\profile-icon-9.png">
+                    <div class="card-body">
+                      <h5 class="card-title">${childSnapshot.val().title}</h5>
+                      <p class="card-text">${childSnapshot.val().artistName} || <span>$${curBidPrice}</span></p>
+                      <p class="card-text" hidden>${childSnapshot.val().id}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
               `;
-              count += 1;
+  
+              document.getElementById('expiredBidding').innerHTML = str;
             }
-
-            if(count > 0){
-              bidding_list.innerHTML = str;
-            }else{
-              var str1 = `<p class="h1" id="noProduct">You have not posted any biddable items</p>`;
-              bidding_list.innerHTML = str1;
-            }
+            
+            
+  
+            if(countdown >= curDate){
+              str2 += `
+                <div class="col mb-5">
+                  <div class="card" style="width: 18rem;">
+                    <img src="${childSnapshot.val().productPic}" class="card-img-top" style="width:auto; max-width:300px; max-height:300px; border: 3px solid #ccc; background: #eee; padding: 15px 10px;" alt="assets\img\profile-icon-9.png">
+                    <div class="card-body">
+                      <h5 class="card-title">${childSnapshot.val().title}</h5>
+                      <p class="card-text">${childSnapshot.val().artistName} || <span>$${curBidPrice}</span></p>
+                      <p class="card-text" hidden>${childSnapshot.val().id}</p>
+                      <button name="${childSnapshot.val().id}" class="btn btn-primary" onclick="retrieveBiddingProductById(this)">View Details</button>
+                    </div>
+                  </div>
+                </div>
+              `;
+    
+              bidding_list.innerHTML = str2;
+            }  
+          }      
         });
       })
     }
+
+    document.getElementById('shoppingCart').addEventListener('click', (e) => {
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+
+      window.location.href = "shoppingCart.html?user_id=" + user_id;
+
+    })
    
-    window.onload = retrieveAllBiddingProductByArtists();
+    
 
     btn_logout.addEventListener('click', (e) => {
       signOut(auth).then(() => {
-        window.location.href = "LoginAccount.html";
+        window.location.href = "index.html";
       }).catch((error) => {
         // An error happened.
         alert(error);
       });
     })
+
+    function reloadWebpage(){
+      location.reload();
+    }
+
+    window.onload = retrieveAllBiddingProductByArtists();
 
   </script>
   
@@ -435,6 +493,17 @@
       window.location.href = "CreateBidding.html?user_id=" + user_id;
     }
 
+    document.getElementById('shoppingCart').addEventListener('click', (e) => {
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+
+      window.location.href = "shoppingCart.html?user_id=" + user_id;
+
+    })
     
   </script>
 

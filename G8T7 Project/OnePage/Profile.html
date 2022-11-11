@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Artistic Shop</title>
+  <title>Art House</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -28,27 +28,6 @@
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 
-  <style>
-    #summary{
-      background-color:lightgrey; 
-      float:right; 
-      height:inherit; 
-      padding:20px;
-      width: 38%;
-    }
-
-    #shoppingDetails{
-        width:60%; 
-        float:left;
-        margin-top: 20px;
-        height: inherit;
-    }
-
-    #shipping{
-      width: 70%;
-      
-    }
-  </style>
 </head>
 
 <body>
@@ -57,7 +36,7 @@
   <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center justify-content-between">
 
-      <h1 class="logo"><a href="index.html">Artistic Shop</a></h1>
+      <h1 class="logo"><a href="index.html">Art House</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
@@ -66,17 +45,19 @@
           <li><a class="nav-link scrollto " href="home.html">Home</a></li>
           <li><a class="nav-link scrollto " href="listing.html">Products</a></li>
           <li><a class="nav-link scrollto" id="productList" href="#">Live Bidding</a></li>
-          <li><a class="nav-link scrollto o" href="#cart">Shopping Cart</a></li>
+          <li><a class="nav-link scrollto o" href="#" id="shoppingCart">Shopping Cart</a></li>
           <li class="dropdown"><a href="#"><span>Profile</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a id="editProfile" href="#">Edit Profile</a></li>
-              <li><a href="#">Purchase History</a></li>
-              <li><a href="../income-dashboard/income-dashboard.html">Income Dashboard</a></li>
+              <li><a href="purchaseHistory.html" id="purchaseHistory">Purchase History</a></li>
+              <li><a href="income-dashboard.html">Income Dashboard</a></li>
               <li><a id="artistBidList" href="#">Your Bidding Products</a></li>
-              <li><a href="LoginAccount.html">Logout</a></li>
+              <li><a id="credits"></a></li>
+              <li><a href="index.html" id="btn_logout">Logout</a></li>
             </ul>
           </li>
-          <li><a class="getstarted scrollto" href="#">Create New Listing</a></li>
+          <li><a class="getstarted scrollto" href="#" onclick="createBiddingProduct()">Create New Bid</a></li>
+          <li><a id="userName"></a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -103,46 +84,71 @@
     </section><!-- End Breadcrumbs -->
 
     <section class="inner-page">
-      <div class="container">
-        <div class="mb-3">
-          <img src="C:\wamp64\www\Project\assets\img\profile-icon-9.png" id="imageSrc" class="rounded float-start mx-auto" alt="Project\assets\img\profile-icon-9.png">
+      <div class="container" style="text-align:center; padding: 100px; width:50%;">
+        <div class="text-center">
+          <img src="..\Project\assets\img\profile-icon-9.png" id="imageSrc" style="max-width:200px; max-height:200px; margin-bottom:50px; margin-top:-30px;" alt="..\Project\assets\img\profile-icon-9.png">
           <input type="file" class="form-control" id="customFile" />
         </div>
         <br>
-        <div class="mb-3">
-          <label for="firstName" class="form-label">First Name</label>
-          <input type="email" class="form-control" id="firstName" aria-describedby="firstNameHelp" >
+        <div class="row mt-5">
+          <div class="col-md-6 mb-4">
+            <div class="mb-3">
+              <label for="firstName" class="form-label">First Name</label>
+              <input type="email" class="form-control" id="firstName" aria-describedby="firstNameHelp" >
+            </div>
+          </div>
+          <div class="col-md-6 mb-4">
+            <div class="mb-3">
+              <label for="lastName" class="form-label">Last Name</label>
+              <input type="email" class="form-control" id="lastName" aria-describedby="lastNameHelp" >
+            </div>
+          </div>
         </div>
-        <div class="mb-3">
-          <label for="lastName" class="form-label">Last Name</label>
-          <input type="email" class="form-control" id="lastName" aria-describedby="lastNameHelp" >
+        <div class="row mt-5">
+          <div class="col-md-3 mb-4">
+            <div class="mb-3">
+              <label for="inputPostalCode" class="form-label">Postal Code</label>
+              <input type="email" class="form-control" id="inputPostalCode" aria-describedby="postalCodeHelp" >
+            </div>
+          </div>
+          <div class="col-md-6 mb-4">
+            <div class="mb-3">
+              <label for="inputAddress" class="form-label">Address</label>
+              <input type="email" class="form-control" id="inputAddress" aria-describedby="addressHelp" disabled>
+            </div>
+          </div>
+          <div class="col-md-3 mb-4">
+            <div class="mb-3">
+              <label for="inputUnitNo" class="form-label">Unit Number</label>
+              <input type="email" class="form-control" id="inputUnitNo" aria-describedby="unitNoHelp" >
+            </div>
+          </div>
         </div>
-        <div class="mb-3">
-          <label for="inputPostalCode" class="form-label">Postal Code</label>
-          <input type="email" class="form-control" id="inputPostalCode" aria-describedby="postalCodeHelp" >
+        <div class="row mt-5">
+          <div class="col-md-6 mb-4">
+            <div class="mb-3">
+              <label for="emailAddress" class="form-label">Email address</label>
+              <input type="email" class="form-control" id="emailAddress" aria-describedby="emailHelp" >
+            </div>
+          </div>
+          <div class="col-md-3 mb-4">
+            <div class="mb-3">
+              <label for="inputPassword" class="form-label">Old Password</label>
+              <input type="password" class="form-control" id="inputExistingPassword" >
+            </div>
+          </div>
+          <div class="col-md-3 mb-4">
+            <div class="mb-3">
+              <label for="inputPassword" class="form-label">New Password</label>
+              <input type="password" class="form-control" id="inputNewPassword" >
+            </div>
+          </div>
         </div>
-        <div class="mb-3">
-          <label for="inputAddress" class="form-label">Address</label>
-          <input type="email" class="form-control" id="inputAddress" aria-describedby="addressHelp" disabled>
+        <div class="row mt-5 mx-auto" style="width:40%;">
+          <button type="submit" id="btn_edit" class="btn btn-danger">Update</button>
+          <button type="submit" id="btn_back" class="btn btn-primary mt-4">Back</button>
         </div>
-        <div class="mb-3">
-          <label for="inputUnitNo" class="form-label">Unit Number</label>
-          <input type="email" class="form-control" id="inputUnitNo" aria-describedby="unitNoHelp" >
-        </div>
-        <div class="mb-3">
-          <label for="emailAddress" class="form-label">Email address</label>
-          <input type="email" class="form-control" id="emailAddress" aria-describedby="emailHelp" >
-        </div>
-        <div class="mb-3">
-          <label for="inputPassword" class="form-label">Old Password</label>
-          <input type="password" class="form-control" id="inputExistingPassword" >
-        </div>
-        <div class="mb-3">
-          <label for="inputPassword" class="form-label">New Password</label>
-          <input type="password" class="form-control" id="inputNewPassword" >
-        </div>
-        <button type="submit" id="btn_edit" class="btn btn-primary">Update</button>
-        <button type="submit" id="btn_back" class="btn btn-primary">Back</button>
+        
       </div>
     </section>
 
@@ -268,6 +274,34 @@
       }
     });
 
+    var userId = "";
+    var userCredit = 0;
+    var userName = "";
+    function getUserData() {
+
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+
+      const db = ref(database, 'users/' + user_id);
+      
+      onValue(db, snap => {
+          console.log(snap.val())
+          userId = user_id;
+          console.log(userId);
+
+          userCredit = snap.val().credits;
+          userName = snap.val().firstName;
+          console.log(userCredit);
+          console.log(userName);
+          document.getElementById("credits").innerText = "Credits: " + userCredit;
+          document.getElementById("userName").innerText = "Welcome! " + userName;
+      })
+    }
+
     //Upload or Replace Image File
     var file_name = document.getElementById('customFile');
     
@@ -371,12 +405,11 @@
         var profilePic_url = ImgURL;
 
         //verify the hash password
-      var bcrypt = dcodeIO.bcrypt;
-      bcrypt.compare(oldPassword, dbPass, function(err, result) {
+        var bcrypt = dcodeIO.bcrypt;
+        bcrypt.compare(oldPassword, dbPass, function(err, result) {
         if (result) {
             var passHash = passwordHash(newPassword);
             console.log(passHash);
-        
             if(profilePic_url != ""){
               UploadProcess();
               updateProfile(email, passHash, firstName, lastName, postalCode, address, unitNumber, profilePic_url, oldPassword);
@@ -406,6 +439,7 @@
     }
 
     window.onload = getProfileDetails();
+    window.onload = getUserData();
 
     function retrieveUserDetails(user_id){
       const dbRef = ref(database, "users/" + user_id);

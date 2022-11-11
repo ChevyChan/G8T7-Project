@@ -12,7 +12,8 @@ function postalCodeSearch(postalCode){
       
       
     }).catch(error => {
-      alert("Please enter a valid postal code!");
+      //alert("Please enter a valid postal code!");
+      document.getElementById('postalError').innerText = "Please enter a valid Postal Code!";
     });
 }
 
