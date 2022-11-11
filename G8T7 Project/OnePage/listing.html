@@ -331,11 +331,6 @@
     const auth = getAuth(app);
     const database = getDatabase(app);
     var product_id=''
-    btn_submit.addEventListener('click', (e) => {
-      var searchInput = document.getElementById("searchInput").value;
-      console.log(searchInput);
-      window.location.href= "listing.html?search=" + searchInput;
-    })
     function redirectInput(){
     const queryString = window.location.search; 
       console.log(queryString); 
@@ -417,6 +412,11 @@ btn_logout.addEventListener('click', (e) => {
     console.log(user_id); 
     artistBidList.addEventListener('click', (e) => { 
       window.location.href = "ArtistsProductBidList.html?user_id=" + user_id; 
+    })
+    btn_submit.addEventListener('click', (e) => {
+      var searchInput = document.getElementById("searchInput").value;
+      console.log(searchInput);
+      window.location.href= "listing.html?search=" + searchInput+"&user_id=" + user_id;
     })
     productList.addEventListener('click', (e) => { 
       window.location.href = "ProductBiddingList.html?user_id=" + user_id; 
