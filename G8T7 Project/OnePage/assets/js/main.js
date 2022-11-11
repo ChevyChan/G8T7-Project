@@ -254,6 +254,28 @@
     }
   });
 
+  var userId = "";
+  var userCredit = 0;
+  var userName = "";
+  function getUserData(uid) {
+    const db = ref(database, 'users/' + uid);
+    
+    onValue(db, snap => {
+        console.log(snap.val())
+        userId = uid;
+        console.log(userId);
+
+        userCredit = snap.val().credits;
+        userName = snap.val().firstName;
+        console.log(userCredit);
+        console.log(userName);
+        document.getElementById("credits").innerText = "Credits: " + userCredit;
+        document.getElementById("userName").innerText = "Welcome! " + userName;
+    })
+    }
+
+
+
   /**
    * Animation on scroll
    */
