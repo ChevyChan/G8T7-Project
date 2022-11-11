@@ -219,6 +219,18 @@
 
     })
 
+    document.getElementById('artistBidList').addEventListener('click', (e) => {
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+
+      window.location.href = "ArtistsProductBidList.html?user_id=" + user_id;
+
+    })
+
     
 
     var userId = "";
@@ -236,7 +248,7 @@
           userName = snap.val().firstName;
           console.log(userCredit);
           console.log(userName);
-          document.getElementById("credits").innerText = "Credits: " + userCredit;
+          document.getElementById("credits").innerText = "Credits: SGD$" + userCredit;
           document.getElementById("userName").innerText = "Welcome! " + userName;
       })
     }
