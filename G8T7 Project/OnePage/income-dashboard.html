@@ -29,7 +29,7 @@
     <link href="assets/css/style.css" rel="stylesheet">
 
     <!-- Canvas.js CDN -->
-    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script src="canvasjs.min.js"></script>
 
 
 
@@ -39,25 +39,27 @@
   <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center justify-content-between">
 
-      <h1 class="logo"><a href="index.html">Artistic Shop</a></h1>
+      <h1 class="logo"><a href="home.html">Art House</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto " href="index.html">Home</a></li>
-          <li><a class="nav-link scrollto " href="listing.html">Products</a></li>
-          <li><a class="nav-link scrollto o" href="shoppingCart.html">Shopping Cart</a></li>
+          <li><a class="nav-link scrollto " href="#" id="products">Products</a></li>
+          <li><a class="nav-link scrollto" id="productList" href="#">Live Bidding</a></li>
+          <li><a class="nav-link scrollto o" href="#" id="shoppingCart">Shopping Cart</a></li>
           <li class="dropdown"><a href="#"><span>Profile</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
-              <li><a id="editProfile" href="Profile.html">Edit Profile</a></li>
-              <li><a href="purchaseHistory.html" id="purchaseHistory">Purchase History</a></li>
-              <li><a href="income-dashboard.html">Income Dashboard</a></li>
-              <li><a id="artistBidList" href="ArtistsProductBidList.html">Your Bidding Products</a></li>
-              <li><a href="LoginAccount.html">Logout</a></li>
+              <li><a id="editProfile" href="#">Edit Profile</a></li>
+              <li><a href="#" id="purchaseHistory">Purchase History</a></li>
+              <li><a href="#" id="incomeDashboard">Income Dashboard</a></li>
+              <li><a id="artistBidList" href="#">Your Bidding Products</a></li>
+              <li><a href="index.html" id="btn_logout">Logout</a></li>
             </ul>
           </li>
-          <li><a class="getstarted scrollto" href="CreateListing.html">Create New Listing</a></li>
+          <li><a class="getstarted scrollto" href="#" onclick="createBiddingProduct()">Create New Bid</a></li>
+          <li><a id="userName"></a></li>
+          <li><a id="credits"></a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -206,183 +208,262 @@
         // Initialize Firebase Authentication and get a reference to the service
         const auth = getAuth(app);
         const database = getDatabase(app);
+      
+        //get user id from url  
         
-    
-      //get user id from url
-      const queryString = window.location.search; 
-      console.log(queryString); 
-      const urlParams = new URLSearchParams(queryString); 
-      console.log(urlParams); 
-      const userID = urlParams.get('user_id'); 
-      console.log(userID);
-      if(userID != null){
-        window.location.href = "income-dashboard.html?user_id=" + userID;
-      }
-      
-      function getDefaultSales(){
-          let date = new Date()
-          let dateArr = []
-          let incomeData = []
-          let totalRevenue = 0
-          var isoDateTime = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString();
-          let fromDate = new Date(Date.now() - (7 * 24 * 60 * 60 * 1000))
-          let toDate = new Date(Date.now())
-          fromDate.setHours(0,0,0,0)
-          //dayDiff converts the difference between the two dates from milliseconds to days
-          let dayDiff = (toDate-fromDate) / 1000 / 60 / 60 / 24
-                //populate date array with placeholder data first
-                let indexDate = new Date(fromDate);
-                for (let d = 0; d<=dayDiff; d++){
-                    dateArr.push([indexDate.toLocaleDateString('en-GB'), 0])
-                    indexDate.setDate(indexDate.getDate()+1)
-                }
-                //get auction list
-                const dbRef = ref(getDatabase());
-                get(child(dbRef, `auction/`)).then((snapshot) => {
-                    let auction = snapshot.val()
-                    for (let aucID in auction){
-                        //check if user has sold the current auction item
-                        if (auction[aucID]['userId'] == userID && auction[aucID]['lastBidUser'] != undefined && isoDateTime>auction[aucID]['countdownTimer']){
-                            let soldDate = new Date(auction[aucID]['countdownTimer']);
-                            soldDate.setHours(0,0,0,0);
-                            if(fromDate <= soldDate && toDate >= soldDate){
-                                let currDate = new Date(fromDate);
-                                for(let d = 0; d<=dayDiff; d++){
-                                    currDate.setDate(fromDate.getDate()+1)
-                                    if(currDate.getDate() == soldDate.getDate()){
-                                        dateArr[d][1] += parseInt(auction[aucID]['curBid'])
-                                    }
-                                }
-                                
-                            }
-                        }
-                    }
-                
-                  //dateArr variable is an array which has the revenues of the current user from the date specified to the end date specified
-                  for (let i=1; i<dateArr.length + 1; i++){
-                    incomeData.push({x: i, y: dateArr[i-1][1], label: dateArr[i-1][0]})
-                    totalRevenue += dateArr[i-1][1]
+        document.getElementById('products').addEventListener('click', (e) => {  
+          const queryString = window.location.search; 
+          console.log(queryString); 
+          const urlParams = new URLSearchParams(queryString); 
+          console.log(urlParams); 
+          const user_id = urlParams.get('user_id'); 
+          console.log(user_id);
+          window.location.href = "income-dashboard.html?user_id=" + user_id;
+        })
+        
+        document.getElementById('incomeDashboard').addEventListener('click', (e) => {  
+          const queryString = window.location.search; 
+          console.log(queryString); 
+          const urlParams = new URLSearchParams(queryString); 
+          console.log(urlParams); 
+          const user_id = urlParams.get('user_id'); 
+          console.log(user_id);
+          window.location.href = "income-dashboard.html?user_id=" + user_id;
+        })
+        
+        document.getElementById('purchaseHistory').addEventListener('click', (e) => {  
+          const queryString = window.location.search; 
+          console.log(queryString); 
+          const urlParams = new URLSearchParams(queryString); 
+          console.log(urlParams); 
+          const user_id = urlParams.get('user_id'); 
+          console.log(user_id);
+          window.location.href = "income-dashboard.html?user_id=" + user_id;
+        })
+
+        editProfile.addEventListener('click', (e) => {
+          const queryString = window.location.search; 
+          console.log(queryString); 
+          const urlParams = new URLSearchParams(queryString); 
+          console.log(urlParams); 
+          const user_id = urlParams.get('user_id'); 
+          console.log(user_id);
+          window.location.href = "Profile.html?user_id=" + user_id;
+        })    
+
+        document.getElementById('shoppingCart').addEventListener('click', (e) => {
+          const queryString = window.location.search; 
+          console.log(queryString); 
+          const urlParams = new URLSearchParams(queryString); 
+          console.log(urlParams); 
+          const user_id = urlParams.get('user_id'); 
+          console.log(user_id);
+          window.location.href = "shoppingCart.html?user_id=" + user_id;
+        })
+
+        artistBidList.addEventListener('click', (e) => {
+          const queryString = window.location.search; 
+          console.log(queryString); 
+          const urlParams = new URLSearchParams(queryString); 
+          console.log(urlParams); 
+          const user_id = urlParams.get('user_id'); 
+          console.log(user_id);
+          window.location.href = "ArtistsProductBidList.html?user_id=" + user_id;
+        })
+
+        productList.addEventListener('click', (e) => {
+          const queryString = window.location.search; 
+          console.log(queryString); 
+          const urlParams = new URLSearchParams(queryString); 
+          console.log(urlParams); 
+          const user_id = urlParams.get('user_id'); 
+          console.log(user_id);
+          window.location.href = "ProductBiddingList.html?user_id=" + user_id;
+        })
+
+        function createBiddingProduct(){
+          const queryString = window.location.search;
+          console.log(queryString);
+          const urlParams = new URLSearchParams(queryString);
+          console.log(urlParams);
+          const user_id = urlParams.get('user_id');
+          console.log(user_id);
+        
+          window.location.href = "CreateBidding.html?user_id=" + user_id;
+        }
+
+        function getDefaultSales(){
+            let date = new Date()
+            let dateArr = []
+            let incomeData = []
+            let totalRevenue = 0
+            var isoDateTime = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString();
+            let fromDate = new Date(Date.now() - (7 * 24 * 60 * 60 * 1000))
+            let toDate = new Date(Date.now())
+            fromDate.setHours(0,0,0,0)
+            //dayDiff converts the difference between the two dates from milliseconds to days
+            let dayDiff = (toDate-fromDate) / 1000 / 60 / 60 / 24
+                  //populate date array with placeholder data first
+                  let indexDate = new Date(fromDate);
+                  for (let d = 0; d<=dayDiff; d++){
+                      dateArr.push([indexDate.toLocaleDateString('en-GB'), 0])
+                      indexDate.setDate(indexDate.getDate()+1)
                   }
-                  document.getElementById('revenue').innerText = "Total revenue: $" + totalRevenue
-                  var chart = new CanvasJS.Chart("chartContainer",
-                  {
-                    animationEnabled: true,
-
-                    data: [
-
+                  //get auction list
+                  const dbRef = ref(getDatabase());
+                  get(child(dbRef, `auction/`)).then((snapshot) => {
+                      let auction = snapshot.val()
+                      for (let aucID in auction){
+                          //check if user has sold the current auction item
+                          if (auction[aucID]['userId'] == userID && auction[aucID]['lastBidUser'] != undefined && isoDateTime>auction[aucID]['countdownTimer']){
+                              let soldDate = new Date(auction[aucID]['countdownTimer']);
+                              soldDate.setHours(0,0,0,0);
+                              if(fromDate <= soldDate && toDate >= soldDate){
+                                  let currDate = new Date(fromDate);
+                                  for(let d = 0; d<=dayDiff; d++){
+                                      currDate.setDate(fromDate.getDate()+1)
+                                      if(currDate.getDate() == soldDate.getDate()){
+                                          dateArr[d][1] += parseInt(auction[aucID]['curBid'])
+                                      }
+                                  }
+                                  
+                              }
+                          }
+                      }
+                  
+                    //dateArr variable is an array which has the revenues of the current user from the date specified to the end date specified
+                    for (let i=1; i<dateArr.length + 1; i++){
+                      incomeData.push({x: i, y: dateArr[i-1][1], label: dateArr[i-1][0]})
+                      totalRevenue += dateArr[i-1][1]
+                    }
+                    document.getElementById('revenue').innerText = "Total revenue: $" + totalRevenue
+                    var chart = new CanvasJS.Chart("chartContainer",
                     {
-                      dataPoints: incomeData,
-                      indexLabel: "${y}",
-                      indexLabelPlacement: "outside",  
-                      indexLabelOrientation: "horizontal",
-                    }
-                    ]
-                  });
-                  chart.render();
-              }).catch((error) => {
-              console.error(error);
-              });
-          }
-      
+                      animationEnabled: true,
 
-      function getSales(){
-          const alertPlaceholder = document.getElementById('errorAlert')
-          const alert = (message) => {
-            alertPlaceholder.innerHTML = [
-              `<div class="alert alert-danger alert-dismissible" role="alert">`,
-              `   <div>${message}</div>`,
-              '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
-              '</div>'
-            ].join('')
-          }
-          let date = new Date()
-          let dateArr = []
-          let incomeData = []
-          let indexLabelChecker = ""
-          let totalRevenue = 0
-          var isoDateTime = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString();
-          let fromDate = new Date(document.getElementById('fromDate').value)
-          let toDate = new Date(document.getElementById('toDate').value)
-          fromDate.setHours(0,0,0,0)
-          toDate.setHours(23,59,59,999)
-          //dayDiff converts the difference between the two dates from milliseconds to days
-          let dayDiff = (toDate-fromDate) / 1000 / 60 / 60 / 24
+                      data: [
 
-          if (fromDate == "Invalid Date" || toDate == "Invalid Date"){
-              alert('Please select 2 dates.')
-          }
-          else if (dayDiff < 0){
-              alert("'To' date cannot be before the 'From' date.")
-          }
-          else {
-              //remove any alerts
-              document.getElementById("errorAlert").innerHTML = ""
-              
-                //populate date array with placeholder data first
-                let indexDate = new Date(fromDate);
-                for (let d = 0; d<=dayDiff; d++){
-                    dateArr.push([indexDate.toLocaleDateString('en-GB'), 0])
-                    indexDate.setDate(indexDate.getDate()+1)
-                }
-                //get auction list
-                const dbRef = ref(getDatabase());
-                get(child(dbRef, `auction/`)).then((snapshot) => {
-                    let auction = snapshot.val()
-                    for (let aucID in auction){
-                        //check if user has sold the current auction item
-                        if (auction[aucID]['userId'] == userID && auction[aucID]['lastBidUser'] != undefined && isoDateTime>auction[aucID]['countdownTimer']){
-                            let soldDate = new Date(auction[aucID]['countdownTimer']);
-                            soldDate.setHours(0,0,0,0);
-                            if(fromDate <= soldDate && toDate >= soldDate){
-                                let currDate = new Date(fromDate);
-                                for(let d = 0; d<=dayDiff; d++){
-                                    currDate.setDate(fromDate.getDate()+1)
-                                    if(currDate.getDate() == soldDate.getDate()){
-                                        dateArr[d][1] += parseInt(auction[aucID]['curBid'])
-                                    }
-                                }
-                                
-                            }
-                        }
-                    }
+                      {
+                        dataPoints: incomeData,
+                        indexLabel: "${y}",
+                        indexLabelPlacement: "outside",  
+                        indexLabelOrientation: "horizontal",
+                      }
+                      ]
+                    });
+                    chart.render();
+                }).catch((error) => {
+                console.error(error);
+                });
+            }
+        
+
+        function getSales(){
+            const alertPlaceholder = document.getElementById('errorAlert')
+            const alert = (message) => {
+              alertPlaceholder.innerHTML = [
+                `<div class="alert alert-danger alert-dismissible" role="alert">`,
+                `   <div>${message}</div>`,
+                '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+                '</div>'
+              ].join('')
+            }
+            let date = new Date()
+            let dateArr = []
+            let incomeData = []
+            let indexLabelChecker = ""
+            let totalRevenue = 0
+            var isoDateTime = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString();
+            let fromDate = new Date(document.getElementById('fromDate').value)
+            let toDate = new Date(document.getElementById('toDate').value)
+            fromDate.setHours(0,0,0,0)
+            toDate.setHours(23,59,59,999)
+            //dayDiff converts the difference between the two dates from milliseconds to days
+            let dayDiff = (toDate-fromDate) / 1000 / 60 / 60 / 24
+
+            if (fromDate == "Invalid Date" || toDate == "Invalid Date"){
+                alert('Please select 2 dates.')
+            }
+            else if (dayDiff < 0){
+                alert("'To' date cannot be before the 'From' date.")
+            }
+            else {
+                //remove any alerts
+                document.getElementById("errorAlert").innerHTML = ""
                 
-                  //dateArr variable is an array which has the revenues of the current user from the date specified to the end date specified
-                  //console.log(dateArr)
-                  for (let i=1; i<dateArr.length + 1; i++){
-                    incomeData.push({x: i, y: dateArr[i-1][1], label: dateArr[i-1][0]})
-                    totalRevenue += dateArr[i-1][1]
+                  //populate date array with placeholder data first
+                  let indexDate = new Date(fromDate);
+                  for (let d = 0; d<=dayDiff; d++){
+                      dateArr.push([indexDate.toLocaleDateString('en-GB'), 0])
+                      indexDate.setDate(indexDate.getDate()+1)
                   }
-                  document.getElementById('revenue').innerText = "Total revenue: $" + totalRevenue
-                  //console.log(incomeData)
-                  //console.log(totalRevenue)
-                  if (incomeData.length <= 31){
-                    indexLabelChecker = "${y}"
-                  }
-                  else{
-                    indexLabelChecker = ""
-                  }
-                  var chart = new CanvasJS.Chart("chartContainer",
-                  {
-                    animationEnabled: true,
-
-                    data: [
-
-                    {
-                      dataPoints: incomeData,
-                      indexLabel: indexLabelChecker,
-                      indexLabelPlacement: "outside",  
-                      indexLabelOrientation: "horizontal",
+                  //get auction list
+                  const dbRef = ref(getDatabase());
+                  get(child(dbRef, `auction/`)).then((snapshot) => {
+                      let auction = snapshot.val()
+                      for (let aucID in auction){
+                          //check if user has sold the current auction item
+                          if (auction[aucID]['userId'] == userID && auction[aucID]['lastBidUser'] != undefined && isoDateTime>auction[aucID]['countdownTimer']){
+                              let soldDate = new Date(auction[aucID]['countdownTimer']);
+                              soldDate.setHours(0,0,0,0);
+                              if(fromDate <= soldDate && toDate >= soldDate){
+                                  let currDate = new Date(fromDate);
+                                  for(let d = 0; d<=dayDiff; d++){
+                                      currDate.setDate(fromDate.getDate()+1)
+                                      if(currDate.getDate() == soldDate.getDate()){
+                                          dateArr[d][1] += parseInt(auction[aucID]['curBid'])
+                                      }
+                                  }
+                                  
+                              }
+                          }
+                      }
+                  
+                    //dateArr variable is an array which has the revenues of the current user from the date specified to the end date specified
+                    //console.log(dateArr)
+                    for (let i=1; i<dateArr.length + 1; i++){
+                      incomeData.push({x: i, y: dateArr[i-1][1], label: dateArr[i-1][0]})
+                      totalRevenue += dateArr[i-1][1]
                     }
-                    ]
-                  });
-                  chart.render();
-              }).catch((error) => {
-              console.error(error);
-              });
-          }
-      }
-  document.getElementById('sales').addEventListener('click', getSales)
-  window.onload = getDefaultSales()  
+                    document.getElementById('revenue').innerText = "Total revenue: $" + totalRevenue
+                    //console.log(incomeData)
+                    //console.log(totalRevenue)
+                    if (incomeData.length <= 31){
+                      indexLabelChecker = "${y}"
+                    }
+                    else{
+                      indexLabelChecker = ""
+                    }
+                    var chart = new CanvasJS.Chart("chartContainer",
+                    {
+                      animationEnabled: true,
+
+                      data: [
+
+                      {
+                        dataPoints: incomeData,
+                        indexLabel: indexLabelChecker,
+                        indexLabelPlacement: "outside",  
+                        indexLabelOrientation: "horizontal",
+                      }
+                      ]
+                    });
+                    chart.render();
+                }).catch((error) => {
+                console.error(error);
+                });
+            }
+        }
+    document.getElementById('sales').addEventListener('click', getSales)
+    btn_logout.addEventListener('click', (e) => {
+        signOut(auth).then(() => {
+          window.location.href = "index.html";
+        }).catch((error) => {
+          // An error happened.
+          alert(error);
+        });
+      })
+    window.onload = getDefaultSales()  
     </script>
     
 </body>
