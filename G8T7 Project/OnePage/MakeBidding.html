@@ -350,9 +350,9 @@
       console.log(queryString);
       const urlParams = new URLSearchParams(queryString);
       console.log(urlParams);
-      const userID = urlParams.get('userid');
+      const userID = urlParams.get('user_id');
       console.log(userID);
-      window.location.href = "ArtistsProductBidList.html?user_id=" + userID;
+      window.location.href = "ProductBiddingList.html?user_id=" + userID;
   })
 
   editProfile.addEventListener('click', (e) => {
@@ -403,10 +403,9 @@
 
           if(existingBidder == childSnapshot.val().userID){
             old_bidder_credits = childSnapshot.val().credits;
+            console.log(old_bidder_credits);
+            return old_bidder_credits;
           }
-
-          console.log(old_bidder_credits);
-          return old_bidder_credits;
         }) 
       })
     }
@@ -437,6 +436,7 @@
       e.preventDefault();
 
       var title = "";
+      var lastBidUser = "";
 
       const queryString = window.location.search;
       console.log(queryString);
@@ -472,20 +472,36 @@
           
           var id = snapshot.val().id;
           title = snapshot.val().title;
+          lastBidUser = snapshot.val().lastBidUser;
         })
 
       var startBid = document.getElementById('inputStartBid').value;
       var subBid = document.getElementById('subBid').value;
-      curBid = parseInt(curBid) + parseInt(subBid);
-      console.log(curBid);
-      console.log(subBid);
-      var newBidUser = user_id;
+      if(lastBidUser == ""){
+        curBid = parseInt(startBid);
+      }else{
+        curBid = parseInt(curBid) + parseInt(subBid);
+        console.log(curBid);
+        console.log(subBid);
+      }
   
-      updateBiddingProduct(curBid, newBidUser, credits, title, dbEmail, dbName);
+      updateBiddingProduct(curBid, user_id, credits, title, dbEmail, dbName);
       
       
       window.location.href = "ProductBiddingDetails.html?product_id=" + product_id + "&user_id=" + user_id;
   })
+
+  function SendEmail(email, firstName, auctionProduct, price){
+    emailjs.send('service_6lrco97', 'template_jdz1rgs', {
+      to_name: firstName,
+      to_email: email,
+      bid_product: auctionProduct, 
+      bid_price: price
+    })
+    .then(function(res){
+      console.log(res.status);
+    })
+  }
 
     function updateBiddingProduct(curBid, newBidUser, credits, productName, email, name) {
 
@@ -509,6 +525,30 @@
                 alert(error);
             });
 
+            update(ref(database, 'users/' + newBidUser), {
+              credits: credit_balance
+            })
+            .then(() => {
+              //Continue
+            })
+            .catch((error) => {
+                // The write failed...
+                alert(error);
+            });
+
+            update(ref(database, 'auction/' + id), {
+              curBid: curBid,
+              lastBidUser: newBidUser
+            })
+            .then(() => {
+                // Data saved successfully!
+                alert("Bid Successfully!");
+            })
+            .catch((error) => {
+                // The write failed...
+                alert(error);
+            });
+          }else{
             update(ref(database, 'users/' + newBidUser), {
               credits: credit_balance
             })
