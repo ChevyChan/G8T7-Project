@@ -132,6 +132,7 @@
                             get(child(dbRef, `users/${artistID}`)).then((snapshot) => {
                                 console.log(artistID)
                                 let artist = snapshot.val()
+                                //cart items
                                 document.getElementById('cartContent').innerHTML += `
                                 <tr class="border-bottom" id="item${id}">
                                     <td>
@@ -154,6 +155,7 @@
                                     </td>
                                 </tr>
                                 `
+                                //payment summary
                                 document.getElementById(id).addEventListener("click",function(){removeItem("item"+id)})
                                 document.getElementById('orderSummary').innerHTML += `<p>${data[id]}</p><p>$${price}</p>`
                                 document.getElementById('totalPrice').innerText += price
@@ -186,7 +188,13 @@
         console.error(error);
         });
 
-        
+      //set standard delivery and express delivery date
+      let currentDate = new Date()
+      //standard delivery date is 7 days from now
+      let standardDeliveryDate = currentDate.getDate()+7+"/"+currentDate.getMonth()+"/"+currentDate.getFullYear()
+      let expressDeliveryDate = currentDate.getDate()+2+"/"+currentDate.getMonth()+"/"+currentDate.getFullYear()
+      document.getElementById('stDate').innerText = standardDeliveryDate
+      document.getElementById('exDate').innerText = expressDeliveryDate
     }
 
 
@@ -222,6 +230,57 @@
 
       
     }
+
+    var checkedDelivery = false
+    function checkDelivery(){
+      if (!checkedDelivery){
+        if(document.getElementById('standardDel').checked){
+          document.getElementById('deliverySummary').innerHTML = `<small class="text-muted">Standard Delivery</small><p>$3</p>`
+          let total = parseFloat(document.getElementById('totalPrice').innerText)
+          total += 3
+          document.getElementById('totalPrice').innerText = total
+          checkedDelivery = true
+        }
+        else if(document.getElementById('expressDel').checked){
+          document.getElementById('deliverySummary').innerHTML = `<small class="text-muted">Express Delivery</small><p>$5</p>`
+          let total = parseFloat(document.getElementById('totalPrice').innerText)
+          total += 5
+          document.getElementById('totalPrice').innerText = total
+          checkDelivery = true
+        }else{
+          document.getElementById('deliverySummary').innerHTML = `<small class="text-danger">SELECT DELIVERY OPTION</small><p></p>`
+        }
+      }
+      
+    }
+
+    //checkout button function
+    document.getElementById('pay').addEventListener('click',function(){
+      checkDelivery();
+      const dbRef = ref(getDatabase());
+      get(child(dbRef, `users/${userID}/credits`)).then((snapshot) => {
+        let credits = snapshot.val()
+        let total = document.getElementById('totalPrice').innerText
+        if(credits < total){
+          document.getElementById('pay').parentNode.innerHTML += `<p style='color:red;text-align:center;'>Insufficient credits, top up below!</p>
+          <button class="btn btn-danger" id="top-up" type="button" style="width:100%;margin-bottom:10px">Top Up</button>`
+          document.getElementById('top-up').addEventListener('click', (e) => {
+            const queryString = window.location.search;
+            console.log(queryString);
+            const urlParams = new URLSearchParams(queryString);
+            console.log(urlParams);
+            const user_id = urlParams.get('user_id');
+            console.log(user_id);
+
+            window.location.href = "top-up.html?user_id=" + user_id;
+
+          })
+        }
+      }).catch((error) => {
+        console.error(error);
+      });
+      
+    });
     
     document.getElementById('purchaseHistory').addEventListener('click', (e) => {
       const queryString = window.location.search;
@@ -465,8 +524,8 @@
                           <small class="text-muted">Order Summary</small>
                         </div>
                         <p id="orderSummary" class="d-flex justify-content-between"></p>
-                        <div class="d-flex justify-content-between pb-3"> <small class="text-muted">Additional Service</small>
-                            <p>$22</p>
+                        <div class="d-flex justify-content-between pb-3" id="deliverySummary">
+                          <!-- delivery summary here -->
                         </div>
                         <div class="d-flex justify-content-between"> <small class="text-muted">Total Amount</small>
                             <p id="totalPrice"></p>
@@ -478,57 +537,29 @@
             <div class="col-lg-8 delivery px-md-3 px-1">
                 <p class="pt-4 fw-bold pb-3 ps-2">Delivery</p>
                 <div class="d-md-flex justify-content-between align-items-center pb-4">
-                    <div class="size d-flex ps-4"> <label class="option d-flex align-items-center"> <input type="radio" name="radio">
+                    <div class="size d-flex ps-4"> <label class="option d-flex align-items-center"> <input type="radio" name="radio" id="standardDel">
                             <div class="card">
                                 <div class="d-flex align-items-center">
                                     <div class="d-flex align-items-center justify-content-center"> <img class="del" src="https://www.freepnglogos.com/uploads/ups-logo-transparent/ups-airlines-aviation-22.png" alt="">
                                         <p class="ps-2">DPD</p>
                                     </div>
                                     <div class=" d-flex flex-column px-3">
-                                        <p class="fw-bold pb-1">DPD<span>Deliveries</span></p> <small class="text-muted pb-1">Expected<span class="ps-1">delivery:</span></small> <small class="text-muted pb-1">Friday:28</small>
+                                        <p class="fw-bold pb-1">Standard <span>Delivery</span></p> <small class="text-muted pb-1">Expected<span class="ps-1">delivery:</span></small> <small class="text-muted pb-1" id="stDate">Friday:28</small>
                                     </div>
-                                    <p class="fw-bold">$5.25</p>
+                                    <p class="fw-bold">$3.00</p>
                                 </div>
                             </div> <span class="checkmark"></span>
                         </label> </div>
-                    <div class="size d-flex pt-md-0 pt-3 ps-md-0 ps-4"> <label class="option d-flex align-items-center"> <input type="radio" name="radio">
+                    <div class="size d-flex pt-md-0 pt-3 ps-md-0 ps-4"> <label class="option d-flex align-items-center"> <input type="radio" name="radio" id="expressDel">
                             <div class="card">
                                 <div class="d-flex align-items-center">
                                     <div class="d-flex align-items-center justify-content-center"> <img class="del" src="https://www.freepnglogos.com/uploads/ups-logo-transparent/ups-airlines-aviation-22.png" alt="">
                                         <p class="ps-2">DPD</p>
                                     </div>
                                     <div class=" d-flex flex-column px-3">
-                                        <p class="fw-bold pb-1">DPD<span>Deliveries</span></p> <small class="text-muted pb-1">Expected<span class="ps-1">delivery:</span></small> <small class="text-muted pb-1">Friday:28</small>
+                                        <p class="fw-bold pb-1">Express <span>Delivery</span></p> <small class="text-muted pb-1">Expected<span class="ps-1">delivery:</span></small> <small class="text-muted pb-1" id="exDate">Friday:28</small>
                                     </div>
-                                    <p class="fw-bold">$5.25</p>
-                                </div>
-                            </div> <span class="checkmark"></span>
-                        </label> </div>
-                </div>
-                <div class="d-md-flex justify-content-between align-items-center pb-4">
-                    <div class="size d-flex ps-4"> <label class="option d-flex align-items-center"> <input type="radio" name="radio">
-                            <div class="card">
-                                <div class="d-flex align-items-center">
-                                    <div class="d-flex align-items-center justify-content-center"> <img class="del" src="https://www.freepnglogos.com/uploads/ups-logo-transparent/ups-airlines-aviation-22.png" alt="">
-                                        <p class="ps-2">DPD</p>
-                                    </div>
-                                    <div class=" d-flex flex-column px-3">
-                                        <p class="fw-bold pb-1">DPD<span>Deliveries</span></p> <small class="text-muted pb-1">Expected<span class="ps-1">delivery:</span></small> <small class="text-muted pb-1">Friday:28</small>
-                                    </div>
-                                    <p class="fw-bold">$5.25</p>
-                                </div>
-                            </div> <span class="checkmark"></span>
-                        </label> </div>
-                    <div class="size d-flex pt-md-0 pt-3 ps-md-0 ps-4"> <label class="option d-flex align-items-center"> <input type="radio" name="radio">
-                            <div class="card">
-                                <div class="d-flex align-items-center">
-                                    <div class="d-flex align-items-center justify-content-center"> <img class="del" src="https://www.freepnglogos.com/uploads/ups-logo-transparent/ups-airlines-aviation-22.png" alt="">
-                                        <p class="ps-2">DPD</p>
-                                    </div>
-                                    <div class=" d-flex flex-column px-3">
-                                        <p class="fw-bold pb-1">DPD<span>Deliveries</span></p> <small class="text-muted pb-1">Expected<span class="ps-1">delivery:</span></small> <small class="text-muted pb-1">Friday:28</small>
-                                    </div>
-                                    <p class="fw-bold">$5.25</p>
+                                    <p class="fw-bold">$5.00</p>
                                 </div>
                             </div> <span class="checkmark"></span>
                         </label> </div>
