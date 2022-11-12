@@ -9,6 +9,10 @@
   <meta content="" name="description">
   <meta content="" name="keywords">
 
+  <style>
+    .navbar-brand{text-transform: uppercase;font-size: 14px;font-weight: 800}nav{border-top-left-radius: 25px;border-top-right-radius: 25px;background-color: white}.order .card{position: relative;background: #fff;box-shadow: 0 0 15px rgba(0, 0, 0, .1)}.ribbon{width: 150px;height: 150px;overflow: hidden;position: absolute}.ribbon::before, .ribbon::after{position: absolute;content: '';display: block;border: 5px solid red}.ribbon span{position: absolute;display: block;width: 225px;padding: 15px 0;background-color: red;box-shadow: 0 5px 10px rgba(0, 0, 0, .1);color: #fff;font: 700 18px/1 'Lato', sans-serif;text-shadow: 0 1px 1px rgba(0, 0, 0, .2);text-transform: uppercase;text-align: center}.ribbon-top-right{top: -12px;right: -12px}.ribbon-top-right::before, .ribbon-top-right::after{border-top-color: transparent;border-right-color: transparent}.ribbon-top-right::before{top: 0;left: 0}.ribbon-top-right::after{bottom: 0;right: 0}.ribbon-top-right span{left: -25px;top: 30px;transform: rotate(45deg)}small{font-size: 12px}.cart{line-height: 1}.icon{background-color: #eee;width: 40px;height: 40px;display: flex;justify-content: center;align-items: center;border-radius: 50%}.pic{width: 70px;height: 90px;border-radius: 5px}td{vertical-align: middle}.red{color: #fd1c1c;font-weight: 600}.b-bottom{border-bottom: 2px dotted black;padding-bottom: 20px}p{margin: 0px}table input{width: 40px;border: 1px solid #eee}input:focus{border: 1px solid #eee;outline: none}.round{background-color: #eee;height: 40px;width: 40px;border-radius: 50%;display: flex;align-items: center;justify-content: center}.payment-summary .unregistered{width: 100%;display: flex;align-items: center;justify-content: center;background-color: #eee;text-transform: uppercase;font-size: 14px}.payment-summary input{width: 100%;margin-right: 20px}.payment-summary .sale{width: 100%;background-color: #e9b3b3;text-transform: uppercase;font-size: 12px;display: flex;justify-content: center;align-items: center;padding: 5PX 0}.red{color: #fd1c1c}.del{width: 35px;height: 35px;object-fit: cover}.delivery .card{padding: 10px 5px}.option{position: relative;top: 50%;display: block;cursor: pointer;color: #888}.option input{display: none}.checkmark{position: absolute;top: 40%;left: -25px;height: 20px;width: 20px;background-color: #fff;border: 1px solid #ccc;border-radius: 50%}.option input:checked~.checkmark:after{display: block}.option .checkmark:after{content: "\2713";width: 10px;height: 10px;display: block;position: absolute;top: 30%;left: 50%;transform: translate(-50%, -50%) scale(0);transition: 200ms ease-in-out 0s}.option:hover input[type="radio"]~.checkmark{background-color: #f4f4f4}.option input[type="radio"]:checked~.checkmark{background: #ac1f32;color: #fff;transition: 300ms ease-in-out 0s}.option input[type="radio"]:checked~.checkmark:after{transform: translate(-50%, -50%) scale(1);color: #fff}
+</style>
+
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -31,8 +35,8 @@
   <script type="module">
     // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
-    import { getAuth , createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
-    import { getDatabase, ref, set, get, remove, child} from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js";
+    import { getAuth , createUserWithEmailAndPassword, onAuthStateChanged} from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+    import { getDatabase, ref, set ,get, remove, child, onValue} from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js";
     import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-storage.js"
     // TODO: Add SDKs for Firebase products that you want to use
     // https://firebase.google.com/docs/web/setup#available-libraries
@@ -56,76 +60,216 @@
     const auth = getAuth(app);
     const database = getDatabase(app);
 
-    //get user id from url  
+    //set userID & transaction ID according to url
     const queryString = window.location.search; 
     console.log(queryString); 
     const urlParams = new URLSearchParams(queryString); 
     console.log(urlParams); 
-    const user_id = urlParams.get('user_id'); 
-    console.log(user_id);
-        
-        document.getElementById('products').addEventListener('click', (e) => {  
-          
-          window.location.href = "listing.html?user_id=" + user_id;
-        })
-        
-        document.getElementById('incomeDashboard').addEventListener('click', (e) => {  
+    const userID = urlParams.get('user_id'); 
+    console.log(userID);
+    const transID = urlParams.get('trans_id'); 
 
-          window.location.href = "income-dashboard.html?user_id=" + user_id;
-        })
-        
-        document.getElementById('purchaseHistory').addEventListener('click', (e) => {  
+    var userId = "";
+    var userCredit = 0;
+    var userName = "";
+    function getUserData(uid) {
+      const db = ref(database, 'users/' + uid);
+      
+      onValue(db, snap => {
+          console.log(snap.val())
+          userId = uid;
+          console.log(userId);
 
-          window.location.href = "purchaseHistory.html?user_id=" + user_id;
-        })
+          userCredit = snap.val().credits;
+          userName = snap.val().firstName;
+          console.log(userCredit);
+          console.log(userName);
+          document.getElementById("credits").innerText = "Credits: SGD$" + userCredit;
+          document.getElementById("userName").innerText = "Welcome! " + userName;
+      })
+    }
+    
+    onAuthStateChanged(auth, (user) => { 
+        if(user){ 
+          console.log(user); 
+          getUserData(user.uid) 
+        }else{ 
+          "Please try again!"; 
+        } 
+         
+    })
 
-        editProfile.addEventListener('click', (e) => {
+    btn_logout.addEventListener('click', (e) => { 
+      signOut(auth).then(() => { 
+        window.location.href = "index.html"; 
+      }).catch((error) => { 
+        // An error happened. 
+        alert(error); 
+      }); 
+    })
+    
 
-          window.location.href = "Profile.html?user_id=" + user_id;
-        })    
-
-        document.getElementById('shoppingCart').addEventListener('click', (e) => {
-
-          window.location.href = "shoppingCart.html?user_id=" + user_id;
-        })
-
-        artistBidList.addEventListener('click', (e) => {
-
-          window.location.href = "ArtistsProductBidList.html?user_id=" + user_id;
-        })
-
-        productList.addEventListener('click', (e) => {
-
-          window.location.href = "ProductBiddingList.html?user_id=" + user_id;
-        })
-
-        document.getElementById('createBid').addEventListener('click', (e) => {  
-          
-          window.location.href = "CreateBidding.html?user_id=" + user_id;
-        })
-
-    function addToHistory(){
-      //add purchase history to userID
+    function removeItem(itemID){
+      console.log(itemID)
+      //remove item from database
       const dbRef = ref(getDatabase());
-      const db = getDatabase();
-      get(child(dbRef, `users/${userID}/cart/`)).then((snapshot) => {
-        let cartItems = snapshot.val()
-        let currentDateTime = new Date().toJSON().replace('.',':')
-        set(ref(db, `users/${userID}/purchaseHistory/${currentDateTime}`), cartItems);
-        //remove cart
-        remove(child(dbRef, `users/${userID}/cart/`))
-       
-      }).catch((error) => {
-        console.error(error);
-      });
+      remove(child(dbRef, `users/${userID}/cart/${itemID}`))
 
+      //remove list item
+      document.getElementById(itemID).remove()
+
+      //add cart empty message
+      if(document.getElementById("cartContent").children.length==0){
+        document.getElementById("cartContent").innerText = 'Cart is empty, add something!'
+      }
       
     }
     
-    document.getElementById('historyBtn').addEventListener('click', addToHistory)
+    function displayTransactionDetails(){
+      const dbRef = ref(getDatabase());
+      const db = getDatabase();
+      userName = document.getElementById("userName").innerText
+      document.getElementById('transDetails').innerHTML=`
+        <p>Transaction ID: ${transID}</p>
+        <p id='name'>Buyer Name: </p>
+        <p id='itemsBought'>Items Bought: </p>`
+      //get and set items bought
+      get(child(dbRef, `users/${userID}/purchaseHistory/${transID}`)).then((snapshot) => {
+        let transSnap = snapshot.val()
+        for(let itemID in transSnap){
+          get(child(dbRef, `product/${itemID}`)).then((snapshot) => {
+            let prodSnap = snapshot.val()
+            document.getElementById('itemsBought').innerText += ` '${transSnap[itemID]} ($${prodSnap.price})' `
+          }).catch((error) => {
+            console.error(error);
+          });
+        }
+      }).catch((error) => {
+        console.error(error);
+      });
+      //get and set buyer name
+      get(child(dbRef, `users/${userID}`)).then((snapshot) => {
+        document.getElementById('name').innerText += ' '+snapshot.val().firstName + ' ' + snapshot.val().lastName
+      }).catch((error) => {
+        console.error(error);
+      });
+    }
+
+    displayTransactionDetails()
+
+    
+    document.getElementById('purchaseHistory').addEventListener('click', (e) => {
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+
+      window.location.href = "purchaseHistory.html?user_id=" + user_id;
+
+    })
+
+    document.getElementById('shoppingCart').addEventListener('click', (e) => {
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+
+      window.location.href = "shoppingCart.html?user_id=" + user_id;
+
+    })
+
+    document.getElementById('home').addEventListener('click', (e) => {
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+
+      window.location.href = "home.html?user_id=" + user_id;
+
+    })
+
+    document.getElementById('editProfile').addEventListener('click', (e) => {
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+
+      window.location.href = "Profile.html?user_id=" + user_id;
+
+    })
+
+    document.getElementById('purchaseHistory').addEventListener('click', (e) => {
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+
+      window.location.href = "purchaseHistory.html?user_id=" + user_id;
+
+    })
+
+    document.getElementById('products').addEventListener('click', (e) => {
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+
+      window.location.href = "listing.html?user_id=" + user_id;
+
+    })
+
+    document.getElementById('productList').addEventListener('click', (e) => {
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+
+      window.location.href = "ProductBiddingList.html?user_id=" + user_id;
+
+    })
+
+    document.getElementById('incomeDashboard').addEventListener('click', (e) => {
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+
+      window.location.href = "income-dashboard.html?user_id=" + user_id;
+
+    })
+
+    document.getElementById('artistBidList').addEventListener('click', (e) => {
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+
+      window.location.href = "ArtistsProductBidList.html?user_id=" + user_id;
+
+    })
+
 
 
 </script>
+
 
 
 </head>
@@ -133,10 +277,10 @@
 <body>
 
    <!-- ======= Header ======= -->
-   <header id="header" class="fixed-top">
+  <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center justify-content-between">
 
-      <h1 class="logo"><a href="index.html">Artistic Shop</a></h1>
+      <h1 class="logo"><a href="#" id="home">Art House</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
@@ -151,10 +295,10 @@
               <li><a href="#" id="purchaseHistory">Purchase History</a></li>
               <li><a href="#" id="incomeDashboard">Income Dashboard</a></li>
               <li><a id="artistBidList" href="#">Your Bidding Products</a></li>
-              <li><a href="#" id="btn_logout">Logout</a></li>
+              <li><a href="index.html" id="btn_logout">Logout</a></li>
             </ul>
           </li>
-          <li><a class="getstarted scrollto" href="#" id="createBid">Create New Bid</a></li>
+          <li><a class="getstarted scrollto" href="#" onclick="createBiddingProduct()">Create New Bid</a></li>
           <li><a id="userName"></a></li>
           <li><a id="credits"></a></li>
         </ul>
@@ -164,6 +308,7 @@
 
     </div>
   </header><!-- End Header -->
+
 
   <main id="main">
 
@@ -184,8 +329,20 @@
     </section><!-- End Breadcrumbs -->
 
     <!-- Body section -->
-    <div id="main">
-      <button id="historyBtn">Add to history</button>
+
+    <div class="container">
+      <div class="row">
+        <div class="col d-flex justify-content-center">
+          <h3 class="text-success">Transaction Successful!</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col" id="transDetails">
+          <p class="text-center">Transaction ID:</p>
+          <p class="text-center">Buyer Name:</p>
+          <p class="text-center">Item Name: Price:$</p>
+        </div>
+      </div>
     </div>
     
 

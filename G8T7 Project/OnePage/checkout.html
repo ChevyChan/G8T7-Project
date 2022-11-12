@@ -214,19 +214,7 @@
       
     }
     function addToHistory(){
-      //add purchase history to userID
-      const dbRef = ref(getDatabase());
-      const db = getDatabase();
-      get(child(dbRef, `users/${userID}/cart/`)).then((snapshot) => {
-        let cartItems = snapshot.val()
-        let currentDateTime = new Date().toJSON().replace('.',':')
-        set(ref(db, `users/${userID}/purchaseHistory/${currentDateTime}`), cartItems);
-        //remove cart
-        remove(child(dbRef, `users/${userID}/cart/`))
-       
-      }).catch((error) => {
-        console.error(error);
-      });
+      
 
       
     }
@@ -275,6 +263,31 @@
             window.location.href = "top-up.html?user_id=" + user_id;
 
           })
+        }else{
+          //add purchase history to userID
+          const dbRef = ref(getDatabase());
+          const db = getDatabase();
+          get(child(dbRef, `users/${userID}/cart/`)).then((snapshot) => {
+            let cartItems = snapshot.val()
+            let currentDateTime = new Date().toJSON().replace('.',':')
+            set(ref(db, `users/${userID}/purchaseHistory/${currentDateTime}`), cartItems);
+            //remove cart
+            remove(child(dbRef, `users/${userID}/cart/`))
+            //redirect to payment success page
+            const queryString = window.location.search;
+            console.log(queryString);
+            const urlParams = new URLSearchParams(queryString);
+            console.log(urlParams);
+            const user_id = urlParams.get('user_id');
+            console.log(user_id);
+
+            window.location.href = "paySuccess.html?user_id=" + user_id +"&trans_id="+currentDateTime;
+          
+          }).catch((error) => {
+            console.error(error);
+          });
+
+          
         }
       }).catch((error) => {
         console.error(error);
@@ -507,7 +520,7 @@
                                     <!-- cart will be here -->
                                 </tbody>
                             </table>
-                            <button class="btn btn-success" id="pay" type="button" style="width:100%;margin-bottom:10px">Checkout</button>
+                            <button class="btn btn-success" id="pay" type="button" style="width:100%;margin-bottom:10px">Pay With Credits</button>
                         </div>
                     </div>
                 </div>
