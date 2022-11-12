@@ -253,7 +253,7 @@
       
       onValue(db, snap => {
           console.log(snap.val())
-          userId = user_id;
+          //userId = user_id;
           console.log(userId);
 
           userCredit = snap.val().credits;
@@ -268,6 +268,8 @@
     var lastBidUser = "";
     var auction_id = "";
     var title = "";
+    var userId = "";
+    var currentBid = 0;
 
     function retrieveBiddingProductByIdFromDB(id){
 
@@ -281,13 +283,14 @@
         title = snapshot.val().title;
         var artist = snapshot.val().artistName;
         var startBid = snapshot.val().startBid;
-        var currentBid = snapshot.val().curBid;
         var subBid = snapshot.val().subBid;
         var videoURL = snapshot.val().videoURL;
         var countdown = snapshot.val().countdownTimer;
         var productPic = snapshot.val().productPic;
         var prodDesc = snapshot.val().prodDesc;
         lastBidUser = snapshot.val().lastBidUser;
+        userId = snapshot.val().userId;
+        currentBid = snapshot.val().curBid;
         console.log(countdown);
 
         const queryString = videoURL;
@@ -325,6 +328,8 @@
             if(time_left < 0) {
               clearInterval(x);
               addToHistory();
+              sendCreditsToArtist();
+              document.getElementById('bidButton').disabled = true;
               document.getElementById("countdownTimer").innerHTML = "Auction Ended";
             }
         })
@@ -347,7 +352,6 @@
                   <p class="mt-4" id="countdownTimer">Auction ending in: <span>${days + "d " + hours + "h " + minutes + "m " + seconds + "s "}</span></p>
                   <hr>
                   <button class="btn btn-primary btn-lg col-4" id="bidButton" type="submit" onclick="makeBiddingByID()">Submit Bid</button>
-                  <p id="bidStatus" style="text-align:center; color:red;"></p>
                 </div>
               </div>
               <hr>
@@ -398,7 +402,6 @@
                   <p class="mt-4" id="price">Current Bid: $<span>${currentBid}</span></p>
                   <p class="mt-4" id="countdownTimer">Auction ending in: <span>${days + "d " + hours + "h " + minutes + "m " + seconds + "s "}</span></p>
                   <button class="btn btn-primary btn-lg col-4" id="bidButton" type="submit" onclick="makeBiddingByID()">Submit Bid</button>
-                  <p id="bidStatus" style="text-align:center; color:red;"></p>
                 </div>
               </div>
               <hr>
@@ -477,6 +480,56 @@
       window.location.href = "shoppingCart.html?user_id=" + user_id;
 
     })
+
+    function sendCreditsToArtist() {
+
+      var credit_balance = 0;
+      var artist_id = "";
+
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const product_id = urlParams.get('product_id');
+      console.log(product_id);
+
+      const dbRef_1 = ref(database, "auction/" + product_id);
+        
+        onValue(dbRef_1, (snapshot) => {
+          
+          console.log(snapshot.val());
+          
+          artist_id = snapshot.val().userId;
+
+        })
+      
+      const dbRef = ref(database, "users/" + artist_id);
+        
+      onValue(dbRef, (snapshot) => {
+        console.log(snapshot.val());
+
+        credit_balance = snapshot.val().credits;
+        console.log(credit_balance);
+      })
+
+      if(lastBidUser != ""){
+        credit_balance += currentBid;
+        console.log(credit_balance);
+      }else{
+        return
+      }
+      
+      update(ref(database, 'users/' + userId), {
+        credits: credit_balance
+      })
+      .then(() => {
+        // Data saved successfully!
+      })
+      .catch((error) => {
+        // The write failed...
+        console.log(error);
+      });
+    }
 
     window.onload = getProductDetails();
     window.onload = getUserData();

@@ -490,8 +490,6 @@
   
       updateBiddingProduct(curBid, user_id, credits, title, dbEmail, dbName);
       
-      
-      window.location.href = "ProductBiddingDetails.html?product_id=" + product_id + "&user_id=" + user_id;
   })
 
   function SendEmail(email, firstName, auctionProduct, price){
@@ -570,6 +568,7 @@
             .then(() => {
                 // Data saved successfully!
                 console.log("Bid Successfully!");
+                window.location.href = "ProductBiddingDetails.html?product_id=" + product_id + "&user_id=" + user_id;
             })
             .catch((error) => {
                 // The write failed...
@@ -702,8 +701,21 @@
       window.location.href = "shoppingCart.html?user_id=" + user_id;
 
     })
+
   </script>
 
+  <script>
+    function createBiddingProduct(){
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+      
+      window.location.href = "CreateBidding.html?user_id=" + user_id;
+    }
+  </script>
 </body>
 
 </html>
