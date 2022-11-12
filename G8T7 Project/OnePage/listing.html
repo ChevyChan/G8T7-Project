@@ -54,7 +54,7 @@
               <li><a href="#" id="btn_logout">Logout</a></li>
             </ul>
           </li>
-          <li><a class="getstarted scrollto" href="#" id="createBid">Create New Bid</a></li>
+          <li><a class="getstarted scrollto" href="#" onclick="createProduct()">Create New Product</a></li>
           <li><a id="userName"></a></li>
           <li><a id="credits"></a></li>
         </ul>
@@ -331,14 +331,17 @@
     const auth = getAuth(app);
     const database = getDatabase(app);
     var product_id=''
+    
     function redirectInput(){
-    const queryString = window.location.search; 
+      const queryString = window.location.search; 
       console.log(queryString); 
       const urlParams = new URLSearchParams(queryString); 
       console.log(urlParams); 
       product_id = urlParams.get('search'); 
       console.log(product_id);
     }
+
+    
     window.onload=redirectInput()
     function retrieveAllProducts(){
       const dbRef = ref(database, "product");
@@ -442,9 +445,6 @@ btn_logout.addEventListener('click', (e) => {
     listing.addEventListener('click', (e) => { 
       window.location.href = "listing.html?user_id=" + user_id; 
     })
-    document.getElementById('createBid').addEventListener('click', (e) => {  
-      window.location.href = "CreateBidding.html?user_id=" + user_id;
-    })
     document.getElementById('home').addEventListener('click', (e) => {
       window.location.href = "home.html?user_id=" + user_id;
     })
@@ -478,6 +478,19 @@ btn_logout.addEventListener('click', (e) => {
         "Please try again!"; 
       } 
     })
+</script>
+
+<script>
+  function createProduct(){
+    const queryString = window.location.search; 
+    console.log(queryString); 
+    const urlParams = new URLSearchParams(queryString); 
+    console.log(urlParams); 
+    const user_id = urlParams.get('user_id'); 
+    console.log(user_id); 
+
+    window.location.href = "CreateListing.html?user_id=" + user_id; 
+  }
 </script>
 
 </body>

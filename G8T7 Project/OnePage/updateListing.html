@@ -54,7 +54,7 @@
               <li><a href="index.html" id="btn_logout">Logout</a></li>
             </ul>
           </li>
-          <li><a class="getstarted scrollto" href="#" onclick="createBiddingProduct()">Create New Bid</a></li>
+          <li><a class="getstarted scrollto" href="#" onclick="createProduct()">Create New Product</a></li>
           <li><a id="userName"></a></li>
           <li><a id="credits"></a></li>
         </ul>
@@ -531,6 +531,19 @@
       window.location.href = "listing.html?user_id=" + user_id; 
  
     })
+
+  </script>
+  <script>
+    function createProduct(){
+      const queryString = window.location.search; 
+      console.log(queryString); 
+      const urlParams = new URLSearchParams(queryString); 
+      console.log(urlParams); 
+      const user_id = urlParams.get('user_id'); 
+      console.log(user_id); 
+ 
+      window.location.href = "CreateListing.html?user_id=" + user_id; 
+    }
   </script>
 
 </body>
