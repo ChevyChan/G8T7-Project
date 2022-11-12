@@ -42,7 +42,7 @@
   <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center justify-content-between">
 
-      <h1 class="logo"><a href="home.html">Art House</a></h1>
+      <h1 class="logo"><a href="#" id="home">Art House</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
@@ -213,7 +213,7 @@
         <div class="d-flex justify-content-between align-items-center">
           <h2>${childData.title}</h2>
           <ol>
-            <li><a href="home.html">Home</a></li>
+            <li><a id="home" href="#">Home</a></li>
             <li>${childData.title}</li>
           </ol>
         </div>
@@ -278,7 +278,7 @@ btn_delete.addEventListener('click', (e) => {
       .then(() => {
         // Data saved successfully!
         alert("Product Deleted!");
-        window.location.href = "home.html"
+        window.location.href = "home.html?user_id=" + user
       })
   }
     })
@@ -293,7 +293,7 @@ btn_update.addEventListener('click', (e) => {
         <div class="d-flex justify-content-between align-items-center">
           <h2>${childData.title}</h2>
           <ol>
-            <li><a href="home.html">Home</a></li>
+            <li><a href="#" id="home">Home</a></li>
             <li>${childData.title}</li>
           </ol>
         </div>

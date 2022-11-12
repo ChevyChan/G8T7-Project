@@ -51,7 +51,7 @@
               <li><a href="#" id="purchaseHistory">Purchase History</a></li>
               <li><a href="#" id="income_dashboard">Income Dashboard</a></li>
               <li><a id="artistBidList" href="#">Your Bidding Products</a></li>
-              <li><a href="index.html" id="btn_logout">Logout</a></li>
+              <li><a href="#" id="btn_logout">Logout</a></li>
             </ul>
           </li>
           <li><a class="getstarted scrollto" href="#" onclick="createProduct()">Create New Product</a></li>
@@ -74,7 +74,7 @@
         <div class="d-flex justify-content-between align-items-center">
           <h2>Update Product Details</h2>
           <ol>
-            <li><a href="home.html">Home</a></li>
+            <li><a href="#" id="home">Home</a></li>
             <li>Update Product Details</li>
           </ol>
         </div>
@@ -346,7 +346,7 @@
 
           var title = document.getElementById('title').value;
           var artistName = document.getElementById('artistName').value;
-          var price = document.getElementById('inputPrice').value;
+          var price = parseFloat(document.getElementById('inputPrice').value);
           
           var productPic = ImgURL;  
           var prodDesc = document.getElementById('productDesc').value;     
@@ -359,7 +359,7 @@
             document.getElementById('artistError').innerText = "Please enter the artist name!";
           }
 
-          if(price == ""){
+          if(price == 0){
             document.getElementById('priceError').innerText = "Please enter the price!";
           }
 
@@ -370,24 +370,24 @@
           if(prodDesc == ""){
             document.getElementById('descError').innerText = "Please enter a description of your art piece!";
           }
-
-          if(title == "" && artistName == "" && price == "" && productPic == "" && prodDesc == ""){
+          if(title == "" && artistName == "" && price==0 && productPic == "" && prodDesc == ""){
             console.log("Please enter all the required fields!");
             document.getElementById('titleError').innerText = "Please enter the art title!";
             document.getElementById('artistError').innerText = "Please enter the artist name!";
             document.getElementById('priceError').innerText = "Please enter the price!";
             document.getElementById('imageError').innerText = "Please upload an image!";
             document.getElementById('descError').innerText = "Please enter a description of your art piece!";
-          }else{
-            if(price > 0){
-              productPic = imageSrc.src;
-              createLisitngProduct(id, title, artistName, price, productPic, prodDesc);
-            }else{
-              document.getElementById('priceError').innerText = "Please enter a valid price!";
-            }
             
           }
-
+          else{
+            if(price>0){
+              productPic = imageSrc.src;
+            createLisitngProduct(id, title, artistName, price, productPic, prodDesc);
+            }
+            else{
+              document.getElementById('priceError').innerText = "Please enter the price!";
+            }
+            }
         })
         .catch(error => {
           console.log(error.message);

@@ -70,7 +70,7 @@
     <!-- ======= Breadcrumbs ======= -->
     <section class="breadcrumbs">
       <div class="container">
-        <form action="listing.html">
+        <form>
         <div class="d-flex justify-content-between align-items-center">
             
             <div class="input-group mb-3">
@@ -91,17 +91,17 @@
         </div>
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <a href="#signup" target="_blank">
+            <a href="#" id="register">
               <img src="media/carousel slide 1.png" class="d-block w-100" alt="...">
             </a>
           </div>
           <div class="carousel-item ">
-            <a href="#createlisting" target="_blank">
+            <a href="#" id="createdBid">
               <img src="media/carousel slide 2.png" class="d-block w-100" alt="...">
             </a>
           </div>
           <div class="carousel-item">
-            <a href="listing.html" target="_blank">
+            <a href="#" id="listing">
               <video class="img-fluid d-block w-100" autoplay loop muted>
                 <source src="media/carousel slide 3.mp4" type="video/mp4" />
               </video>
@@ -245,6 +245,9 @@
     const user_id = urlParams.get('user_id'); 
     console.log(user_id); 
 
+    register.addEventListener('click', (e) => { 
+      window.location.href = "Register.html";
+    })
     artistBidList.addEventListener('click', (e) => { 
       window.location.href = "ArtistsProductBidList.html?user_id=" + user_id; 
     })
