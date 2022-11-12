@@ -568,7 +568,6 @@
             .then(() => {
                 // Data saved successfully!
                 console.log("Bid Successfully!");
-                window.location.href = "ProductBiddingDetails.html?product_id=" + product_id + "&user_id=" + user_id;
             })
             .catch((error) => {
                 // The write failed...
@@ -580,6 +579,7 @@
           document.getElementById("creditStatus").innerText = "Insufficient Credit! Please top up and try again!";
         }
            
+        window.location.href = "ProductBiddingDetails.html?product_id=" + product_id + "&user_id=" + user_id;
     }
     
     document.getElementById('home').addEventListener('click', (e) => {
