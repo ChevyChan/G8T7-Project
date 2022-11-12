@@ -83,12 +83,13 @@
     </section><!-- End Breadcrumbs -->
 
     <section class="inner-page">
-      <div class="container">
+      <div class="container" style="width:50%;">
         <form id="registerForm" method="GET" action="#">
             <div class="form-outline mb-4">
               <img src="https://uxwing.com/wp-content/themes/uxwing/download/logistics-shipping-delivery/search-product-icon.png" style="width:300px; height:300px; margin-left:40%; margin-bottom:30px; margin-top:30px;" id="imageSrc" alt="/Project/assets/img/profile-icon-9.png">
               <input type="file" class="form-control" id="customFile" onchange="showImage()"/>
               <label class="form-label" for="customFile">Image File</label>
+              <p style="color:red;" id="imageError"></p>
             </div>
             <!-- 2 column grid layout with text inputs for the first and last names -->
             <div class="row mt-5">
@@ -96,12 +97,14 @@
                   <div class="form-outline">
                   <input type="text" id="title" name="inputTitle" class="form-control" value=""/>
                   <label class="form-label" for="title">Title</label>
+                  <p style="color:red;" id="titleError"></p>
                   </div>
               </div>
               <div class="col-md-6 mb-4">
                   <div class="form-outline">
                   <input type="text" id="artistName" class="form-control" value=""/>
                   <label class="form-label" for="artistName">Artist Name</label>
+                  <p style="color:red;" id="artistError"></p>
                   </div>
               </div>
             </div>
@@ -109,6 +112,7 @@
               <div class="form-outline mb-4">
                 <input type="text" class="form-control" id="inputPrice" aria-describedby="startPriceHelp">
                 <label for="inputPrice" class="form-label">Price ($)</label>
+                <p style="color:red;" id="priceError"></p>
               </div>
   
               
@@ -116,6 +120,7 @@
               <div class="form-outline mb-4">
                 <textarea class="form-control" id="productDesc" rows="3"></textarea>
                 <label for="productDesc" class="form-label">Description</label>
+                <p style="color:red;" id="descError"></p>
               </div>
   
               <!-- Submit button -->
@@ -317,8 +322,32 @@
           var productPic = ImgURL;  
           var prodDesc = document.getElementById('productDesc').value;     
       
-          if(productPic != ""){
-            createLisitngProduct(id, title, artistName, price, productPic, prodDesc);
+          if(title == ""){
+            document.getElementById('titleError').innerText = "Please enter the art title!";
+          }
+
+          if(artistName == ""){
+            document.getElementById('artistError').innerText = "Please enter the artist name!";
+          }
+
+          if(price == ""){
+            document.getElementById('priceError').innerText = "Please enter the price!";
+          }
+
+          if(uploadPic == ""){
+            document.getElementById('imageError').innerText = "Please upload an image!";
+          }
+
+          if(prodDesc == ""){
+            document.getElementById('descError').innerText = "Please enter a description of your art piece!";
+          }
+          if(title == "" && artistName == "" && price == "" && productPic == "" && prodDesc == ""){
+            console.log("Please enter all the required fields!");
+            document.getElementById('titleError').innerText = "Please enter the art title!";
+            document.getElementById('artistError').innerText = "Please enter the artist name!";
+            document.getElementById('priceError').innerText = "Please enter the price!";
+            document.getElementById('imageError').innerText = "Please upload an image!";
+            document.getElementById('descError').innerText = "Please enter a description of your art piece!";
           }else{
             productPic = imageSrc.src;
             createLisitngProduct(id, title, artistName, price, productPic, prodDesc);
