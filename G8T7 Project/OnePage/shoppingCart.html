@@ -70,15 +70,20 @@
         if (snapshot.exists()) {
             let data = snapshot.val()
             for(let id in data){
-              //add cart items and button into list
+              get(child(dbRef, `product/${id}`)).then((snapshot) => {
+                let prodSnap = snapshot.val()
+                //add cart items and button into list
                 let li = document.createElement("li")
-                let node = document.createTextNode(data[id])
-                li.appendChild(node)
-                li.setAttribute("class","list-group-item d-flex justify-content-between")
+                li.innerHTML = `<div><img src=${prodSnap.productPic} style='height:70px; display:inline-block;'><h3 style='display:inline-block;'>${data[id]}</div>`
+                li.innerHTML += `<div>$${prodSnap.price}<button class='btn btn-danger' id='${id}' value='${id}'>Remove Item</button></div>`
+                li.setAttribute("class","list-group-item d-flex justify-content-between align-items-center")
                 li.setAttribute('id','listItem')
-                li.innerHTML += `<button class='btn btn-danger' id='${id}' value='${id}'>Remove Item</button>`
                 document.getElementById("cartList").appendChild(li) 
                 document.getElementById(id).addEventListener("click",function(){removeItem(id)})
+              }).catch((error) => {
+              console.error(error);
+              });
+                
             }
             
         } else {
