@@ -36,7 +36,7 @@
   <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center justify-content-between">
 
-      <h1 class="logo"><a href="#" id="home">Art House</a></h1>
+      <h1 class="logo"><a href="#" onclick="home()">Art House</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
@@ -74,7 +74,7 @@
         <div class="d-flex justify-content-between align-items-center">
           <h2>Create Product Details</h2>
           <ol>
-            <li><a href="#" id="home">Home</a></li>
+            <li><a href="#" onclick="home()">Home</a></li>
             <li>Create Product Details</li>
           </ol>
         </div>
@@ -452,7 +452,7 @@
       window.location.href = "shoppingCart.html?user_id=" + user_id;
 
     })
-    home.addEventListener('click', (e) => { 
+    function home(){
       const queryString = window.location.search; 
       console.log(queryString); 
       const urlParams = new URLSearchParams(queryString); 
@@ -461,8 +461,7 @@
       console.log(user_id); 
  
       window.location.href = "home.html?user_id=" + user_id; 
- 
-    })
+    }
     listing.addEventListener('click', (e) => { 
       const queryString = window.location.search; 
       console.log(queryString); 

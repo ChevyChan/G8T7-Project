@@ -42,7 +42,7 @@
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto " id="listing" href="#">Products</a></li>
+          <li><a class="nav-link scrollto" onclick="listing()" href="#">Products</a></li>
           <li><a class="nav-link scrollto" id="productList" href="#">Live Bidding</a></li>
           <li><a class="nav-link scrollto o" href="#" id="shoppingCart">Shopping Cart</a></li>
           <li class="dropdown"><a href="#"><span>Profile</span> <i class="bi bi-chevron-down"></i></a>
@@ -96,12 +96,12 @@
             </a>
           </div>
           <div class="carousel-item ">
-            <a href="#" id="createdBid">
+            <a href="#" onclick="createProduct()">
               <img src="media/carousel slide 2.png" class="d-block w-100" alt="...">
             </a>
           </div>
           <div class="carousel-item">
-            <a href="#" id="listing">
+            <a href="#" onclick="listing()">
               <video class="img-fluid d-block w-100" autoplay loop muted>
                 <source src="media/carousel slide 3.mp4" type="video/mp4" />
               </video>
@@ -287,9 +287,6 @@
     document.getElementById('shoppingCart').addEventListener('click', (e) => {
       window.location.href = "shoppingCart.html?user_id=" + user_id;
     })
-    listing.addEventListener('click', (e) => { 
-      window.location.href = "listing.html?user_id=" + user_id; 
-    })
     income_dashboard.addEventListener('click', (e) => { 
       window.location.href = "income-dashboard.html?user_id=" + user_id; 
     })
@@ -302,9 +299,7 @@
     shoppingCart.addEventListener('click', (e) => { 
       window.location.href = "shoppingCart.html?user_id=" + user_id; 
     })
-    listing.addEventListener('click', (e) => { 
-      window.location.href = "listing.html?user_id=" + user_id; 
-    })
+    
     /*document.getElementById('createBid').addEventListener('click', (e) => {
       window.location.href = "CreateBidding.html?user_id=" + user_id;
     })*/
@@ -330,6 +325,15 @@
 
     window.location.href = "CreateListing.html?user_id=" + user_id; 
   }
+  function listing(){
+      const queryString = window.location.search; 
+      console.log(queryString); 
+      const urlParams = new URLSearchParams(queryString); 
+      console.log(urlParams); 
+      const user_id = urlParams.get('user_id'); 
+      console.log(user_id); 
+      window.location.href = "listing.html?user_id=" + user_id; 
+    }
 </script>
 
 

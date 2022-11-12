@@ -42,13 +42,13 @@
   <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center justify-content-between">
 
-      <h1 class="logo"><a href="#" id="home">Art House</a></h1>
+      <h1 class="logo"><a href="#" onclick="home()">Art House</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto " id="home" href="#">Home</a></li>
+          <li><a class="nav-link scrollto " onclick="home()" href="#">Home</a></li>
           <li><a class="nav-link scrollto " id="listing" href="#">Products</a></li>
           <li><a class="nav-link scrollto" id="productList" href="#">Live Bidding</a></li>
           <li><a class="nav-link scrollto o" href="#" id="shoppingCart">Shopping Cart</a></li>
@@ -213,7 +213,7 @@
         <div class="d-flex justify-content-between align-items-center">
           <h2>${childData.title}</h2>
           <ol>
-            <li><a id="home" href="#">Home</a></li>
+            <li><a onclick="home()" href="#">Home</a></li>
             <li>${childData.title}</li>
           </ol>
         </div>
@@ -293,7 +293,7 @@ btn_update.addEventListener('click', (e) => {
         <div class="d-flex justify-content-between align-items-center">
           <h2>${childData.title}</h2>
           <ol>
-            <li><a href="#" id="home">Home</a></li>
+            <li><a href="#" onclick="home()">Home</a></li>
             <li>${childData.title}</li>
           </ol>
         </div>
@@ -448,17 +448,6 @@ window.onload=retrieveAllProducts()
       window.location.href = "shoppingCart.html?user_id=" + user_id;
 
     })
-    home.addEventListener('click', (e) => { 
-      const queryString = window.location.search; 
-      console.log(queryString); 
-      const urlParams = new URLSearchParams(queryString); 
-      console.log(urlParams); 
-      const user_id = urlParams.get('user_id'); 
-      console.log(user_id); 
- 
-      window.location.href = "home.html?user_id=" + user_id; 
- 
-    })
     listing.addEventListener('click', (e) => { 
       const queryString = window.location.search; 
       console.log(queryString); 
@@ -529,6 +518,16 @@ window.onload=retrieveAllProducts()
   </script>
 
   <script>
+    function home(){
+      const queryString = window.location.search; 
+      console.log(queryString); 
+      const urlParams = new URLSearchParams(queryString); 
+      console.log(urlParams); 
+      const user_id = urlParams.get('user_id'); 
+      console.log(user_id); 
+ 
+      window.location.href = "home.html?user_id=" + user_id; 
+    }
     function createProduct(){
       const queryString = window.location.search; 
       console.log(queryString); 
