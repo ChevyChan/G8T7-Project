@@ -330,7 +330,7 @@
               addToHistory();
               sendCreditsToArtist();
               document.getElementById('bidButton').disabled = true;
-              document.getElementById("countdownTimer").innerHTML = "Auction Ended";
+              document.getElementById("countdownTimer").innerHTML = `<p class="mt-4 text-danger" id="countdownTimer">Status: Auction Ended</p>`;
             }
         })
 
