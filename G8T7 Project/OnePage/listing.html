@@ -360,7 +360,7 @@
           console.log(childData)
           str+=`<div class="col-lg-4 col-md-6 portfolio-item">
                   <div class="portfolio-wrap">
-                    <img src="${childData.productPic}" class="img-fluid" alt="${childData.title}">
+                    <img src="${childData.productPic}" style="max-width:300px; max-height:300px;" class="img-fluid" alt="${childData.title}">
                     <div class="portfolio-info">
                       <h4>${childData.title}</h4>
                       <p>${childData.artistName}</p>
@@ -380,7 +380,7 @@
         if(childData.title.toLowerCase().includes(product_id)){
           str+=`<div class="col-lg-4 col-md-6 portfolio-item">
                   <div class="portfolio-wrap">
-                    <img src="${childData.productPic}" class="img-fluid" alt="${childData.title}">
+                    <img src="${childData.productPic}" style="max-width:300px; max-height:300px;" class="img-fluid" alt="${childData.title}">
                     <div class="portfolio-info">
                       <h4>${childData.title}</h4>
                       <p>${childData.artistName}</p><br>
