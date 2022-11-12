@@ -415,7 +415,21 @@
         var mins = curDate.getMinutes();
 
         curDate = yyyy + '-' + mm + '-' + dd + "T" + hours + ":" + mins; //Current Date and time
-        
+
+        if(hours.toString().length == 1 && mins.toString().length == 1){
+          curDate = yyyy + '-' + mm + '-' + dd + "T" + "0"+hours + ":" + "0"+mins; //Current Date and time
+        }
+
+        else if(hours.toString().length == 1){
+          curDate = yyyy + '-' + mm + '-' + dd + "T" + "0"+hours + ":" + mins; //Current Date and time
+        }
+
+        else if(mins.toString().length == 1){
+          curDate = yyyy + '-' + mm + '-' + dd + "T" + hours + ":" + "0"+mins; //Current Date and time
+        }
+
+        console.log(curDate);
+         
         var id = 0;
         var api_endpoint_url = 'https://www.uuidtools.com/api/generate/v4/count/1';
         axios.get(api_endpoint_url)
