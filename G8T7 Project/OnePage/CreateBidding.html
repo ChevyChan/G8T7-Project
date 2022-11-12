@@ -468,6 +468,12 @@
             document.getElementById('descError').innerText = "Please enter a description of your art piece!";
           }
 
+          const regex = /[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/g;
+
+          prodDesc = prodDesc.replace(regex, '');
+          console.log(prodDesc);
+          
+
           if(title == "" && artistName == "" && startBid == "" && subBid == "" && item_cat == "" && countdownTimer == "" && productPic == "" && prodDesc == ""){
             console.log("Please enter all the required fields!");
             document.getElementById('titleError').innerText = "Please enter the art title!";
