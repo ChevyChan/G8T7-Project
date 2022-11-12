@@ -367,7 +367,12 @@
         }).catch((error) => {
           console.error(error);
         });
-        alert('top up!')
+        document.getElementById('msg').setAttribute('class','text-success text-center')
+        document.getElementById('msg').innerText = 'Top Up Successful!'
+      }
+      else{
+        document.getElementById('msg').setAttribute('class','text-danger text-center')
+        document.getElementById('msg').innerText = 'Top Up Unsuccessful!'
       }
     })
 
@@ -931,7 +936,7 @@ input {
           </div>
         </div>
         <!-- start of credit card -->
-        <div id="creditCardBody" style="margin-left:10%;margin-right:10%;height:500px" class="d-flex">
+        <div id="creditCardBody" style="margin-left:10%;margin-right:10%;height:400px" class="d-flex">
             <div class="payment-title">
               <h1>Payment Information</h1>
           </div>
@@ -1057,7 +1062,11 @@ input {
           </div>
         </div>
         <!-- end of credit card -->
-        <button class="btn btn-primary" id="top-up">Top Up!</button>
+        <div style="background-color: #f9f9f9;">
+            <p class="text-center" id="msg"></p>
+            <button class="btn btn-success" id="top-up" style="width:300px;margin-left: 50%;">Top Up!</button>
+        </div>
+        
         
 
         <!-- ======= Footer ======= -->

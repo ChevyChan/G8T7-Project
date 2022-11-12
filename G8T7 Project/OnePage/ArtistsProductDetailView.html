@@ -320,7 +320,7 @@
 
             if(time_left < 0) {
               clearInterval(x);
-              document.getElementById("countdownTimer").innerHTML = "Auction Ended";
+              document.getElementById("countdownTimer").innerHTML = `<p class="mt-4 text-danger" id="countdownTimer">Status: Auction Ended</p>`;
             }
         })
 
@@ -342,7 +342,6 @@
                   <p class="mt-4" id="countdownTimer">Auction ending in: <span>${days + "d " + hours + "h " + minutes + "m " + seconds + "s "}</span></p>
                   <hr>
                   <button class="btn btn-primary btn-lg col-4" id="bidButton" type="button" name="${snapshot.val().id}" onclick="updateBiddingProductById(this)">Update Bidding</button>
-                  <p id="bidStatus" style="text-align:center; color:red;"></p>
                 </div>
               </div>
               <hr>
@@ -393,7 +392,6 @@
                   <p class="mt-4" id="price">Current Bid: $<span>${currentBid}</span></p>
                   <p class="mt-4" id="countdownTimer">Auction ending in: <span>${days + "d " + hours + "h " + minutes + "m " + seconds + "s "}</span></p>
                   <button class="btn btn-primary btn-lg col-4" id="bidButton" type="button" name="${snapshot.val().id}" onclick="updateBiddingProductById(this)">Update Bidding</button>  
-                  <p id="bidStatus" style="text-align:center; color:red;"></p>
                 </div>  
               </div>
               <hr>
@@ -434,7 +432,7 @@
         if (curDate >= countdown) {
           document.getElementById('bidButton').disabled = true;
           console.log("Bidding has Ended!");
-          document.getElementById("bidStatus").innerText = "Bidding has Ended!";
+          document.getElementById("bidStatus").innerHTML = "Bidding has Ended!";
         }
 
       }) 
