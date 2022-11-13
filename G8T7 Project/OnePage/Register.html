@@ -278,7 +278,7 @@
             document.getElementById('postalError').innerText = "Please enter your Postal Code!";
             document.getElementById('unitError').innerText = "Please enter your unit number!";
           }else{
-            if(imageSrc.src == ""){
+            if(document.getElementById('imageSrc').src == ""){
               document.getElementById('imgError').innerText = "Please upload a photo!";
             }else{
               createUserWithEmailAndPassword(auth, email, passHash, firstName, lastName, postalCode, address, unitNumber, ImgURL)
