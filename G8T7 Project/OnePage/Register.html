@@ -59,7 +59,6 @@
               <label class="form-label" id="lbl_upload"></label>
               <input type="file" class="input100 mb-2 text-center" id="customFile" required/>
               <label class="form-label" id="customFileInstruction">Upload your Personal Picture (Mandatory)</label>
-              <p style="color:red;" id="imgError"></p>
           </div>
 
 					<div class="wrap-input100 validate-input" data-validate = "Enter first name">
@@ -278,9 +277,6 @@
             document.getElementById('postalError').innerText = "Please enter your Postal Code!";
             document.getElementById('unitError').innerText = "Please enter your unit number!";
           }else{
-            if(profilePic_url == ""){
-              document.getElementById('imgError').innerText = "Please upload a photo!";
-            }else{
               createUserWithEmailAndPassword(auth, email, passHash, firstName, lastName, postalCode, address, unitNumber, ImgURL)
             .then((userCredential) => {
                 // Signed in 
@@ -315,7 +311,6 @@
                 
                 console.log(errorMessage);
             });
-            }
           }
         })
                
