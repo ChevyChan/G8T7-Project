@@ -574,12 +574,15 @@
                 console.log(error);
             });
           }
+          
+          window.location.href = "ProductBiddingDetails.html?product_id=" + product_id + "&user_id=" + user_id;
+
         }else{
           console.log("Insufficient Credit! Please top up and try again!");
           document.getElementById("creditStatus").innerText = "Insufficient Credit! Please top up and try again!";
         }
            
-        window.location.href = "ProductBiddingDetails.html?product_id=" + product_id + "&user_id=" + user_id;
+        
     }
     
     document.getElementById('home').addEventListener('click', (e) => {
