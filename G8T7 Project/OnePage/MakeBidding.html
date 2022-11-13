@@ -535,7 +535,6 @@
             .then(() => {
               //Continue
               SendEmail(email, name, productName, curBid);
-              window.location.href = "ProductBiddingDetails.html?product_id=" + product_id + "&user_id=" + user_id;
             })
             .catch((error) => {
                 // The write failed...
@@ -590,7 +589,7 @@
                 console.log(error);
             });
           }
-
+          window.location.href = "ProductBiddingDetails.html?product_id=" + product_id + "&user_id=" + user_id;
         }else{
           console.log("Insufficient Credit! Please top up and try again!");
           document.getElementById("creditStatus").innerText = "Insufficient Credit! Please top up and try again!";
