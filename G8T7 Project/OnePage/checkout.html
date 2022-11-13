@@ -75,6 +75,7 @@
         if (snapshot.exists()) {
             let data = snapshot.val()
             let price = 0
+            let total = 0
             for(let id in data){
                 //get product price from auction
                 get(child(dbRef, `auction/`)).then((snapshot) => {
@@ -125,6 +126,7 @@
                 get(child(dbRef, `product/`)).then((snapshot) => {
                     let prodSnap = snapshot.val()
                     let artistID =''
+                    
                     for(let prodID in prodSnap){
                         if (id == prodID){
                             price = prodSnap[prodID].price
@@ -157,8 +159,10 @@
                                 `
                                 //payment summary
                                 document.getElementById(id).addEventListener("click",function(){removeItem("item"+id)})
-                                document.getElementById('orderSummary').innerHTML += `<p>${data[id]}</p><p>$${price}</p>`
-                                document.getElementById('totalPrice').innerText += price
+                                document.getElementById('orderSummary').innerHTML += `<span class="d-flex justify-content-between"><p>${data[id]}</p><p>$${price}</p></span>`
+                                console.log(document.getElementById('totalPrice').innerText)
+                                total += parseFloat(price)
+                                document.getElementById('totalPrice').innerText = total
                                 
                             }).catch((error) => {
                             console.error(error);
@@ -533,10 +537,12 @@
                         <div class="btn btn-primary">Apply</div>
                     </div>
                     <div class="d-flex flex-column b-bottom">
-                        <div class="d-flex justify-content-between py-3"> 
-                          <small class="text-muted">Order Summary</small>
+                        <div id="orderSummary">
+                          <div class="d-flex justify-content-between py-3"> 
+                            <small class="text-muted">Order Summary</small>
+                          </div>
+                          <!-- order summary here -->
                         </div>
-                        <p id="orderSummary" class="d-flex justify-content-between"></p>
                         <div class="d-flex justify-content-between pb-3" id="deliverySummary">
                           <!-- delivery summary here -->
                         </div>
