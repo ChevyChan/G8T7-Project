@@ -488,7 +488,12 @@
         console.log(subBid);
       }
   
-      updateBiddingProduct(curBid, user_id, credits, title, dbEmail, dbName);
+      if(lastBidUser == user_id){
+        document.getElementById('btn_submit').disabled = true;
+      }else{
+        updateBiddingProduct(curBid, user_id, credits, title, dbEmail, dbName);
+      }
+      
       
   })
 
@@ -568,14 +573,13 @@
             .then(() => {
                 // Data saved successfully!
                 console.log("Bid Successfully!");
+                window.location.href = "ProductBiddingDetails.html?product_id=" + product_id + "&user_id=" + user_id;
             })
             .catch((error) => {
                 // The write failed...
                 console.log(error);
             });
           }
-          
-          window.location.href = "ProductBiddingDetails.html?product_id=" + product_id + "&user_id=" + user_id;
 
         }else{
           console.log("Insufficient Credit! Please top up and try again!");
