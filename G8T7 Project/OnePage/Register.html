@@ -283,7 +283,43 @@
             document.getElementById('postalError').innerText = "Please enter your Postal Code!";
             document.getElementById('unitError').innerText = "Please enter your unit number!";
           }else{
-            createUserWithEmailAndPassword(auth, email, passHash, firstName, lastName, postalCode, address, unitNumber, ImgURL)
+            if(profilePic_url == ""){
+              createUserWithEmailAndPassword(auth, email, passHash, firstName, lastName, postalCode, address, unitNumber, ImgURL)
+            .then((userCredential) => {
+                // Signed in 
+                const user = userCredential.user;
+    
+                set(ref(database, 'users/' + user.uid), {
+                    email: email,
+                    password : passHash,
+                    firstName: firstName,
+                    lastName: lastName,
+                    postalCode: postalCode,
+                    address: address, 
+                    unitNumber: unitNumber,
+                    profilePic_url: "assets/img/profile-icon-9.png",
+                    userID: user.uid,
+                    credits: 0
+                  })
+                  .then(() => {
+                    // Data saved successfully!
+                    //SendEmail(email, firstName);
+                    console.log("User Created Successfully!");
+                    window.location.href = "index.html";
+                  })
+                  .catch((error) => {
+                    // The write failed...
+                    console.log(error);
+                  });  
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                
+                console.log(errorMessage);
+            });
+            }else{
+              createUserWithEmailAndPassword(auth, email, passHash, firstName, lastName, postalCode, address, unitNumber, ImgURL)
             .then((userCredential) => {
                 // Signed in 
                 const user = userCredential.user;
@@ -309,9 +345,7 @@
                   .catch((error) => {
                     // The write failed...
                     console.log(error);
-                  });
-    
-                
+                  });  
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -319,6 +353,7 @@
                 
                 console.log(errorMessage);
             });
+            }
           }
         })
                
