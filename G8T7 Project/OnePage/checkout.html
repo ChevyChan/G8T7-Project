@@ -32,6 +32,15 @@
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 
+  <!-- EmailJS -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            // https://dashboard.emailjs.com/admin/account
+            emailjs.init('3L-522NFMR3kWhHjh');
+        })();
+    </script>
+
   <script type="module">
     // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
@@ -158,7 +167,7 @@
                                 </tr>
                                 `
                                 //payment summary
-                                document.getElementById(id).addEventListener("click",function(){removeItem("item"+id)})
+                                document.getElementById(id).addEventListener("click",function(){removeItem(id,'item'+id)})
                                 document.getElementById('orderSummary').innerHTML += `<span class="d-flex justify-content-between"><p>${data[id]}</p><p>$${price}</p></span>`
                                 console.log(document.getElementById('totalPrice').innerText)
                                 total += parseFloat(price)
@@ -202,24 +211,21 @@
     }
 
 
-    function removeItem(itemID){
-      console.log(itemID)
+    function removeItem(itemID, listItemID){
       //remove item from database
       const dbRef = ref(getDatabase());
       remove(child(dbRef, `users/${userID}/cart/${itemID}`))
 
       //remove list item
-      document.getElementById(itemID).remove()
+      document.getElementById(listItemID).remove()
 
-       //disable pay button if cart empty
-       document.getElementById('pay').setAttribute('disabled', true)
+      //disable pay button if cart empty
+      if(document.getElementById('cartContent').children.length==0){
+        document.getElementById('pay').setAttribute('disabled', true)
+      }
       
     }
-    function addToHistory(){
-      
-
-      
-    }
+  
 
     var checkedDelivery = false
     function checkDelivery(){
@@ -228,7 +234,7 @@
           checkedDelivery = true
         }
         else if(document.getElementById('expressDel').checked){
-          checkDelivery = true
+          checkedDelivery = true
         }else{
           document.getElementById('deliverySummary').innerHTML = `<small class="text-danger">SELECT DELIVERY OPTION</small><p></p>`
         }
@@ -284,6 +290,8 @@
               //deduct credits
               let newBal = credits - total
               set(ref(db, `users/${userID}/credits`), newBal);
+              //send email to user
+              sendEmail(userID,currentDateTime, cartItems, total)
               //redirect to payment success page
               const queryString = window.location.search;
               console.log(queryString);
@@ -307,6 +315,31 @@
       
       
     });
+
+    // Send email
+    function sendEmail(userID,transID ,cartObj, totalPrice){
+      // get user email and name
+      const dbRef = ref(getDatabase());
+      const db = getDatabase();
+      get(child(dbRef, `users/${userID}`)).then((snapshot) => {
+        let userEmail = snapshot.val().email
+        let name = snapshot.val().firstName + ' ' +snapshot.val().lastName
+        let itemList = ''
+        for(let itemID in cartObj){
+          itemList += `"${cartObj[itemID]}", `
+        }
+        let message = `
+        Your purchase has been confirmed!<br/>
+        Item(s) Purchased: ${itemList}<br/>
+        Total Price:${totalPrice}`
+        let templateParams = {to_email:userEmail,transID:transID,to_name:name,message:message}
+        emailjs.send('service_w3ktcsu', 'template_kqp8s0n', templateParams, '3L-522NFMR3kWhHjh');
+      }).catch((error) => {
+        console.error(error);
+      });
+    }
+        
+    
     
     document.getElementById('purchaseHistory').addEventListener('click', (e) => {
       const queryString = window.location.search;
