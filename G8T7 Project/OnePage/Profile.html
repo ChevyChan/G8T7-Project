@@ -459,8 +459,17 @@
         document.getElementById('inputPostalCode').value = snapshot.val().postalCode;
         document.getElementById('inputAddress').value = snapshot.val().address;
         document.getElementById('inputUnitNo').value = snapshot.val().unitNumber;
-        var imageURL = document.getElementById('imageSrc');
-        imageURL.setAttribute('src', snapshot.val().profilePic_url);
+
+        var image = snapshot.val().profilePic_url;
+        
+        if(image == ""){
+          var imageURL = document.getElementById('imageSrc');
+          imageURL.setAttribute('src', "assets/img/profile-icon-9.png");
+        }else{
+          var imageURL = document.getElementById('imageSrc');
+          imageURL.setAttribute('src', snapshot.val().profilePic_url);
+        }
+        
       }) 
     }
 
