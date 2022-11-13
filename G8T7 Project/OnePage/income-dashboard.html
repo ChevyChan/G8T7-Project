@@ -211,11 +211,11 @@
       
         //get user id from url  
         const queryString = window.location.search; 
-        console.log(queryString); 
+        //console.log(queryString); 
         const urlParams = new URLSearchParams(queryString); 
-        console.log(urlParams); 
+        //console.log(urlParams); 
         const user_id = urlParams.get('user_id'); 
-        console.log(user_id);
+        //console.log(user_id);
 
         document.getElementById('products').addEventListener('click', (e) => {
           window.location.href = "listing.html?user_id=" + user_id;
@@ -278,14 +278,14 @@
                           //check if user has sold the current auction item
                           if (auction[aucID]['userId'] == user_id && auction[aucID]['lastBidUser'] != undefined && isoDateTime>auction[aucID]['countdownTimer']){
                               let soldDate = new Date(auction[aucID]['countdownTimer']);
-                              soldDate.setHours(0,0,0,0);
+                              //soldDate.setHours(0,0,0,0);
                               if(fromDate <= soldDate && toDate >= soldDate){
                                   let currDate = new Date(fromDate);
                                   for(let d = 0; d<=dayDiff; d++){
-                                      currDate.setDate(fromDate.getDate()+1)
-                                      if(currDate.getDate() == soldDate.getDate()){
-                                          dateArr[d][1] += parseInt(auction[aucID]['curBid'])
-                                      }
+                                    if(currDate.getDate() == soldDate.getDate()){
+                                      dateArr[d][1] += parseInt(auction[aucID]['curBid'])
+                                    }
+                                    currDate.setDate(currDate.getDate()+1)
                                   }
                                   
                               }
@@ -301,10 +301,11 @@
                     var chart = new CanvasJS.Chart("chartContainer",
                     {
                       animationEnabled: true,
-
+                      
                       data: [
 
                       {
+                        color: '#0074d9',
                         dataPoints: incomeData,
                         indexLabel: "${y}",
                         indexLabelPlacement: "outside",  
@@ -325,14 +326,14 @@
               const db = ref(database, 'users/' + uid);
               
               onValue(db, snap => {
-                  console.log(snap.val())
+                  //console.log(snap.val())
                   userId = uid;
-                  console.log(userId);
+                  //console.log(userId);
 
                   userCredit = snap.val().credits;
                   userName = snap.val().firstName;
-                  console.log(userCredit);
-                  console.log(userName);
+                  //console.log(userCredit);
+                  //console.log(userName);
                   document.getElementById("credits").innerText = "Credits: SGD$" + userCredit;
                   document.getElementById("userName").innerText = "Welcome! " + userName;
               })
@@ -340,7 +341,7 @@
             
             onAuthStateChanged(auth, (user) => { 
             if(user){ 
-              console.log(user); 
+              //console.log(user); 
               getUserData(user.uid) 
             }
             else{ 
@@ -399,10 +400,10 @@
                               if(fromDate <= soldDate && toDate >= soldDate){
                                   let currDate = new Date(fromDate);
                                   for(let d = 0; d<=dayDiff; d++){
-                                      currDate.setDate(fromDate.getDate()+1)
-                                      if(currDate.getDate() == soldDate.getDate()){
-                                          dateArr[d][1] += parseInt(auction[aucID]['curBid'])
-                                      }
+                                    if(currDate.getDate() == soldDate.getDate()){
+                                        dateArr[d][1] += parseInt(auction[aucID]['curBid'])
+                                    }
+                                    currDate.setDate(currDate.getDate()+1)
                                   }
                                   
                               }
@@ -427,10 +428,10 @@
                     var chart = new CanvasJS.Chart("chartContainer",
                     {
                       animationEnabled: true,
-
                       data: [
 
                       {
+                        color: '#0074d9',
                         dataPoints: incomeData,
                         indexLabel: indexLabelChecker,
                         indexLabelPlacement: "outside",  
