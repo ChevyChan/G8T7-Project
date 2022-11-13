@@ -100,14 +100,19 @@
                     </div>
                 </div>
                 `
+                
                 for(let itemID in data[timeStamp]){
+                  if(itemID != 'delivery' && itemID != 'deliveryDate'){
                     document.getElementById(listID).innerHTML += `
                         <li class='list-group-item d-flex justify-content-between align-items-center'>
                             <div>
                               <img class='${itemID}img'>
                               <p>${data[timeStamp][itemID]}<p>
                             </div>
-                            <p class='${itemID}price'>$</p>
+                            <div>
+                              <p class='${itemID}price'>Item Price :$</p>
+                              <p>Estimated Delivery Date:${data[timeStamp].deliveryDate}</p>
+                            </div>
                         </div>
                     `
                     // set pic and price if item in product
@@ -119,7 +124,7 @@
                           i.setAttribute('style','height:70px;')
                         }
                         for(let i of document.getElementsByClassName(`${itemID}price`)){
-                          i.innerText = '$'+prodSnap.price
+                          i.innerText = 'Item Price: $'+prodSnap.price
                         }
                       }
                     }).catch((error) => {
@@ -140,6 +145,7 @@
                     }).catch((error) => {
                       console.error(error);
                     });
+                  }
                 }
                 
             }
