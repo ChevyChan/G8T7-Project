@@ -130,16 +130,18 @@
       const db = getDatabase();
       userName = document.getElementById("userName").innerText
       document.getElementById('transDetails').innerHTML=`
-        <p>Transaction ID: ${transID}</p>
+      <div class='text-center'>
+        <p>Transaction ID: <b>${transID}</b></p>
         <p id='name'>Buyer Name: </p>
-        <p id='itemsBought'>Items Bought: </p>`
+        <p id='itemsBought'>Items Bought: </p>
+      </div>`
       //get and set items bought
       get(child(dbRef, `users/${userID}/purchaseHistory/${transID}`)).then((snapshot) => {
         let transSnap = snapshot.val()
         for(let itemID in transSnap){
           get(child(dbRef, `product/${itemID}`)).then((snapshot) => {
             let prodSnap = snapshot.val()
-            document.getElementById('itemsBought').innerText += ` '${transSnap[itemID]} ($${prodSnap.price})' `
+            document.getElementById('itemsBought').innerHTML += ` '<b>${transSnap[itemID]} ($${prodSnap.price})</b>' `
           }).catch((error) => {
             console.error(error);
           });
@@ -149,7 +151,7 @@
       });
       //get and set buyer name
       get(child(dbRef, `users/${userID}`)).then((snapshot) => {
-        document.getElementById('name').innerText += ' '+snapshot.val().firstName + ' ' + snapshot.val().lastName
+        document.getElementById('name').innerHTML += ' <b>'+snapshot.val().firstName + ' ' + snapshot.val().lastName +'</b>'
       }).catch((error) => {
         console.error(error);
       });
