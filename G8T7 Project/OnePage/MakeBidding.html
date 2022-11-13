@@ -534,6 +534,8 @@
             })
             .then(() => {
               //Continue
+              SendEmail(email, name, productName, curBid);
+              
               update(ref(database, 'users/' + newBidUser), {
                 credits: credit_balance
               })
@@ -562,8 +564,6 @@
                 // The write failed...
                 console.log(error);
             });
-
-            SendEmail(email, name, productName, curBid);
           }else{
             update(ref(database, 'users/' + newBidUser), {
               credits: credit_balance
