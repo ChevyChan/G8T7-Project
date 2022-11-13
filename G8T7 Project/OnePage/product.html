@@ -372,8 +372,10 @@ function addToWinnerCart() {
               let up = {}
               up[`/users/${user}/cart/` + product_id] = childData.title
               update(ref(db),up)
+              document.getElementById("btn_atc").setAttribute("class","btn btn-success")
+              document.getElementById("btn_atc").innerHTML="Added!"
           } else {
-              console.log("No data available");
+              console.log("No data available2");
           }
           }).catch((error) => {
           console.error(error);

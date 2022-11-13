@@ -262,7 +262,7 @@
       imageSrc.src = reader.result;
     }
     
-    function createLisitngProduct(id, title, artistName, price, productPic, prodDesc) {
+    function createListingProduct(id, title, artistName, price, productPic, prodDesc) {
       const user = auth.currentUser.uid;
       console.log(user);
 
@@ -273,7 +273,7 @@
         price : price, 
         productPic : productPic,
         prodDesc : prodDesc,
-        userId : user
+        userId : user,
       })
       .then(() => {
         // Data saved successfully!
@@ -345,7 +345,7 @@
           else{
             if(price>0){
               productPic = imageSrc.src;
-            createLisitngProduct(id, title, artistName, price, productPic, prodDesc);
+            createListingProduct(id, title, artistName, price, productPic, prodDesc);
             }
             else{
               document.getElementById('priceError').innerText = "Please enter the price!";
