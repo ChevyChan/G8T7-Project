@@ -520,6 +520,7 @@
         curBid = parseInt(curBid) + parseInt(subBid);
         console.log(curBid);
         console.log(subBid);
+        SendEmail(dbEmail, dbName, title, curBid);
       }
 
       SendEmail(dbEmail, dbName, title, curBid);
