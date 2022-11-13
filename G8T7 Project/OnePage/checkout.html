@@ -162,7 +162,7 @@
                                 document.getElementById('orderSummary').innerHTML += `<span class="d-flex justify-content-between"><p>${data[id]}</p><p>$${price}</p></span>`
                                 console.log(document.getElementById('totalPrice').innerText)
                                 total += parseFloat(price)
-                                document.getElementById('totalPrice').innerText = total
+                                document.getElementById('totalPrice').innerText = '$'+total
                                 
                             }).catch((error) => {
                             console.error(error);
