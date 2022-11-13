@@ -488,7 +488,12 @@
         console.log(subBid);
       }
   
-      updateBiddingProduct(curBid, user_id, credits, title, dbEmail, dbName);
+      if(lastBidUser == user_id){
+        document.getElementById('btn_submit').disabled = true;
+      }else{
+        updateBiddingProduct(curBid, user_id, credits, title, dbEmail, dbName);
+      }
+      
       
   })
 
