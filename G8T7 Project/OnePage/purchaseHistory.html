@@ -65,6 +65,7 @@
       console.log(userID);
     //read History
     function getHistory(){
+        const db = getDatabase();
         const dbRef = ref(getDatabase());
         get(child(dbRef, `users/${userID}/purchaseHistory/`)).then((snapshot) => {
         if (snapshot.exists()) {
@@ -97,12 +98,27 @@
                 </div>
                 `
                 for(let itemID in data[timeStamp]){
-                    document.getElementById(listID).innerHTML = `
-                        <li class='list-group-item d-flex justify-content-between'>
-                            <p>${data[timeStamp][itemID]}<p>
-                            <p>Item Rating:</p>
+                    document.getElementById(listID).innerHTML += `
+                        <li class='list-group-item d-flex justify-content-between align-items-center'>
+                            <div>
+                              <img class='${itemID}img'>
+                              <p>${data[timeStamp][itemID]}<p>
+                            </div>
+                            <p class='${itemID}price'>$</p>
                         </div>
                     `
+                    get(child(dbRef, `product/${itemID}`)).then((snapshot) => {
+                      let prodSnap = snapshot.val()
+                      for(let i of document.getElementsByClassName(`${itemID}img`)){
+                        i.setAttribute('src',prodSnap.productPic)
+                        i.setAttribute('style','height:70px;')
+                      }
+                      for(let i of document.getElementsByClassName(`${itemID}price`)){
+                        i.innerText = '$'+prodSnap.price
+                      }
+                    }).catch((error) => {
+                      console.error(error);
+                    });
                 }
                 
             }
