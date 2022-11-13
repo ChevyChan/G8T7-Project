@@ -520,7 +520,7 @@
   }
 
     function updateBiddingProduct(curBid, newBidUser, credits, productName, email, name) {
-
+      
         if(credits >= curBid){
           var credit_balance = credits - curBid;
           console.log(credit_balance);
@@ -534,36 +534,36 @@
             })
             .then(() => {
               //Continue
-              SendEmail(email, name, productName, curBid);
+              update(ref(database, 'users/' + newBidUser), {
+                credits: credit_balance
+              })
+              .then(() => {
+                //Continue
+                update(ref(database, 'auction/' + id), {
+                  curBid: curBid,
+                  lastBidUser: newBidUser
+                })
+                .then(() => {
+                    // Data saved successfully!
+                    console.log("Bid Successfully!");
+                    window.location.href = "ProductBiddingDetails.html?product_id=" + product_id + "&user_id=" + user_id;
+                })
+                .catch((error) => {
+                    // The write failed...
+                    console.log(error);
+                });
+              })
+              .catch((error) => {
+                  // The write failed...
+                  console.log(error);
+              });
             })
             .catch((error) => {
                 // The write failed...
                 console.log(error);
             });
 
-            update(ref(database, 'users/' + newBidUser), {
-              credits: credit_balance
-            })
-            .then(() => {
-              //Continue
-            })
-            .catch((error) => {
-                // The write failed...
-                console.log(error);
-            });
-
-            update(ref(database, 'auction/' + id), {
-              curBid: curBid,
-              lastBidUser: newBidUser
-            })
-            .then(() => {
-                // Data saved successfully!
-                console.log("Bid Successfully!");
-            })
-            .catch((error) => {
-                // The write failed...
-                console.log(error);
-            });
+            SendEmail(email, name, productName, curBid);
           }else{
             update(ref(database, 'users/' + newBidUser), {
               credits: credit_balance
@@ -589,7 +589,6 @@
                 console.log(error);
             });
           }
-          window.location.href = "ProductBiddingDetails.html?product_id=" + product_id + "&user_id=" + user_id;
         }else{
           console.log("Insufficient Credit! Please top up and try again!");
           document.getElementById("creditStatus").innerText = "Insufficient Credit! Please top up and try again!";
