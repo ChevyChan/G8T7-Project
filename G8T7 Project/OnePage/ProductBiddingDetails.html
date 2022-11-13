@@ -465,7 +465,7 @@
       const dbRef = ref(getDatabase());
       const db = getDatabase();
       let auctionObj = {}
-      auctionObj[auctionID] = itemName
+      auctionObj[auction_id] = title;
       set(ref(db, `users/${userID}/purchaseHistory/${currentDateTime}`), auctionObj);
     }
 
