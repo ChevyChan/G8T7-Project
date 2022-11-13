@@ -225,17 +225,9 @@
     function checkDelivery(){
       if (!checkedDelivery){
         if(document.getElementById('standardDel').checked){
-          document.getElementById('deliverySummary').innerHTML = `<small class="text-muted">Standard Delivery</small><p>$3</p>`
-          let total = parseFloat(document.getElementById('totalPrice').innerText)
-          total += 3
-          document.getElementById('totalPrice').innerText = total
           checkedDelivery = true
         }
         else if(document.getElementById('expressDel').checked){
-          document.getElementById('deliverySummary').innerHTML = `<small class="text-muted">Express Delivery</small><p>$5</p>`
-          let total = parseFloat(document.getElementById('totalPrice').innerText)
-          total += 5
-          document.getElementById('totalPrice').innerText = total
           checkDelivery = true
         }else{
           document.getElementById('deliverySummary').innerHTML = `<small class="text-danger">SELECT DELIVERY OPTION</small><p></p>`
@@ -243,60 +235,76 @@
       }
       
     }
+    document.getElementById('standardDel').addEventListener('click',function(){
+      document.getElementById('deliverySummary').innerHTML = `<small class="text-muted">Standard Delivery</small><p>$3</p>`
+      let total = parseFloat(document.getElementById('totalPrice').innerText)
+      total += 3
+      document.getElementById('totalPrice').innerText = total
+    });
+
+    document.getElementById('expressDel').addEventListener('click',function(){
+      document.getElementById('deliverySummary').innerHTML = `<small class="text-muted">Express Delivery</small><p>$5</p>`
+      let total = parseFloat(document.getElementById('totalPrice').innerText)
+      total += 5
+      document.getElementById('totalPrice').innerText = total
+    });
 
     //checkout button function
     document.getElementById('pay').addEventListener('click',function(){
       checkDelivery();
-      const dbRef = ref(getDatabase());
-      get(child(dbRef, `users/${userID}/credits`)).then((snapshot) => {
-        let credits = snapshot.val()
-        let total = document.getElementById('totalPrice').innerText
-        if(credits < total){
-          document.getElementById('pay').parentNode.innerHTML += `<p style='color:red;text-align:center;'>Insufficient credits, top up below!</p>
-          <button class="btn btn-danger" id="top-up" type="button" style="width:100%;margin-bottom:10px">Top Up</button>`
-          document.getElementById('top-up').addEventListener('click', (e) => {
-            const queryString = window.location.search;
-            console.log(queryString);
-            const urlParams = new URLSearchParams(queryString);
-            console.log(urlParams);
-            const user_id = urlParams.get('user_id');
-            console.log(user_id);
+      if(checkedDelivery){
+        const dbRef = ref(getDatabase());
+        get(child(dbRef, `users/${userID}/credits`)).then((snapshot) => {
+          let credits = snapshot.val()
+          let total = document.getElementById('totalPrice').innerText
+          if(credits < total){
+            document.getElementById('pay').parentNode.innerHTML += `<p style='color:red;text-align:center;'>Insufficient credits, top up below!</p>
+            <button class="btn btn-danger" id="top-up" type="button" style="width:100%;margin-bottom:10px">Top Up</button>`
+            document.getElementById('top-up').addEventListener('click', (e) => {
+              const queryString = window.location.search;
+              console.log(queryString);
+              const urlParams = new URLSearchParams(queryString);
+              console.log(urlParams);
+              const user_id = urlParams.get('user_id');
+              console.log(user_id);
 
-            window.location.href = "top-up.html?user_id=" + user_id;
+              window.location.href = "top-up.html?user_id=" + user_id;
 
-          })
-        }else{
-          //add purchase history to userID
-          const dbRef = ref(getDatabase());
-          const db = getDatabase();
-          get(child(dbRef, `users/${userID}/cart/`)).then((snapshot) => {
-            let cartItems = snapshot.val()
-            let currentDateTime = new Date().toJSON().replace('.',':')
-            set(ref(db, `users/${userID}/purchaseHistory/${currentDateTime}`), cartItems);
-            //remove cart
-            remove(child(dbRef, `users/${userID}/cart/`))
-            //deduct credits
-            let newBal = credits - total
-            set(ref(db, `users/${userID}/credits`), newBal);
-            //redirect to payment success page
-            const queryString = window.location.search;
-            console.log(queryString);
-            const urlParams = new URLSearchParams(queryString);
-            console.log(urlParams);
-            const user_id = urlParams.get('user_id');
-            console.log(user_id);
+            })
+          }else{
+            //add purchase history to userID
+            const dbRef = ref(getDatabase());
+            const db = getDatabase();
+            get(child(dbRef, `users/${userID}/cart/`)).then((snapshot) => {
+              let cartItems = snapshot.val()
+              let currentDateTime = new Date().toJSON().replace('.',':')
+              set(ref(db, `users/${userID}/purchaseHistory/${currentDateTime}`), cartItems);
+              //remove cart
+              remove(child(dbRef, `users/${userID}/cart/`))
+              //deduct credits
+              let newBal = credits - total
+              set(ref(db, `users/${userID}/credits`), newBal);
+              //redirect to payment success page
+              const queryString = window.location.search;
+              console.log(queryString);
+              const urlParams = new URLSearchParams(queryString);
+              console.log(urlParams);
+              const user_id = urlParams.get('user_id');
+              console.log(user_id);
 
-            window.location.href = "paySuccess.html?user_id=" + user_id +"&trans_id="+currentDateTime;
-          
-          }).catch((error) => {
-            console.error(error);
-          });
+              window.location.href = "paySuccess.html?user_id=" + user_id +"&trans_id="+currentDateTime;
+            
+            }).catch((error) => {
+              console.error(error);
+            });
 
-          
-        }
-      }).catch((error) => {
-        console.error(error);
-      });
+            
+          }
+        }).catch((error) => {
+          console.error(error);
+        });
+      }
+      
       
     });
     
