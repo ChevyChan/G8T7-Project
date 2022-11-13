@@ -302,18 +302,6 @@
       
     });
     
-    document.getElementById('pay').addEventListener('click', (e) => {
-      const queryString = window.location.search;
-      console.log(queryString);
-      const urlParams = new URLSearchParams(queryString);
-      console.log(urlParams);
-      const user_id = urlParams.get('user_id');
-      console.log(user_id);
-
-      window.location.href = "checkout.html?user_id=" + user_id;
-
-    })
-
     document.getElementById('purchaseHistory').addEventListener('click', (e) => {
       const queryString = window.location.search;
       console.log(queryString);
@@ -338,7 +326,7 @@
 
     })
 
-    document.getElementById('productList').addEventListener('click', (e) => {
+    document.getElementById('home').addEventListener('click', (e) => {
       const queryString = window.location.search;
       console.log(queryString);
       const urlParams = new URLSearchParams(queryString);
@@ -346,7 +334,7 @@
       const user_id = urlParams.get('user_id');
       console.log(user_id);
 
-      window.location.href = "ProductBiddingList.html?user_id=" + user_id;
+      window.location.href = "home.html?user_id=" + user_id;
 
     })
 
@@ -362,7 +350,7 @@
 
     })
 
-    document.getElementById('artistBidList').addEventListener('click', (e) => {
+    document.getElementById('purchaseHistory').addEventListener('click', (e) => {
       const queryString = window.location.search;
       console.log(queryString);
       const urlParams = new URLSearchParams(queryString);
@@ -370,31 +358,7 @@
       const user_id = urlParams.get('user_id');
       console.log(user_id);
 
-      window.location.href = "ArtistsProductBidList.html?user_id=" + user_id;
-
-    })
-
-    document.getElementById('artistBidList').addEventListener('click', (e) => {
-      const queryString = window.location.search;
-      console.log(queryString);
-      const urlParams = new URLSearchParams(queryString);
-      console.log(urlParams);
-      const user_id = urlParams.get('user_id');
-      console.log(user_id);
-
-      window.location.href = "ArtistsProductBidList.html?user_id=" + user_id;
-
-    })
-
-    document.getElementById('home').addEventListener('click', (e) => {
-      const queryString = window.location.search;
-      console.log(queryString);
-      const urlParams = new URLSearchParams(queryString);
-      console.log(urlParams);
-      const user_id = urlParams.get('user_id');
-      console.log(user_id);
-
-      window.location.href = "home.html?user_id=" + user_id;
+      window.location.href = "purchaseHistory.html?user_id=" + user_id;
 
     })
 
@@ -410,6 +374,18 @@
 
     })
 
+    document.getElementById('productList').addEventListener('click', (e) => {
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+
+      window.location.href = "ProductBiddingList.html?user_id=" + user_id;
+
+    })
+
     document.getElementById('incomeDashboard').addEventListener('click', (e) => {
       const queryString = window.location.search;
       console.log(queryString);
@@ -421,7 +397,18 @@
       window.location.href = "income-dashboard.html?user_id=" + user_id;
 
     })
-    
+
+    document.getElementById('artistBidList').addEventListener('click', (e) => {
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+
+      window.location.href = "ArtistsProductBidList.html?user_id=" + user_id;
+
+    })
 
     var userId = "";
     var userCredit = 0;
@@ -440,6 +427,7 @@
           console.log(userName);
           document.getElementById("credits").innerText = "Credits: SGD$" + userCredit;
           document.getElementById("userName").innerText = "Welcome! " + userName;
+          document.getElementById("orderAcc").innerText = userName + "'s Order";
       })
     }
     
@@ -461,6 +449,8 @@
         alert(error); 
       }); 
     })
+
+    getCart()
 
 
 </script>
