@@ -57,7 +57,7 @@
           </li>
           <li><a class="getstarted scrollto" href="#" onclick="createBiddingProduct()">Create New Bid</a></li>
           <li><a id="userName"></a></li>
-          <li><a id="credits"></a></li>
+          <li><a href="#" id="credits"></a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -102,7 +102,7 @@
           <!--1st item-->
           <div class="col mb-4" style="margin-left:33%;">
             <div class="col mb-4">
-              <img src="assets\img\coffee-2306471_1920.jpg" style="border-radius:50%; max-width:300px; max-height:300px;" class="card-img-top" alt="..\Project\assets\img\profile-icon-9.png">
+              <img src="assets/img/coffee-2306471_1920.jpg" style="border-radius:50%; max-width:300px; max-height:300px;" class="card-img-top" alt="assets/img/coffee-2306471_1920.jpg">
               <h2 class="text-center mt-4">Please check again later!</h2>
             </div>
           </div>
@@ -114,17 +114,6 @@
         <div id="remainBidding"  class="row row-cols-auto mt-4">
 
         </div>
-
-        
-        <!--<div id="remainBidding"  class="row row-cols-auto mt-4">
-          <div class="col mb-4">
-            <img src="https://i.kym-cdn.com/entries/icons/original/000/026/111/4917038d8bbd7fe362bed691690c7da4.jpg" class="card-img-top" alt="C:\wamp64\www\Project\assets\img\profile-icon-9.png">
-            <h2 class="text-center mt-4">Please check again later!</h2>
-          </div>
-        </div>-->
-         
-
-        
       </div>
     </section>
 
@@ -666,6 +655,17 @@
       window.location.href = "shoppingCart.html?user_id=" + user_id;
 
     })
+
+    document.getElementById("credits").addEventListener('click', (e) => {
+      const queryString = window.location.search;
+      console.log(queryString);
+      const urlParams = new URLSearchParams(queryString);
+      console.log(urlParams);
+      const user_id = urlParams.get('user_id');
+      console.log(user_id);
+
+      window.location.href = "top-up.html?user_id=" + user_id;
+  })
   </script>
 
 </body>

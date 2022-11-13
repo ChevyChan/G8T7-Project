@@ -547,6 +547,17 @@
       window.location.href = "shoppingCart.html?user_id=" + user_id;
 
     })
+
+    document.getElementById("credits").addEventListener('click', (e) => {
+        const queryString = window.location.search;
+        console.log(queryString);
+        const urlParams = new URLSearchParams(queryString);
+        console.log(urlParams);
+        const user_id = urlParams.get('user_id');
+        console.log(user_id);
+
+        window.location.href = "top-up.html?user_id=" + user_id;
+    })
     
   </script>
 
