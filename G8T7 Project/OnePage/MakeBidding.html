@@ -583,6 +583,7 @@
             .then(() => {
                 // Data saved successfully!
                 console.log("Bid Successfully!");
+                document.getElementById("creditStatus").innerText = "Bid Successfully!";
             })
             .catch((error) => {
                 // The write failed...
