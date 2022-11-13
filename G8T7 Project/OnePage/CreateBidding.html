@@ -504,8 +504,7 @@
                 if(productPic != ""){
                   createBiddingProduct(id, title, artistName, startBid, subBid, curBid, item_cat, countdownTimer, videoURL, productPic, prodDesc);
                 }else{
-                  productPic = imageSrc.src;
-                  createBiddingProduct(id, title, artistName, startBid, subBid, curBid, item_cat, countdownTimer, videoURL, productPic, prodDesc);
+                  document.getElementById('imageError').innerText = "Please upload an image!";
                 }
               }else{
                 document.getElementById('dateError').innerText = "Please enter a valid date!";
