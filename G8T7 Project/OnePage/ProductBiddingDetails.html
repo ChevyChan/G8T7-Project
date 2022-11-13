@@ -323,15 +323,17 @@
           seconds = Math.floor((time_left % (1000 * 60)) / 1000); 
 
           console.log(days + "d " + hours + "h " + minutes + "m " + seconds + "s ");
-          document.getElementById("countdownTimer").innerHTML =` <p class="mt-4" id="countdownTimer">Auction ending in: <span>${days + "d " + hours + "h " + minutes + "m " + seconds + "s "}</span></p>`;
+          
 
-            if(time_left < 0) {
-              clearInterval(x);
-              addToHistory();
-              sendCreditsToArtist();
-              document.getElementById('bidButton').disabled = true;
-              document.getElementById("countdownTimer").innerHTML = `<p class="mt-4 text-danger" id="countdownTimer">Status: Auction Ended</p>`;
-            }
+          if(time_left < 0) {
+            clearInterval(x);
+            addToHistory();
+            sendCreditsToArtist();
+            document.getElementById('bidButton').disabled = true;
+            document.getElementById("countdownTimer").innerHTML = `<p class="mt-4 text-danger" id="countdownTimer">Status: Auction Ended</p>`;
+          }else{
+            document.getElementById("countdownTimer").innerHTML =` <p class="mt-4" id="countdownTimer">Auction ending in: <span>${days + "d " + hours + "h " + minutes + "m " + seconds + "s "}</span></p>`;
+          }
         })
 
         if(videoURL != ""){
