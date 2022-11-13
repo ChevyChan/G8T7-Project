@@ -466,7 +466,7 @@
       product_id = urlParams.get('product_id');
       console.log(product_id);
 
-      const dbRef = ref(database, "users/" + user_id);
+      const dbRef = ref(database, "users/" + lastBidUser);
       var dbEmail = "";
       var dbUsers = [];
       var dbName = "";
