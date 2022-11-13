@@ -58,7 +58,7 @@
               <img src="assets/img/profile-icon-9.png" id="imageSrc" alt="assets/img/spongebob.png" style="max-width:200px; max-height:200px; margin-bottom:50px; border-radius:20px;">
               <label class="form-label" id="lbl_upload"></label>
               <input type="file" class="input100 mb-2 text-center" id="customFile" required/>
-              <label class="form-label" id="customFile">Upload your Personal Picture (Mandatory)</label>
+              <label class="form-label" id="customFileInstruction">Upload your Personal Picture (Mandatory)</label>
           </div>
 
 					<div class="wrap-input100 validate-input" data-validate = "Enter first name">
@@ -284,40 +284,7 @@
             document.getElementById('unitError').innerText = "Please enter your unit number!";
           }else{
             if(profilePic_url == ""){
-              createUserWithEmailAndPassword(auth, email, passHash, firstName, lastName, postalCode, address, unitNumber, ImgURL)
-            .then((userCredential) => {
-                // Signed in 
-                const user = userCredential.user;
-    
-                set(ref(database, 'users/' + user.uid), {
-                    email: email,
-                    password : passHash,
-                    firstName: firstName,
-                    lastName: lastName,
-                    postalCode: postalCode,
-                    address: address, 
-                    unitNumber: unitNumber,
-                    profilePic_url: "assets/img/profile-icon-9.png",
-                    userID: user.uid,
-                    credits: 0
-                  })
-                  .then(() => {
-                    // Data saved successfully!
-                    //SendEmail(email, firstName);
-                    console.log("User Created Successfully!");
-                    window.location.href = "index.html";
-                  })
-                  .catch((error) => {
-                    // The write failed...
-                    console.log(error);
-                  });  
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                
-                console.log(errorMessage);
-            });
+              
             }else{
               createUserWithEmailAndPassword(auth, email, passHash, firstName, lastName, postalCode, address, unitNumber, ImgURL)
             .then((userCredential) => {
