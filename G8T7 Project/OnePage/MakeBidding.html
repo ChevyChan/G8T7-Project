@@ -360,6 +360,18 @@
         }) 
       }
 
+    function SendEmail(email, firstName, auctionProduct, price){
+      emailjs.send('service_6lrco97', 'template_jdz1rgs', {
+        to_name: firstName,
+        to_email: email,
+        bid_product: auctionProduct, 
+        bid_price: price
+      })
+      .then(function(res){
+        console.log(res.status);
+      })
+    }
+
     document.getElementById('btn_back').addEventListener('click', (e) => {
       const queryString = window.location.search;
       console.log(queryString);
@@ -507,18 +519,6 @@
       
   })
 
-  function SendEmail(email, firstName, auctionProduct, price){
-    emailjs.send('service_6lrco97', 'template_jdz1rgs', {
-      to_name: firstName,
-      to_email: email,
-      bid_product: auctionProduct, 
-      bid_price: price
-    })
-    .then(function(res){
-      console.log(res.status);
-    })
-  }
-
     function updateBiddingProduct(curBid, newBidUser, credits, productName, email, name) {
       
         if(credits >= curBid){
@@ -528,6 +528,8 @@
           //Check if there is any existing bidder
           if(existingBidder != ""){
             old_bidder_credits += oldBidAmount;
+
+            SendEmail(email, name, productName, curBid);
 
             update(ref(database, 'users/' + existingBidder), {
               credits: old_bidder_credits
@@ -562,8 +564,6 @@
                 // The write failed...
                 console.log(error);
             });
-
-            SendEmail(email, name, productName, curBid);
               
           }else{
             update(ref(database, 'users/' + newBidUser), {
