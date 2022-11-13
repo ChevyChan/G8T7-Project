@@ -532,8 +532,6 @@
           if(existingBidder != ""){
             old_bidder_credits += oldBidAmount;
 
-            SendEmail(email, name, productName, curBid);
-
             update(ref(database, 'users/' + existingBidder), {
               credits: old_bidder_credits
             })
@@ -567,7 +565,7 @@
                 // The write failed...
                 console.log(error);
             });
-              
+            SendEmail(email, name, productName, curBid);
           }else{
             update(ref(database, 'users/' + newBidUser), {
               credits: credit_balance
