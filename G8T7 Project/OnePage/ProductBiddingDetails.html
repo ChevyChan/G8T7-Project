@@ -464,9 +464,9 @@
       //add purchase history to userID
       const dbRef = ref(getDatabase());
       const db = getDatabase();
-    
-      let currentDateTime = new Date().toJSON().replace('.',':')
-      set(ref(db, `users/${lastBidUser}/purchaseHistory/${currentDateTime}`), {auction_id, title});
+      let auctionObj = {}
+      auctionObj[auctionID] = itemName
+      set(ref(db, `users/${userID}/purchaseHistory/${currentDateTime}`), auctionObj);
     }
 
     document.getElementById('shoppingCart').addEventListener('click', (e) => {
