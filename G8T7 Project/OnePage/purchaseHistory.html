@@ -28,6 +28,7 @@
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 
+
   <script type="module">
     // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
@@ -78,16 +79,18 @@
                 timeStampID = timeStampID.replace('-','')
                 timeStampID = timeStampID.replace('-','')
                 timeStampID = 'T' + timeStampID
-                console.log(timeStamp)
 
                 let listID = timeStampID + 'L'
-                let dateBought = timeStamp.slice(0,10)
+                //let dateBought = timeStamp.slice(0,10)
+
+                let timeStampObj = new Date(timeStamp.slice(0,-5) +'.'+timeStamp.slice(-4))
+                let monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
                 document.getElementById('historyContainer').innerHTML += `
                 <div class="row">
                     <div class='col'>
-                        <a class="btn btn-primary dropdown-toggle" data-bs-toggle="collapse" href="#${timeStampID}" role="button" aria-expanded="false" aria-controls="collapseExample">
-                            ${dateBought}
+                        <a class="btn btn-secondary dropdown-toggle form-control my-1" data-bs-toggle="collapse" href="#${timeStampID}" role="button" aria-expanded="false" aria-controls="collapseExample">
+                            ${timeStampObj.getDate()} ${monthNames[timeStampObj.getMonth()]} ${timeStampObj.getFullYear()} ${timeStampObj.getHours()}hrs:${timeStampObj.getMinutes()}mins
                         </a>
                         <div class="collapse" id=${timeStampID}>
                             <div class='list-group' id=${listID}>
@@ -107,14 +110,32 @@
                             <p class='${itemID}price'>$</p>
                         </div>
                     `
+                    // set pic and price if item in product
                     get(child(dbRef, `product/${itemID}`)).then((snapshot) => {
-                      let prodSnap = snapshot.val()
-                      for(let i of document.getElementsByClassName(`${itemID}img`)){
-                        i.setAttribute('src',prodSnap.productPic)
-                        i.setAttribute('style','height:70px;')
+                      if (snapshot.exists()) {
+                        let prodSnap = snapshot.val()
+                        for(let i of document.getElementsByClassName(`${itemID}img`)){
+                          i.setAttribute('src',prodSnap.productPic)
+                          i.setAttribute('style','height:70px;')
+                        }
+                        for(let i of document.getElementsByClassName(`${itemID}price`)){
+                          i.innerText = '$'+prodSnap.price
+                        }
                       }
-                      for(let i of document.getElementsByClassName(`${itemID}price`)){
-                        i.innerText = '$'+prodSnap.price
+                    }).catch((error) => {
+                      console.error(error);
+                    });
+                    // set pic and price if item in auction
+                    get(child(dbRef, `auction/${itemID}`)).then((snapshot) => {
+                      if (snapshot.exists()) {
+                        let prodSnap = snapshot.val()
+                        for(let i of document.getElementsByClassName(`${itemID}img`)){
+                          i.setAttribute('src',prodSnap.productPic)
+                          i.setAttribute('style','height:70px;')
+                        }
+                        for(let i of document.getElementsByClassName(`${itemID}price`)){
+                          i.innerText = '$'+prodSnap.curBid
+                        }
                       }
                     }).catch((error) => {
                       console.error(error);
