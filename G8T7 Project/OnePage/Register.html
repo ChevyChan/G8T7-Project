@@ -269,12 +269,6 @@
             document.getElementById('unitError').innerText = "Please enter your unit number!";
           }
 
-          if(profilePic_url == ""){
-            profilePic_url = "assets/img/profile-icon-9.png";
-          }
-
-          
-
           if(email == "" && password == "" && firstName == "" && lastName == "" && postalCode == "" && unitNumber == ""){
             console.log("Please enter all the required fields!");
             document.getElementById('emailError').innerText = "Please enter your Postal Code!";
@@ -284,7 +278,7 @@
             document.getElementById('postalError').innerText = "Please enter your Postal Code!";
             document.getElementById('unitError').innerText = "Please enter your unit number!";
           }else{
-            if(profilePic_url == ""){
+            if(document.getElementById('customFile').src == ""){
               document.getElementById('imgError').innerText = "Please upload a photo!";
             }else{
               createUserWithEmailAndPassword(auth, email, passHash, firstName, lastName, postalCode, address, unitNumber, ImgURL)
