@@ -520,15 +520,17 @@
         curBid = parseInt(curBid) + parseInt(subBid);
         console.log(curBid);
         console.log(subBid);
+        SendEmail(dbEmail, dbName, title, curBid);
       }
+
+      SendEmail(dbEmail, dbName, title, curBid);
   
       updateBiddingProduct(curBid, user_id, credits, title, dbEmail, dbName);
-      SendEmail(dbEmail, dbName, title, curBid);
       
   })
 
     function updateBiddingProduct(curBid, newBidUser, credits, productName, email, name) {
-      
+
         if(credits >= curBid){
           var credit_balance = credits - curBid;
           console.log(credit_balance);

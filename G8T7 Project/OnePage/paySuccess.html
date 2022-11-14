@@ -134,18 +134,22 @@
         <p>Transaction ID: <b>${transID}</b></p>
         <p id='name'>Buyer Name: </p>
         <p id='itemsBought'>Items Bought: </p>
+        <p id='delType'>Delivery Type:</p>
+        <p id='delDate'>Estimated Delivery Date:</p>
       </div>`
       //get and set items bought
       get(child(dbRef, `users/${userID}/purchaseHistory/${transID}`)).then((snapshot) => {
         let transSnap = snapshot.val()
         for(let itemID in transSnap){
-          get(child(dbRef, `product/${itemID}`)).then((snapshot) => {
-            let prodSnap = snapshot.val()
+          get(child(dbRef, `product/${itemID}`)).then((snapshot2) => {
+            let prodSnap = snapshot2.val()
             document.getElementById('itemsBought').innerHTML += ` '<b>${transSnap[itemID]} ($${prodSnap.price})</b>' `
           }).catch((error) => {
             console.error(error);
           });
         }
+        document.getElementById('delType').innerHTML += ` '<b>${transSnap.delivery}</b>' `
+        document.getElementById('delDate').innerHTML += ` '<b>${transSnap.deliveryDate}</b>' `
       }).catch((error) => {
         console.error(error);
       });
