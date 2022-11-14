@@ -344,7 +344,24 @@
           //Check for user's posted bids
           if(artistID == user_id){
             
-            
+            if(countdown > curDate){
+              str2 += `
+                <div class="col mb-5">
+                  <div class="card" style="width: 18rem;">
+                    <img src="${childSnapshot.val().productPic}" class="card-img-top" style="width:auto; max-width:300px; max-height:300px; border: 3px solid #ccc; background: #eee; padding: 15px 10px;" alt="assets\img\profile-icon-9.png">
+                    <div class="card-body">
+                      <h5 class="card-title">${childSnapshot.val().title}</h5>
+                      <p class="card-text">${childSnapshot.val().artistName} || <span>$${curBidPrice}</span></p>
+                      <p class="card-text" hidden>${childSnapshot.val().id}</p>
+                      <button name="${childSnapshot.val().id}" class="btn btn-primary" onclick="retrieveBiddingProductById(this)">View Details</button>
+                    </div>
+                  </div>
+                </div>
+              `;
+    
+              bidding_list.innerHTML = str2;
+            }  
+
             if(curDate > countdown){
               console.log(days);
               str += `
@@ -362,26 +379,6 @@
   
               document.getElementById('expiredBidding').innerHTML = str;
             }
-            
-            
-  
-            if(countdown >= curDate){
-              str2 += `
-                <div class="col mb-5">
-                  <div class="card" style="width: 18rem;">
-                    <img src="${childSnapshot.val().productPic}" class="card-img-top" style="width:auto; max-width:300px; max-height:300px; border: 3px solid #ccc; background: #eee; padding: 15px 10px;" alt="assets\img\profile-icon-9.png">
-                    <div class="card-body">
-                      <h5 class="card-title">${childSnapshot.val().title}</h5>
-                      <p class="card-text">${childSnapshot.val().artistName} || <span>$${curBidPrice}</span></p>
-                      <p class="card-text" hidden>${childSnapshot.val().id}</p>
-                      <button name="${childSnapshot.val().id}" class="btn btn-primary" onclick="retrieveBiddingProductById(this)">View Details</button>
-                    </div>
-                  </div>
-                </div>
-              `;
-    
-              bidding_list.innerHTML = str2;
-            }  
           }      
         });
       })
