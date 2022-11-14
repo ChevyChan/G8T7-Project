@@ -308,19 +308,6 @@
           curDate = yyyy + '-' + mm + '-' + dd + "T" + hours + ":" + mins; //Current Date and time
           console.log(curDate);
 
-          if(countdown < curDate){
-            str5 = `
-            <div class="col mb-4" style="margin-left:33%;">
-              <div class="col mb-4">
-                <img src="assets/img/coffee-2306471_1920.jpg" style="border-radius:50%; max-width:300px; max-height:300px; margin-left:10%;" class="card-img-top" alt="../Project/assets/img/profile-icon-9.png">
-                <h2 class="mt-4">Please check again later!</h2>
-              </div>
-            </div>
-          `;
-          }
-          bidding_list.innerHTML = str5;
-          document.getElementById('title_others').style.visibility = "hidden";
-
           if(countdown > curDate){
             str += `
               <div class="col mb-5">
@@ -337,6 +324,19 @@
             }
             bidding_list.innerHTML = str;
             document.getElementById('title_others').style.visibility = "hidden";
+
+          if(countdown < curDate){
+            str5 = `
+            <div class="col mb-4" style="margin-left:33%;">
+              <div class="col mb-4">
+                <img src="assets/img/coffee-2306471_1920.jpg" style="border-radius:50%; max-width:300px; max-height:300px; margin-left:10%;" class="card-img-top" alt="../Project/assets/img/profile-icon-9.png">
+                <h2 class="mt-4">Please check again later!</h2>
+              </div>
+            </div>
+          `;
+          }
+          bidding_list.innerHTML = str5;
+          document.getElementById('title_others').style.visibility = "hidden";
 
         })
       })
